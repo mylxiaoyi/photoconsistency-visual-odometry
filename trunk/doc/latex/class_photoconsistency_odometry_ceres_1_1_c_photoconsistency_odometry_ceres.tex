@@ -1,0 +1,72 @@
+\hypertarget{class_photoconsistency_odometry_ceres_1_1_c_photoconsistency_odometry_ceres}{
+\section{PhotoconsistencyOdometryCeres::CPhotoconsistencyOdometryCeres Class Reference}
+\label{class_photoconsistency_odometry_ceres_1_1_c_photoconsistency_odometry_ceres}\index{PhotoconsistencyOdometryCeres::CPhotoconsistencyOdometryCeres@{PhotoconsistencyOdometryCeres::CPhotoconsistencyOdometryCeres}}
+}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_photoconsistency_odometry_ceres_1_1_c_photoconsistency_odometry_ceres_1_1_residual_r_g_b_d_photoconsistency}{ResidualRGBDPhotoconsistency}
+\item 
+class \hyperlink{class_photoconsistency_odometry_ceres_1_1_c_photoconsistency_odometry_ceres_1_1_visualization_callback}{VisualizationCallback}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_photoconsistency_odometry_ceres_1_1_c_photoconsistency_odometry_ceres_a33e2c233258954ea85a3d81902618852}{
+void {\bfseries setCameraMatrix} (Eigen::Matrix3f \&camMat)}
+\label{class_photoconsistency_odometry_ceres_1_1_c_photoconsistency_odometry_ceres_a33e2c233258954ea85a3d81902618852}
+
+\item 
+\hypertarget{class_photoconsistency_odometry_ceres_1_1_c_photoconsistency_odometry_ceres_a78f20796bdb619d6e5a53a5610de5589}{
+void {\bfseries setSourceFrame} (cv::Mat \&imgGray, cv::Mat \&imgDepth)}
+\label{class_photoconsistency_odometry_ceres_1_1_c_photoconsistency_odometry_ceres_a78f20796bdb619d6e5a53a5610de5589}
+
+\item 
+\hypertarget{class_photoconsistency_odometry_ceres_1_1_c_photoconsistency_odometry_ceres_a38b679a8d0050258b1feb6ffb7a0ecf0}{
+void {\bfseries setTargetFrame} (cv::Mat \&imgGray)}
+\label{class_photoconsistency_odometry_ceres_1_1_c_photoconsistency_odometry_ceres_a38b679a8d0050258b1feb6ffb7a0ecf0}
+
+\item 
+\hypertarget{class_photoconsistency_odometry_ceres_1_1_c_photoconsistency_odometry_ceres_a07d65d9fe91f55f3fb61c0b6283c3755}{
+void {\bfseries setInitialStateVector} (const std::vector$<$ double $>$ \&initialStateVector)}
+\label{class_photoconsistency_odometry_ceres_1_1_c_photoconsistency_odometry_ceres_a07d65d9fe91f55f3fb61c0b6283c3755}
+
+\item 
+\hypertarget{class_photoconsistency_odometry_ceres_1_1_c_photoconsistency_odometry_ceres_a109048ffe22019a79c8933db463daef4}{
+void {\bfseries optimize} ()}
+\label{class_photoconsistency_odometry_ceres_1_1_c_photoconsistency_odometry_ceres_a109048ffe22019a79c8933db463daef4}
+
+\item 
+\hypertarget{class_photoconsistency_odometry_ceres_1_1_c_photoconsistency_odometry_ceres_af7b585a5b4edbfa81bf877c3e9ff7e4d}{
+void {\bfseries getOptimalStateVector} (std::vector$<$ double $>$ \&optimalStateVector)}
+\label{class_photoconsistency_odometry_ceres_1_1_c_photoconsistency_odometry_ceres_af7b585a5b4edbfa81bf877c3e9ff7e4d}
+
+\item 
+\hypertarget{class_photoconsistency_odometry_ceres_1_1_c_photoconsistency_odometry_ceres_a8c1ac216b428ce83be3a65caa3ede97d}{
+void {\bfseries getOptimalRigidTransformationMatrix} (Eigen::Matrix4f \&optimal\_\-Rt)}
+\label{class_photoconsistency_odometry_ceres_1_1_c_photoconsistency_odometry_ceres_a8c1ac216b428ce83be3a65caa3ede97d}
+
+\item 
+\hypertarget{class_photoconsistency_odometry_ceres_1_1_c_photoconsistency_odometry_ceres_a75350ca8a5de4aa39879dd83433ba700}{
+void {\bfseries readConfigurationFile} (std::string fileName)}
+\label{class_photoconsistency_odometry_ceres_1_1_c_photoconsistency_odometry_ceres_a75350ca8a5de4aa39879dd83433ba700}
+
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_photoconsistency_odometry_ceres_1_1_c_photoconsistency_odometry_ceres_af391ca291b70b1e531cc74a60ba40d46}{
+void {\bfseries buildPyramid} (cv::Mat \&img, std::vector$<$ cv::Mat $>$ \&pyramid, int levels, bool applyBlur)}
+\label{class_photoconsistency_odometry_ceres_1_1_c_photoconsistency_odometry_ceres_af391ca291b70b1e531cc74a60ba40d46}
+
+\item 
+\hypertarget{class_photoconsistency_odometry_ceres_1_1_c_photoconsistency_odometry_ceres_a7940f59d11a4b104c9fdc44570e2a1c9}{
+void {\bfseries buildDerivativesPyramids} (std::vector$<$ cv::Mat $>$ \&imagePyramid, std::vector$<$ cv::Mat $>$ \&derXPyramid, std::vector$<$ cv::Mat $>$ \&derYPyramid)}
+\label{class_photoconsistency_odometry_ceres_1_1_c_photoconsistency_odometry_ceres_a7940f59d11a4b104c9fdc44570e2a1c9}
+
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+CPhotoconsistencyOdometryCeres.h\end{DoxyCompactItemize}

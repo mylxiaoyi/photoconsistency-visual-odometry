@@ -1,0 +1,26 @@
+Installing in Ubuntu Linux
+--------------------------
+
+- Download and install the following Google Flags libraries from:
+
+	https://code.google.com/p/gflags/downloads/list
+
+	libgflags0_2.0-1_i386.deb
+	libgflags-dev_2.0-1_i386.deb
+
+- Download, compile and install Google Log libraries from:
+
+	http://code.google.com/p/google-glog/downloads/detail?name=glog-0.3.2.tar.gz&can=2&q=
+
+	cd Libs/glog-0.3.2/
+	./configure
+	make
+	sudo make install
+
+- Download the Google Ceres library from:
+	
+	http://code.google.com/p/ceres-solver/
+
+- Configure and generate the Ceres project for Code::Blocks (or your preferred IDE)
+
+- Compile the Google Ceres library.
