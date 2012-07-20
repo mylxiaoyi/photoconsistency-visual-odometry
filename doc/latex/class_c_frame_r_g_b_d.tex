@@ -1,0 +1,210 @@
+\hypertarget{class_c_frame_r_g_b_d}{
+\section{CFrameRGBD Class Reference}
+\label{class_c_frame_r_g_b_d}\index{CFrameRGBD@{CFrameRGBD}}
+}
+
+
+{\ttfamily \#include $<$CFrameRGBD.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_c_frame_r_g_b_d_a1babff86224475dd7b7e6960fbb71663}{setRGBImage} (const cv::Mat \&rgbImage)
+\item 
+cv::Mat \& \hyperlink{class_c_frame_r_g_b_d_a6775deb1a76779b2f8de4cdc9dd6c548}{getRGBImage} ()
+\item 
+void \hyperlink{class_c_frame_r_g_b_d_a04b2bf58c8c5027148219675f626eeb7}{setDepthImage} (const cv::Mat \&depthImage)
+\item 
+cv::Mat \& \hyperlink{class_c_frame_r_g_b_d_a21d4754f8db3a0a93dbe1d67a00f4ce5}{getDepthImage} ()
+\item 
+void \hyperlink{class_c_frame_r_g_b_d_ab778d5eb102f577cc338ee1812846ac9}{setTimeStamp} (uint64\_\-t timeStamp)
+\item 
+uint64\_\-t \hyperlink{class_c_frame_r_g_b_d_a9c441cdc349038fae31bffc4d0202b2c}{getTimeStamp} ()
+\item 
+cv::Mat \& \hyperlink{class_c_frame_r_g_b_d_a7fd118a6a456ee314009f1fd260e70e0}{getIntensityImage} ()
+\item 
+pcl::PointCloud$<$ pcl::PointXYZRGBA $>$::Ptr \hyperlink{class_c_frame_r_g_b_d_aae45ce5efb781c914ec8b420970ce492}{getPointCloud} (const Eigen::Matrix3f \&cameraMatrix)
+\item 
+pcl::PointCloud$<$ pcl::PointXYZRGBA $>$::Ptr \hyperlink{class_c_frame_r_g_b_d_af2d7e89a8f680b567f4b798beb075f8e}{getDownsampledPointCloud} (const Eigen::Matrix3f \&cameraMatrix)
+\item 
+\hypertarget{class_c_frame_r_g_b_d_a976a8d17209c3b3190ea7404a4d2464e}{
+void {\bfseries getMatrixNumberRepresentationOf\_\-uint64\_\-t} (uint64\_\-t number, cv::Mat \&matrixNumberRepresentation)}
+\label{class_c_frame_r_g_b_d_a976a8d17209c3b3190ea7404a4d2464e}
+
+\item 
+\hypertarget{class_c_frame_r_g_b_d_aa06519642bbec944c008786c6d5a21aa}{
+void {\bfseries saveToFile} (std::string fileName)}
+\label{class_c_frame_r_g_b_d_aa06519642bbec944c008786c6d5a21aa}
+
+\item 
+\hypertarget{class_c_frame_r_g_b_d_a7312a178f68d3a0e8a864404805bcfde}{
+void {\bfseries get\_\-uint64\_\-t\_\-ofMatrixRepresentation} (cv::Mat \&matrixNumberRepresentation, uint64\_\-t \&number)}
+\label{class_c_frame_r_g_b_d_a7312a178f68d3a0e8a864404805bcfde}
+
+\item 
+\hypertarget{class_c_frame_r_g_b_d_af3a2aa2e5662f6c497814e99b2cbc13b}{
+void {\bfseries loadFromFile} (std::string fileName)}
+\label{class_c_frame_r_g_b_d_af3a2aa2e5662f6c497814e99b2cbc13b}
+
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+cv::Mat \hyperlink{class_c_frame_r_g_b_d_aaaa8d12b6df4db4a2a2e050d6894fa64}{m\_\-rgbImage}
+\item 
+cv::Mat \hyperlink{class_c_frame_r_g_b_d_a4267ae0f2e87e7f1b8faccce68ffecd3}{m\_\-intensityImage}
+\item 
+cv::Mat \hyperlink{class_c_frame_r_g_b_d_a1dbfcec74d90c8cc98018a9f0df6c708}{m\_\-depthImage}
+\item 
+pcl::PointCloud$<$ pcl::PointXYZRGBA $>$::Ptr \hyperlink{class_c_frame_r_g_b_d_a72e3371759953f15c7bb6637bc6d8ab4}{m\_\-pointCloudPtr}
+\item 
+pcl::PointCloud$<$ pcl::PointXYZRGBA $>$::Ptr \hyperlink{class_c_frame_r_g_b_d_aaff14ee9689f9d2d895300e5236be6d0}{m\_\-downsampledPointCloudPtr}
+\item 
+bool \hyperlink{class_c_frame_r_g_b_d_ace30426f416cd66b2a0a256071d93464}{pointCloudAvailable}
+\item 
+bool \hyperlink{class_c_frame_r_g_b_d_a06f87da2b36ef01b47ac338adb6443ea}{downsampledPointCloudAvailable}
+\item 
+bool \hyperlink{class_c_frame_r_g_b_d_a445d7d67bbff8cdac482e1c10dba2dc9}{intensityImageAvailable}
+\item 
+uint64\_\-t \hyperlink{class_c_frame_r_g_b_d_a0f7c2fb4831a936c63b78305ab9298bd}{m\_\-timeStamp}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The class \hyperlink{class_c_frame_r_g_b_d}{CFrameRGBD} encapsulates the RGB and depht data of a certain RGBD frame. It also contains the timestamp of the RGBD data. 
+
+\subsection{Member Function Documentation}
+\hypertarget{class_c_frame_r_g_b_d_a21d4754f8db3a0a93dbe1d67a00f4ce5}{
+\index{CFrameRGBD@{CFrameRGBD}!getDepthImage@{getDepthImage}}
+\index{getDepthImage@{getDepthImage}!CFrameRGBD@{CFrameRGBD}}
+\subsubsection[{getDepthImage}]{\setlength{\rightskip}{0pt plus 5cm}cv::Mat\& CFrameRGBD::getDepthImage (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{class_c_frame_r_g_b_d_a21d4754f8db3a0a93dbe1d67a00f4ce5}
+Returns the depth image of the RGBD frame. \hypertarget{class_c_frame_r_g_b_d_af2d7e89a8f680b567f4b798beb075f8e}{
+\index{CFrameRGBD@{CFrameRGBD}!getDownsampledPointCloud@{getDownsampledPointCloud}}
+\index{getDownsampledPointCloud@{getDownsampledPointCloud}!CFrameRGBD@{CFrameRGBD}}
+\subsubsection[{getDownsampledPointCloud}]{\setlength{\rightskip}{0pt plus 5cm}pcl::PointCloud$<$pcl::PointXYZRGBA$>$::Ptr CFrameRGBD::getDownsampledPointCloud (
+\begin{DoxyParamCaption}
+\item[{const Eigen::Matrix3f \&}]{cameraMatrix}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{class_c_frame_r_g_b_d_af2d7e89a8f680b567f4b798beb075f8e}
+Gets a downsampled version of the RGB point cloud \hypertarget{class_c_frame_r_g_b_d_a7fd118a6a456ee314009f1fd260e70e0}{
+\index{CFrameRGBD@{CFrameRGBD}!getIntensityImage@{getIntensityImage}}
+\index{getIntensityImage@{getIntensityImage}!CFrameRGBD@{CFrameRGBD}}
+\subsubsection[{getIntensityImage}]{\setlength{\rightskip}{0pt plus 5cm}cv::Mat\& CFrameRGBD::getIntensityImage (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{class_c_frame_r_g_b_d_a7fd118a6a456ee314009f1fd260e70e0}
+Gets a grayscale version of the RGB image \hypertarget{class_c_frame_r_g_b_d_aae45ce5efb781c914ec8b420970ce492}{
+\index{CFrameRGBD@{CFrameRGBD}!getPointCloud@{getPointCloud}}
+\index{getPointCloud@{getPointCloud}!CFrameRGBD@{CFrameRGBD}}
+\subsubsection[{getPointCloud}]{\setlength{\rightskip}{0pt plus 5cm}pcl::PointCloud$<$pcl::PointXYZRGBA$>$::Ptr CFrameRGBD::getPointCloud (
+\begin{DoxyParamCaption}
+\item[{const Eigen::Matrix3f \&}]{cameraMatrix}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{class_c_frame_r_g_b_d_aae45ce5efb781c914ec8b420970ce492}
+Gets a 3D coloured point cloud from the RGBD data using the camera parameters \hypertarget{class_c_frame_r_g_b_d_a6775deb1a76779b2f8de4cdc9dd6c548}{
+\index{CFrameRGBD@{CFrameRGBD}!getRGBImage@{getRGBImage}}
+\index{getRGBImage@{getRGBImage}!CFrameRGBD@{CFrameRGBD}}
+\subsubsection[{getRGBImage}]{\setlength{\rightskip}{0pt plus 5cm}cv::Mat\& CFrameRGBD::getRGBImage (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{class_c_frame_r_g_b_d_a6775deb1a76779b2f8de4cdc9dd6c548}
+Returns the RGB image of the RGBD frame. \hypertarget{class_c_frame_r_g_b_d_a9c441cdc349038fae31bffc4d0202b2c}{
+\index{CFrameRGBD@{CFrameRGBD}!getTimeStamp@{getTimeStamp}}
+\index{getTimeStamp@{getTimeStamp}!CFrameRGBD@{CFrameRGBD}}
+\subsubsection[{getTimeStamp}]{\setlength{\rightskip}{0pt plus 5cm}uint64\_\-t CFrameRGBD::getTimeStamp (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{class_c_frame_r_g_b_d_a9c441cdc349038fae31bffc4d0202b2c}
+Returns the RGBD frame timestamp \hypertarget{class_c_frame_r_g_b_d_a04b2bf58c8c5027148219675f626eeb7}{
+\index{CFrameRGBD@{CFrameRGBD}!setDepthImage@{setDepthImage}}
+\index{setDepthImage@{setDepthImage}!CFrameRGBD@{CFrameRGBD}}
+\subsubsection[{setDepthImage}]{\setlength{\rightskip}{0pt plus 5cm}void CFrameRGBD::setDepthImage (
+\begin{DoxyParamCaption}
+\item[{const cv::Mat \&}]{depthImage}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{class_c_frame_r_g_b_d_a04b2bf58c8c5027148219675f626eeb7}
+Sets a depth image to the RGBD frame. \hypertarget{class_c_frame_r_g_b_d_a1babff86224475dd7b7e6960fbb71663}{
+\index{CFrameRGBD@{CFrameRGBD}!setRGBImage@{setRGBImage}}
+\index{setRGBImage@{setRGBImage}!CFrameRGBD@{CFrameRGBD}}
+\subsubsection[{setRGBImage}]{\setlength{\rightskip}{0pt plus 5cm}void CFrameRGBD::setRGBImage (
+\begin{DoxyParamCaption}
+\item[{const cv::Mat \&}]{rgbImage}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{class_c_frame_r_g_b_d_a1babff86224475dd7b7e6960fbb71663}
+Sets a RGB image to the RGBD frame. \hypertarget{class_c_frame_r_g_b_d_ab778d5eb102f577cc338ee1812846ac9}{
+\index{CFrameRGBD@{CFrameRGBD}!setTimeStamp@{setTimeStamp}}
+\index{setTimeStamp@{setTimeStamp}!CFrameRGBD@{CFrameRGBD}}
+\subsubsection[{setTimeStamp}]{\setlength{\rightskip}{0pt plus 5cm}void CFrameRGBD::setTimeStamp (
+\begin{DoxyParamCaption}
+\item[{uint64\_\-t}]{timeStamp}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{class_c_frame_r_g_b_d_ab778d5eb102f577cc338ee1812846ac9}
+Set the RGBD frame timestamp 
+
+\subsection{Field Documentation}
+\hypertarget{class_c_frame_r_g_b_d_a06f87da2b36ef01b47ac338adb6443ea}{
+\index{CFrameRGBD@{CFrameRGBD}!downsampledPointCloudAvailable@{downsampledPointCloudAvailable}}
+\index{downsampledPointCloudAvailable@{downsampledPointCloudAvailable}!CFrameRGBD@{CFrameRGBD}}
+\subsubsection[{downsampledPointCloudAvailable}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf CFrameRGBD::downsampledPointCloudAvailable}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{class_c_frame_r_g_b_d_a06f87da2b36ef01b47ac338adb6443ea}
+True if the downsampled coloured point cloud is available, false otherwise \hypertarget{class_c_frame_r_g_b_d_a445d7d67bbff8cdac482e1c10dba2dc9}{
+\index{CFrameRGBD@{CFrameRGBD}!intensityImageAvailable@{intensityImageAvailable}}
+\index{intensityImageAvailable@{intensityImageAvailable}!CFrameRGBD@{CFrameRGBD}}
+\subsubsection[{intensityImageAvailable}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf CFrameRGBD::intensityImageAvailable}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{class_c_frame_r_g_b_d_a445d7d67bbff8cdac482e1c10dba2dc9}
+True if the intensity image is available, false otherwise \hypertarget{class_c_frame_r_g_b_d_a1dbfcec74d90c8cc98018a9f0df6c708}{
+\index{CFrameRGBD@{CFrameRGBD}!m\_\-depthImage@{m\_\-depthImage}}
+\index{m\_\-depthImage@{m\_\-depthImage}!CFrameRGBD@{CFrameRGBD}}
+\subsubsection[{m\_\-depthImage}]{\setlength{\rightskip}{0pt plus 5cm}cv::Mat {\bf CFrameRGBD::m\_\-depthImage}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{class_c_frame_r_g_b_d_a1dbfcec74d90c8cc98018a9f0df6c708}
+Depth image \hypertarget{class_c_frame_r_g_b_d_aaff14ee9689f9d2d895300e5236be6d0}{
+\index{CFrameRGBD@{CFrameRGBD}!m\_\-downsampledPointCloudPtr@{m\_\-downsampledPointCloudPtr}}
+\index{m\_\-downsampledPointCloudPtr@{m\_\-downsampledPointCloudPtr}!CFrameRGBD@{CFrameRGBD}}
+\subsubsection[{m\_\-downsampledPointCloudPtr}]{\setlength{\rightskip}{0pt plus 5cm}pcl::PointCloud$<$pcl::PointXYZRGBA$>$::Ptr {\bf CFrameRGBD::m\_\-downsampledPointCloudPtr}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{class_c_frame_r_g_b_d_aaff14ee9689f9d2d895300e5236be6d0}
+Downsampled coloured point cloud \hypertarget{class_c_frame_r_g_b_d_a4267ae0f2e87e7f1b8faccce68ffecd3}{
+\index{CFrameRGBD@{CFrameRGBD}!m\_\-intensityImage@{m\_\-intensityImage}}
+\index{m\_\-intensityImage@{m\_\-intensityImage}!CFrameRGBD@{CFrameRGBD}}
+\subsubsection[{m\_\-intensityImage}]{\setlength{\rightskip}{0pt plus 5cm}cv::Mat {\bf CFrameRGBD::m\_\-intensityImage}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{class_c_frame_r_g_b_d_a4267ae0f2e87e7f1b8faccce68ffecd3}
+Intensity image (grayscale version of the RGB image) \hypertarget{class_c_frame_r_g_b_d_a72e3371759953f15c7bb6637bc6d8ab4}{
+\index{CFrameRGBD@{CFrameRGBD}!m\_\-pointCloudPtr@{m\_\-pointCloudPtr}}
+\index{m\_\-pointCloudPtr@{m\_\-pointCloudPtr}!CFrameRGBD@{CFrameRGBD}}
+\subsubsection[{m\_\-pointCloudPtr}]{\setlength{\rightskip}{0pt plus 5cm}pcl::PointCloud$<$pcl::PointXYZRGBA$>$::Ptr {\bf CFrameRGBD::m\_\-pointCloudPtr}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{class_c_frame_r_g_b_d_a72e3371759953f15c7bb6637bc6d8ab4}
+Coloured point cloud \hypertarget{class_c_frame_r_g_b_d_aaaa8d12b6df4db4a2a2e050d6894fa64}{
+\index{CFrameRGBD@{CFrameRGBD}!m\_\-rgbImage@{m\_\-rgbImage}}
+\index{m\_\-rgbImage@{m\_\-rgbImage}!CFrameRGBD@{CFrameRGBD}}
+\subsubsection[{m\_\-rgbImage}]{\setlength{\rightskip}{0pt plus 5cm}cv::Mat {\bf CFrameRGBD::m\_\-rgbImage}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{class_c_frame_r_g_b_d_aaaa8d12b6df4db4a2a2e050d6894fa64}
+RGB image \hypertarget{class_c_frame_r_g_b_d_a0f7c2fb4831a936c63b78305ab9298bd}{
+\index{CFrameRGBD@{CFrameRGBD}!m\_\-timeStamp@{m\_\-timeStamp}}
+\index{m\_\-timeStamp@{m\_\-timeStamp}!CFrameRGBD@{CFrameRGBD}}
+\subsubsection[{m\_\-timeStamp}]{\setlength{\rightskip}{0pt plus 5cm}uint64\_\-t {\bf CFrameRGBD::m\_\-timeStamp}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{class_c_frame_r_g_b_d_a0f7c2fb4831a936c63b78305ab9298bd}
+Timestamp of the RGBD frame \hypertarget{class_c_frame_r_g_b_d_ace30426f416cd66b2a0a256071d93464}{
+\index{CFrameRGBD@{CFrameRGBD}!pointCloudAvailable@{pointCloudAvailable}}
+\index{pointCloudAvailable@{pointCloudAvailable}!CFrameRGBD@{CFrameRGBD}}
+\subsubsection[{pointCloudAvailable}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf CFrameRGBD::pointCloudAvailable}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{class_c_frame_r_g_b_d_ace30426f416cd66b2a0a256071d93464}
+True if the coloured point cloud is available, false otherwise 
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+CFrameRGBD.h\end{DoxyCompactItemize}

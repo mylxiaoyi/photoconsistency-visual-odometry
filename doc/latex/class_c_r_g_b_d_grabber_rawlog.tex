@@ -1,0 +1,110 @@
+\hypertarget{class_c_r_g_b_d_grabber_rawlog}{
+\section{CRGBDGrabberRawlog Class Reference}
+\label{class_c_r_g_b_d_grabber_rawlog}\index{CRGBDGrabberRawlog@{CRGBDGrabberRawlog}}
+}
+
+
+{\ttfamily \#include $<$CRGBDGrabberRawlog.h$>$}
+
+Inheritance diagram for CRGBDGrabberRawlog:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_c_r_g_b_d_grabber_rawlog}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_c_r_g_b_d_grabber_rawlog_aabfd5bddf00ddb3a43d0a13280c32c24}{CRGBDGrabberRawlog} (const std::string \&rawlog\_\-file)
+\item 
+void \hyperlink{class_c_r_g_b_d_grabber_rawlog_abf3ace5b3c3fbc947b47a0caec76791d}{init} ()
+\item 
+void \hyperlink{class_c_r_g_b_d_grabber_rawlog_a22e26394c6f7d83d45c5de01a4c999b4}{grab} (\hyperlink{class_c_frame_r_g_b_d}{CFrameRGBD} $\ast$)
+\item 
+void \hyperlink{class_c_r_g_b_d_grabber_rawlog_af499a26d2f6a92184fcc457e9c664da3}{stop} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_c_r_g_b_d_grabber_rawlog_a1a90df6d545fdd0cce5da3d4e48d3700}{
+mrpt::slam::CObservation3DRangeScanPtr {\bfseries currentObservationPtr}}
+\label{class_c_r_g_b_d_grabber_rawlog_a1a90df6d545fdd0cce5da3d4e48d3700}
+
+\item 
+\hypertarget{class_c_r_g_b_d_grabber_rawlog_a9ead576a05025c9c3f59dde0b23d8be6}{
+mrpt::utils::CFileGZInputStream $\ast$ {\bfseries dataset}}
+\label{class_c_r_g_b_d_grabber_rawlog_a9ead576a05025c9c3f59dde0b23d8be6}
+
+\item 
+\hypertarget{class_c_r_g_b_d_grabber_rawlog_add51cd2527e3d5ca829a25119b75f71e}{
+bool {\bfseries endGrabbing}}
+\label{class_c_r_g_b_d_grabber_rawlog_add51cd2527e3d5ca829a25119b75f71e}
+
+\item 
+\hypertarget{class_c_r_g_b_d_grabber_rawlog_a33406069d1bf46517105224d63e2c994}{
+uint64\_\-t {\bfseries lastTimestamp}}
+\label{class_c_r_g_b_d_grabber_rawlog_a33406069d1bf46517105224d63e2c994}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class captures RGBD frames from rawlog sensor data using the MRPT library. It grabs the intensity image as well as its depth image. It also grabs the timestamp of each frame if provided in the rawlog. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_c_r_g_b_d_grabber_rawlog_aabfd5bddf00ddb3a43d0a13280c32c24}{
+\index{CRGBDGrabberRawlog@{CRGBDGrabberRawlog}!CRGBDGrabberRawlog@{CRGBDGrabberRawlog}}
+\index{CRGBDGrabberRawlog@{CRGBDGrabberRawlog}!CRGBDGrabberRawlog@{CRGBDGrabberRawlog}}
+\subsubsection[{CRGBDGrabberRawlog}]{\setlength{\rightskip}{0pt plus 5cm}CRGBDGrabberRawlog::CRGBDGrabberRawlog (
+\begin{DoxyParamCaption}
+\item[{const std::string \&}]{rawlog\_\-file}
+\end{DoxyParamCaption}
+)}}
+\label{class_c_r_g_b_d_grabber_rawlog_aabfd5bddf00ddb3a43d0a13280c32c24}
+Creates a \hyperlink{class_c_r_g_b_d_grabber_rawlog}{CRGBDGrabberRawlog} instance that grabs RGBD frames from the specified rawlog file. 
+
+\subsection{Member Function Documentation}
+\hypertarget{class_c_r_g_b_d_grabber_rawlog_a22e26394c6f7d83d45c5de01a4c999b4}{
+\index{CRGBDGrabberRawlog@{CRGBDGrabberRawlog}!grab@{grab}}
+\index{grab@{grab}!CRGBDGrabberRawlog@{CRGBDGrabberRawlog}}
+\subsubsection[{grab}]{\setlength{\rightskip}{0pt plus 5cm}void CRGBDGrabberRawlog::grab (
+\begin{DoxyParamCaption}
+\item[{{\bf CFrameRGBD} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{class_c_r_g_b_d_grabber_rawlog_a22e26394c6f7d83d45c5de01a4c999b4}
+Retains the current RGBD frame. 
+
+Implements \hyperlink{class_c_r_g_b_d_grabber_aa7f9c715a16933287a92ecaf7a1bbfb4}{CRGBDGrabber}.
+
+\hypertarget{class_c_r_g_b_d_grabber_rawlog_abf3ace5b3c3fbc947b47a0caec76791d}{
+\index{CRGBDGrabberRawlog@{CRGBDGrabberRawlog}!init@{init}}
+\index{init@{init}!CRGBDGrabberRawlog@{CRGBDGrabberRawlog}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}void CRGBDGrabberRawlog::init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{class_c_r_g_b_d_grabber_rawlog_abf3ace5b3c3fbc947b47a0caec76791d}
+Initializes the grabber object 
+
+Implements \hyperlink{class_c_r_g_b_d_grabber_ab1aa7a5c871104dd8791d5a3a5117e3a}{CRGBDGrabber}.
+
+\hypertarget{class_c_r_g_b_d_grabber_rawlog_af499a26d2f6a92184fcc457e9c664da3}{
+\index{CRGBDGrabberRawlog@{CRGBDGrabberRawlog}!stop@{stop}}
+\index{stop@{stop}!CRGBDGrabberRawlog@{CRGBDGrabberRawlog}}
+\subsubsection[{stop}]{\setlength{\rightskip}{0pt plus 5cm}void CRGBDGrabberRawlog::stop (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{class_c_r_g_b_d_grabber_rawlog_af499a26d2f6a92184fcc457e9c664da3}
+Stop grabing RGBD frames. 
+
+Implements \hyperlink{class_c_r_g_b_d_grabber_a653ef16978adcd9000079f0e5f00addc}{CRGBDGrabber}.
+
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+CRGBDGrabberRawlog.h\end{DoxyCompactItemize}

@@ -1,0 +1,114 @@
+\hypertarget{index_intro_sec}{}\section{Introduction}\label{index_intro_sec}
+This is the documentation of the Photoconsistency-\/Visual-\/Odometry project. This project implements a method to estimate the rigid transformation that best aligns a pair of RGBD frames based on the maximization of a photoconsistency error function for visual odometry applications. To estimate the rigid transformation, the method performs a photoconsistency error function optimization at different image scales.
+
+ \hypertarget{index_dependencies_sec}{}\section{Dependencies}\label{index_dependencies_sec}
+This project uses several open-\/source libraries to build the whole solution. The main dependencies are:
+\begin{DoxyItemize}
+\item Ceres Solver: \href{http://code.google.com/p/ceres-solver/}{\tt http://code.google.com/p/ceres-\/solver/}
+\item OpenCV: \href{http://opencv.willowgarage.com/wiki/}{\tt http://opencv.willowgarage.com/wiki/}
+\item PCL: \href{http://pointclouds.org/}{\tt http://pointclouds.org/}
+\item MRPT: \href{http://www.mrpt.org/}{\tt http://www.mrpt.org/}
+\item Eigen: \href{http://eigen.tuxfamily.org}{\tt http://eigen.tuxfamily.org}
+\end{DoxyItemize}\hypertarget{index_install_sec}{}\section{Installation}\label{index_install_sec}
+This project has been implemented and tested in Ubuntu 11.04 and 11.10. To compile the source code you need to install the dependencies first. After that, follow the following steps to compile the project.
+\begin{DoxyItemize}
+\item Substitute the ceres-\/solver/include/ceres/jet.h header by the one inside PhotoconsistencyVisualOdometry/extra\_\-src/jet.h.
+\end{DoxyItemize}
+
+
+\begin{DoxyItemize}
+\item Generate the Code::Blocks project.
+\begin{DoxyEnumerate}
+\item Open CMake.
+\item Set the source directory to PhotoconsistencyVisualOdometry and the build directory to PhotoconsistencyVisualOdometry/build.
+\item Set OpenCV\_\-DIR and MRPT\_\-DIR to the OpenCV and MRPT build directories respectively.
+\item Specify the Ceres include directory (ceres-\/solver/include) to the CERES\_\-INCLUDE\_\-DIRECTORY variable.
+\item Specify the Ceres library directory (ceres-\/solver\_\-build/internal/ceres) to the CERES\_\-LIB\_\-DIRECTORY variable.
+\item Configure.
+\item Generate.
+\end{DoxyEnumerate}
+\end{DoxyItemize}
+
+
+\begin{DoxyItemize}
+\item Compile the PhotoconsistencyVisualOdometry project.
+\begin{DoxyEnumerate}
+\item Open the PhotoconsistencyVisualOdometry/build/PhotoconsistencyVisualOdometry.cbp project.
+\item Compile.
+\end{DoxyEnumerate}
+\end{DoxyItemize}
+
+
+\begin{DoxyItemize}
+\item \mbox{[}optional\mbox{]} Install CVPR tools.
+\begin{DoxyEnumerate}
+\item Install CVPR tools dependencies and download the CVPR tools inside the PhotoconsistencyVisualOdometry/tools/rgbd\_\-benchmark\_\-tools directory. \begin{DoxyVerb}
+sudo apt-get install python-numpy
+sudo apt-get install python-matplotlib 
+cd PhotoconsistencyVisualOdometry/tools
+svn co https://svncvpr.in.tum.de/cvpr-ros-pkg/trunk/rgbd_benchmark/rgbd_benchmark_tools/src/rgbd_benchmark_tools/
+\end{DoxyVerb}
+
+\end{DoxyEnumerate}
+\item \mbox{[}optional\mbox{]} Download the file 'rigid\_\-transform\_\-3D.m' inside the PhotoconsistencyVisualOdometry/tools/plot\_\-trajectory\_\-tools directory. The file can be found in the following link: \href{http://nghiaho.com/uploads/code/rigid_transform_3D.m}{\tt http://nghiaho.com/uploads/code/rigid\_\-transform\_\-3D.m}
+\end{DoxyItemize}\hypertarget{index_usage_sec}{}\section{Software usage}\label{index_usage_sec}
+After compiling the project, two executables should appear in the PhotoconsistencyVisualOdometry/build directory. The program PhotoconsistencyFrameAlignment estimates the 3DoF/6DoF rigid body motion between two RGBD frames loaded from file and shows the resulting difference image (Note: the 3DoF warping function is not yet implemented). The program PhotoconsistencyVisualOdometry estimates the trajectory of the Kinect sensor using a pairwise alignment approach. This program generates 3D point clouds transformed to the same reference frame to show the alignment results. The RGB-\/D data can be provided using a file interface that grabs RGB-\/D frames from .rawlog datasets using the MRPT library (TODO: in the following releases, an OpenNI interface will be added to allow online operation). In the following link there are some RGB-\/D datasets (.rawlog) that can be used to test the programs.
+
+\href{http://www.mrpt.org/robotic_datasets}{\tt http://www.mrpt.org/robotic\_\-datasets}
+
+The original datasets can be found in the following link. However they are not prepared to be used in this sofware.
+
+\href{http://cvpr.in.tum.de/data/datasets/rgbd-dataset}{\tt http://cvpr.in.tum.de/data/datasets/rgbd-\/dataset}
+
+These RGB-\/D datasets also contain a very precise ground-\/truth that can be very useful to evaluate different configurations. In the previous link, the CVPR group also provides a set of tools to measure the error between the estimated trajectory and the real trajectory of the ground-\/truth.\hypertarget{index_PhotoconsistencyFrameAlignment}{}\subsection{PhotoconsistencyFrameAlignment}\label{index_PhotoconsistencyFrameAlignment}
+This program estimates the 3DoF/6DoF rigid transformation between two RGBD frames loaded from file, maximizing the photoconsistency between the warped source intensity image and the target intensity image. To configure the optimization process, provide a configuration file to the algorithm like the ones in the PhotoconsistencyVisualOdometry/config\_\-files directory.
+
+\begin{DoxyVerb}
+cd PhotoconsistencyVisualOdometry/build
+./PhotoconsistencyFrameAlignment <config_file.yml> <imgRGB0.png> <imgDepth0.png> <imgRGB1.png>
+\end{DoxyVerb}
+
+
+ \hypertarget{index_PhotoconsistencyVisualOdometry}{}\subsection{PhotoconsistencyVisualOdometry}\label{index_PhotoconsistencyVisualOdometry}
+This program estimates the trajectory of the sensor and generates a 3D map from the provided secuence of RGB-\/D frames. The program stores the results in the PhotoconsistencyVisualOdometry/results directory. The program generates .pcd files representing each keyframe transformed to the original reference frame. These files are generated in the PhotoconsistencyVisualOdometry/results/pcd\_\-files directory. The program can be compiled to use an Iterative Closest Point algorithm to refine the estimated rigid transformation. To refine the rigid transformation using ICP (recommended), set the ENABLE\_\-ICP\_\-POSE\_\-REFINEMENT define to 1. Another useful feature is the possibility to save the estimated trajectory (and ground-\/truth if provided) to file. This is useful to visualize the estimated trajectory, as well as to compare it with the ground-\/truth using the CVPR tools. If you don't need to visualize or compare the estimated and ground-\/truth trajectories, simply set the ENABLE\_\-SAVE\_\-TRAJECTORY to 0.
+
+The rest of the configuration parameters can be passed to the program through the command line. The main parameters are the ground-\/truth file, to compare with the estimated trajectory (needs the CVPR tools) and the Iterative Closest Point method used to refine the pose.
+
+\begin{DoxyVerb}
+cd PhotoconsistencyVisualOdometry/build
+./PhotoconsistencyVisualOdometry <config_file.yml> <rawlog_file.rawlog> [options]
+       options: 
+               -g          Ground truth file <groundtruth.txt>
+               -m          Iterative Closest Point method:
+                           0: GICP
+                           1: ICP-LM
+                           2: ICP
+               -d          Maximum correspondence distance (ICP/ICP-LM/GICP):
+               -r          Ransac outlier rejection threshold (ICP/ICP-LM/GICP):
+               -i          Maximum number of iterations (ICP/ICP-LM/GICP):
+               -e          Transformation epsilon (ICP/ICP-LM/GICP):
+               -s          Skip X frames. Process only one of X frames:
+\end{DoxyVerb}
+
+
+If you compile the program to save the trajectory, three files (\char`\"{}poses.mat\char`\"{}, \char`\"{}trajectory.txt\char`\"{} and \char`\"{}estimated\_\-trajectory.eps\char`\"{}) will be saved to the PhotoconsistencyVisualOdometry/results directory: the first file contains the sequence of estimated poses (each row represents the 16 elements of a 4x4 rigid transformation matrix); the second file contains the same sequence of poses with timestamps, but using a 3D+Quaternion representation (to be used with the CVPR tools); the last file is a figure that shows the 2D top view of the sequence of poses (note: requires Octave to draw the trajectory).
+
+Furthermore, if you provide a ground-\/truth file to the program, three more files (\char`\"{}groundtruth.txt\char`\"{}, \char`\"{}trajectory.pdf\char`\"{} and \char`\"{}ground-\/truth\_\-and\_\-estimated\_\-trajectory.eps\char`\"{}) will be added to the PhotoconsistencyVisualOdometry/results directory: the first file is simply a copy of the provided ground-\/truth file; the second is the output file from the evaluate\_\-ate.py CVPR tool, that shows the estimated trajectory and pose differences drawn over the ground-\/truth (note: requires the CVPR tools dependencies installed); the third file is a figure that shows the estimated trajectory over the ground-\/truth in the reference frame of the first RGBD frame (note: requires Octave and the file rigid\_\-transform\_\-3D.m).\hypertarget{index_A}{}\subsection{Global map visualization}\label{index_A}
+As said before, the PhotoconsistencyVisualOdometry program generates \char`\"{}.pcd\char`\"{} files inside the PhotoconsistencyVisualOdometry/results/pcd\_\-files directory. These files contain the point cloud of each keyframe transformed to the same reference frame. To visualize the global map simply run the pcd\_\-viewer tool from the PCL library with all or a subset of the generated \char`\"{}.pcd\char`\"{} files.
+
+\begin{DoxyVerb}
+cd PhotoconsistencyVisualOdometry/build
+../results/pcd_files/*.pcd 
+\end{DoxyVerb}
+
+
+ \hypertarget{index_B}{}\subsection{CVPR tools}\label{index_B}
+If you have the CVPR tools dependencies installed and have compiled the PhotoconsistencyVisualOdometry program to save the trajectories, the program will execute the evaluate\_\-ate.py and evaluate\_\-rpe.py tools that compute the absolute and relative error of the estimated trajectory compared to the ground-\/truth. Additionally, to visualize the goodness of the estimated trajectory, a \char`\"{}.pdf\char`\"{} file will be generated inside the PhotoconsistencyVisualOdometry/results directory, representing the ground-\/truth and the estimated trajectory seen from above.
+
+ \hypertarget{index_C}{}\subsection{Octave visualization scripts}\label{index_C}
+Other useful tools for visualization are the \char`\"{}plot\_\-odometry.m\char`\"{} and \char`\"{}plot\_\-trajectory\_\-groundtruth\_\-estimated.m\char`\"{} Octave scripts: the first script loads the \char`\"{}poses.mat\char`\"{} file generated inside the PhotoconsistencyVisualOdometry/results (if compiled to save the trajectory) and plots all the estimated poses as seen from above; the second, plots the estimated trajectory and ground-\/truth as seen from above.
+
+  \begin{DoxyAuthor}{Author}
+Miguel Algaba Borrego \par
+ \href{http://thecomputervision.blogspot.com/}{\tt http://thecomputervision.blogspot.com/} 
+\end{DoxyAuthor}

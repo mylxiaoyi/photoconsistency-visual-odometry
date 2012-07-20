@@ -1,0 +1,86 @@
+\hypertarget{class_c_r_g_b_d_grabber}{
+\section{CRGBDGrabber Class Reference}
+\label{class_c_r_g_b_d_grabber}\index{CRGBDGrabber@{CRGBDGrabber}}
+}
+
+
+{\ttfamily \#include $<$CRGBDGrabber.h$>$}
+
+Inheritance diagram for CRGBDGrabber:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_c_r_g_b_d_grabber}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_c_r_g_b_d_grabber_ab1aa7a5c871104dd8791d5a3a5117e3a}{init} ()=0
+\item 
+virtual void \hyperlink{class_c_r_g_b_d_grabber_aa7f9c715a16933287a92ecaf7a1bbfb4}{grab} (\hyperlink{class_c_frame_r_g_b_d}{CFrameRGBD} $\ast$)=0
+\item 
+virtual void \hyperlink{class_c_r_g_b_d_grabber_a653ef16978adcd9000079f0e5f00addc}{stop} ()=0
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_c_frame_r_g_b_d}{CFrameRGBD} $\ast$ \hyperlink{class_c_r_g_b_d_grabber_a672772dade93a640a52e129f14c6d2fa}{framePtr}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Abstract class that especifies the functionality of a generic RGBD grabber. 
+
+\subsection{Member Function Documentation}
+\hypertarget{class_c_r_g_b_d_grabber_aa7f9c715a16933287a92ecaf7a1bbfb4}{
+\index{CRGBDGrabber@{CRGBDGrabber}!grab@{grab}}
+\index{grab@{grab}!CRGBDGrabber@{CRGBDGrabber}}
+\subsubsection[{grab}]{\setlength{\rightskip}{0pt plus 5cm}virtual void CRGBDGrabber::grab (
+\begin{DoxyParamCaption}
+\item[{{\bf CFrameRGBD} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{class_c_r_g_b_d_grabber_aa7f9c715a16933287a92ecaf7a1bbfb4}
+Retains the current RGBD frame. 
+
+Implemented in \hyperlink{class_c_r_g_b_d_grabber_rawlog_a22e26394c6f7d83d45c5de01a4c999b4}{CRGBDGrabberRawlog}.
+
+\hypertarget{class_c_r_g_b_d_grabber_ab1aa7a5c871104dd8791d5a3a5117e3a}{
+\index{CRGBDGrabber@{CRGBDGrabber}!init@{init}}
+\index{init@{init}!CRGBDGrabber@{CRGBDGrabber}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}virtual void CRGBDGrabber::init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{class_c_r_g_b_d_grabber_ab1aa7a5c871104dd8791d5a3a5117e3a}
+Initializes the grabber object 
+
+Implemented in \hyperlink{class_c_r_g_b_d_grabber_rawlog_abf3ace5b3c3fbc947b47a0caec76791d}{CRGBDGrabberRawlog}.
+
+\hypertarget{class_c_r_g_b_d_grabber_a653ef16978adcd9000079f0e5f00addc}{
+\index{CRGBDGrabber@{CRGBDGrabber}!stop@{stop}}
+\index{stop@{stop}!CRGBDGrabber@{CRGBDGrabber}}
+\subsubsection[{stop}]{\setlength{\rightskip}{0pt plus 5cm}virtual void CRGBDGrabber::stop (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{class_c_r_g_b_d_grabber_a653ef16978adcd9000079f0e5f00addc}
+Stop grabing RGBD frames. 
+
+Implemented in \hyperlink{class_c_r_g_b_d_grabber_rawlog_af499a26d2f6a92184fcc457e9c664da3}{CRGBDGrabberRawlog}.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{class_c_r_g_b_d_grabber_a672772dade93a640a52e129f14c6d2fa}{
+\index{CRGBDGrabber@{CRGBDGrabber}!framePtr@{framePtr}}
+\index{framePtr@{framePtr}!CRGBDGrabber@{CRGBDGrabber}}
+\subsubsection[{framePtr}]{\setlength{\rightskip}{0pt plus 5cm}{\bf CFrameRGBD}$\ast$ {\bf CRGBDGrabber::framePtr}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{class_c_r_g_b_d_grabber_a672772dade93a640a52e129f14c6d2fa}
+Pointer to the last grabbed RGBD frame 
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+CRGBDGrabber.h\end{DoxyCompactItemize}

@@ -1,0 +1,13 @@
+- Compile the Ceres library and dependencies
+
+- Substitute the jet.h header of Ceres by the one inside RGBDOdometry.
+
+- Open CMake and press the "Configure" button
+
+- Specify the Ceres include directory (ceres-solver/include) to the CERES_INCLUDE_DIRECTORY variable 
+
+- Specify the Ceres library directory (ceres-solver_build/internal/ceres) to the CERES_LIB_DIRECTORY variable
+
+- Press the "Configure" button again
+
+- Press the "Generate" button to gererate the project
