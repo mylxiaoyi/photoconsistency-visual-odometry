@@ -4,7 +4,7 @@
 Multiscale Photoconsistency Visual Odometry from RGBD Images
 http://code.google.com/p/photoconsistency-visual-odometry/
 
-Photoconsistency-Visual-Odometry is licensed under BSD license, please see LICENSE.txt for a full text of the license.
+Photoconsistency-Visual-Odometry is licensed under BSD license, please see LICENSE.txt for a full text of the license. 
 
 1. Introduction:
 ----------------
@@ -18,8 +18,10 @@ This project uses several open-source libraries to build the whole solution. The
     - OpenCV: http://opencv.willowgarage.com/wiki/
     - PCL: http://pointclouds.org/
     - MRPT: http://www.mrpt.org/
-    - Eigen: http://eigen.tuxfamily.org
+    - Eigen: http://eigen.tuxfamily.org  
 
+This project includes code developed by the authors of the Libmv library to propagate the image derivatives, needed to integrate the numeric image gradients with the auto-diff framework of Ceres Solver. Please see CPhotoconsistencyOdometryCeres.h for their copyright notice. 
+    
 3. Installation:
 ----------------
 This project has been implemented and tested in Ubuntu 11.04 and 11.10. To compile the source code you need to install the dependencies first. After that, follow the following steps to compile the project.
