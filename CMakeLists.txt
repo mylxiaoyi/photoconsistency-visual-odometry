@@ -96,6 +96,7 @@ LINK_DIRECTORIES( ${LINK_DIRECTORIES} "${CERES_LIB}" )
 # Declare the target (an executable)
 ADD_EXECUTABLE(PhotoconsistencyFrameAlignment PhotoconsistencyFrameAlignment.cpp
 include/CPhotoconsistencyOdometryCeres.h
+third_party/sample.h
 )
 
 TARGET_LINK_LIBRARIES(PhotoconsistencyFrameAlignment 
@@ -110,6 +111,7 @@ TARGET_LINK_LIBRARIES(PhotoconsistencyFrameAlignment
 # Declare the target (an executable)
 ADD_EXECUTABLE(PhotoconsistencyVisualOdometry PhotoconsistencyVisualOdometry.cpp
 include/CPhotoconsistencyOdometryCeres.h
+third_party/sample.h
 ./include/CFrameRGBD.h
 ./include/cvmat_serialization.h
 ./include/PointCloudDownsampler.h
