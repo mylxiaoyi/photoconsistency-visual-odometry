@@ -26,7 +26,7 @@ This project includes code developed by the authors of the Libmv library to prop
 ----------------
 This project has been implemented and tested in Ubuntu 11.04 and 11.10. To compile the source code you need to install the dependencies first. After that, follow the following steps to compile the project.
 
-    - Substitute the ceres-solver/include/ceres/jet.h header by the one inside PhotoconsistencyVisualOdometry/extra_src/jet.h.
+    - Substitute the ceres-solver/include/ceres/jet.h header by the one inside PhotoconsistencyVisualOdometry/third_party/jet.h.
 
     - Generate the Code::Blocks project.
         - Open CMake.
