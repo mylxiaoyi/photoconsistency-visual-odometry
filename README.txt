@@ -41,15 +41,17 @@ This project has been implemented and tested in Ubuntu 11.04 and 11.10. To compi
         - Open the PhotoconsistencyVisualOdometry/build/PhotoconsistencyVisualOdometry.cbp project.
         - Compile.
 
-    - [optional] Install CVPR tools.
-        - Install CVPR tools dependencies and download the CVPR tools inside the PhotoconsistencyVisualOdometry/tools/rgbd_benchmark_tools directory.
+    - [optional] Install CVPR tools dependencies and download the CVPR tools inside the PhotoconsistencyVisualOdometry/tools/rgbd_benchmark_tools directory.
 
-        sudo apt-get install python-numpy
-        sudo apt-get install python-matplotlib 
-        cd PhotoconsistencyVisualOdometry/tools
-        svn co https://svncvpr.in.tum.de/cvpr-ros-pkg/trunk/rgbd_benchmark/rgbd_benchmark_tools/src/rgbd_benchmark_tools/
+      sudo apt-get install python-numpy
+      sudo apt-get install python-matplotlib 
+      cd PhotoconsistencyVisualOdometry/tools
+      svn co https://svncvpr.in.tum.de/cvpr-ros-pkg/trunk/rgbd_benchmark/rgbd_benchmark_tools/src/rgbd_benchmark_tools/
 
     - [optional] Download the file 'rigid_transform_3D.m' inside the PhotoconsistencyVisualOdometry/tools/plot_trajectory_tools directory. The file can be found in the following link: http://nghiaho.com/uploads/code/rigid_transform_3D.m
+
+      cd PhotoconsistencyVisualOdometry/tools/plot_trajectory_tools
+      wget http://nghiaho.com/uploads/code/rigid_transform_3D.m
 
 4. Software usage:
 ------------------
