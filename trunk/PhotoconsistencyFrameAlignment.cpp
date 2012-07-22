@@ -33,6 +33,7 @@
 
 #include "include/CPhotoconsistencyOdometryCeres.h"
 #include "opencv2/highgui/highgui.hpp"
+#include "opencv2/contrib/contrib.hpp" //TickMeter
 
 void printHelp()
 {
