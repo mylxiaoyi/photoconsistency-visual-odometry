@@ -40,17 +40,22 @@ This project has been implemented and tested in Ubuntu 11.04 and 11.10. To compi
 
 
 \begin{DoxyItemize}
-\item \mbox{[}optional\mbox{]} Install CVPR tools.
-\begin{DoxyEnumerate}
-\item Install CVPR tools dependencies and download the CVPR tools inside the PhotoconsistencyVisualOdometry/tools/rgbd\_\-benchmark\_\-tools directory. \begin{DoxyVerb}
+\item \mbox{[}optional\mbox{]} Install CVPR tools dependencies and download the CVPR tools inside the PhotoconsistencyVisualOdometry/tools/rgbd\_\-benchmark\_\-tools directory. \begin{DoxyVerb}
 sudo apt-get install python-numpy
 sudo apt-get install python-matplotlib 
 cd PhotoconsistencyVisualOdometry/tools
 svn co https://svncvpr.in.tum.de/cvpr-ros-pkg/trunk/rgbd_benchmark/rgbd_benchmark_tools/src/rgbd_benchmark_tools/
 \end{DoxyVerb}
 
-\end{DoxyEnumerate}
-\item \mbox{[}optional\mbox{]} Download the file 'rigid\_\-transform\_\-3D.m' inside the PhotoconsistencyVisualOdometry/tools/plot\_\-trajectory\_\-tools directory. The file can be found in the following link: \href{http://nghiaho.com/uploads/code/rigid_transform_3D.m}{\tt http://nghiaho.com/uploads/code/rigid\_\-transform\_\-3D.m}
+\end{DoxyItemize}
+
+
+\begin{DoxyItemize}
+\item \mbox{[}optional\mbox{]} Download the file 'rigid\_\-transform\_\-3D.m' inside the PhotoconsistencyVisualOdometry/tools/plot\_\-trajectory\_\-tools directory. The file can be found in the following link: \href{http://nghiaho.com/uploads/code/rigid_transform_3D.m}{\tt http://nghiaho.com/uploads/code/rigid\_\-transform\_\-3D.m} \begin{DoxyVerb}
+cd PhotoconsistencyVisualOdometry/tools/plot_trajectory_tools
+wget http://nghiaho.com/uploads/code/rigid_transform_3D.m
+\end{DoxyVerb}
+
 \end{DoxyItemize}\hypertarget{index_usage_sec}{}\section{Software usage}\label{index_usage_sec}
 After compiling the project, two executables should appear in the PhotoconsistencyVisualOdometry/build directory. The program PhotoconsistencyFrameAlignment estimates the 3DoF/6DoF rigid body motion between two RGBD frames loaded from file and shows the resulting difference image (Note: the 3DoF warping function is not yet implemented). The program PhotoconsistencyVisualOdometry estimates the trajectory of the Kinect sensor using a pairwise alignment approach. This program generates 3D point clouds transformed to the same reference frame to show the alignment results. The RGB-\/D data can be provided using a file interface that grabs RGB-\/D frames from .rawlog datasets using the MRPT library (TODO: in the following releases, an OpenNI interface will be added to allow online operation). In the following link there are some RGB-\/D datasets (.rawlog) that can be used to test the programs.
 
