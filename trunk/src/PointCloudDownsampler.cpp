@@ -96,7 +96,7 @@ void PointCloudDownsampler::downsamplePointCloud(
                 yV.resize(nPoints);
                 zV.resize(nPoints);
 
-                //Compute the mean 3D point
+                //Compute the median 3D point
                 std::sort(xV.begin(),xV.end());
                 std::sort(yV.begin(),yV.end());
                 std::sort(zV.begin(),zV.end());
@@ -106,7 +106,7 @@ void PointCloudDownsampler::downsamplePointCloud(
                 point.y=yV[nPoints/2];
                 point.z=zV[nPoints/2];
 
-                //Set the mean point as the representative point of the region
+                //Set the median point as the representative point of the region
                 #pragma omp critical
                 {
                     downsampledPointCloudPtr->points[j]=point;
@@ -182,7 +182,7 @@ void PointCloudDownsampler::downsamplePointCloudColor(
                 gV.resize(nPoints);
                 bV.resize(nPoints);
 
-                //Compute the mean 3D point and mean RGB value
+                //Compute the median 3D point and median RGB value
                 std::sort(xV.begin(),xV.end());
                 std::sort(yV.begin(),yV.end());
                 std::sort(zV.begin(),zV.end());
@@ -198,7 +198,7 @@ void PointCloudDownsampler::downsamplePointCloudColor(
                 point.g=gV[nPoints/2];
                 point.b=bV[nPoints/2];
 
-                //Set the mean point as the representative point of the region
+                //Set the median point as the representative point of the region
                 #pragma omp critical
                 {
                     downsampledPointCloudPtr->points[j]=point;

@@ -37,7 +37,7 @@
 #define ENABLE_POINTCLOUD_DOWNSAMPLER 1
 
 #if ENABLE_POINTCLOUD_DOWNSAMPLER
-    #include "include/PointCloudDownsampler.h"
+    #include "PointCloudDownsampler.h"
 #else
     #include <pcl/filters/voxel_grid.h>
 #endif
@@ -49,7 +49,7 @@
 #include <fstream>
 #include <boost/lexical_cast.hpp>
 
-#include "cvmat_serialization.h"
+#include "third_party/cvmat_serialization.h"
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
 #include <fstream>

@@ -31,7 +31,15 @@
  *
  */
 
-#include "include/CPhotoconsistencyOdometryCeres.h"
+#define USE_PHOTOCONSISTENCY_ODOMETRY_ANALYTIC 1 // If set to 1 uses the CPhotoconsistencyOdometryAnalytic class
+                                                 // else, uses the CPhotoconsistencyOdometryCeres class.
+
+#if USE_PHOTOCONSISTENCY_ODOMETRY_ANALYTIC
+    #include "include/CPhotoconsistencyOdometryAnalytic.h"
+#else
+    #include "include/CPhotoconsistencyOdometryCeres.h"
+#endif
+
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/contrib/contrib.hpp" //TickMeter
 
@@ -62,7 +70,11 @@ int main (int argc,char ** argv)
     cv::cvtColor( imgRGB1, imgGray1, CV_BGR2GRAY );
 
     //Define the photoconsistency odometry object and set the input parameters
-	PhotoconsistencyOdometryCeres::CPhotoconsistencyOdometryCeres photoconsistencyOdometry;
+	#if USE_PHOTOCONSISTENCY_ODOMETRY_ANALYTIC
+	PhotoconsistencyOdometry::Analytic::CPhotoconsistencyOdometryAnalytic photoconsistencyOdometry;
+	#else
+	PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres photoconsistencyOdometry;
+	#endif
 	photoconsistencyOdometry.readConfigurationFile(std::string(argv[1]));
     photoconsistencyOdometry.setCameraMatrix(cameraMatrix);
     photoconsistencyOdometry.setSourceFrame(imgGray0,imgDepth0);
@@ -81,7 +93,7 @@ int main (int argc,char ** argv)
     photoconsistencyOdometry.getOptimalRigidTransformationMatrix(Rt);
     std::cout<<"main::Rt eigen:"<<std::endl<<Rt<<std::endl;
     cv::Mat warpedImage;
-    PhotoconsistencyOdometryCeres::warpImage<uint8_t>(imgGray0,imgDepth0,warpedImage,Rt,cameraMatrix);
+    PhotoconsistencyOdometry::warpImage<uint8_t>(imgGray0,imgDepth0,warpedImage,Rt,cameraMatrix);
     cv::Mat imgDiff;
     cv::absdiff(imgGray1,warpedImage,imgDiff);
     cv::imshow("main::imgDiff",imgDiff);
