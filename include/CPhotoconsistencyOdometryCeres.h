@@ -38,12 +38,16 @@
 #define ENABLE_BOX_FILTER_BLUR 0
 #define ENABLE_OPENMP_MULTITHREADING 1
 
+#include "CPhotoconsistencyOdometry.h"
+
 #include "third_party/sample.h"
-#include "opencv2/imgproc/imgproc.hpp"
 #include "ceres/ceres.h"
 #include "opencv2/highgui/highgui.hpp" //visualize iterations
 
-namespace PhotoconsistencyOdometryCeres
+namespace PhotoconsistencyOdometry
+{
+
+namespace Ceres
 {
 
 using ceres::AutoDiffCostFunction;
@@ -73,91 +77,10 @@ bool minimizer_progress_to_stdout;
 bool visualizeIterations;
 double x[6]; //Parameter vector (x y z yaw pitch roll)
 
-void eigenPose(float x,
-           float y,
-           float z,
-           float yaw,
-           float pitch,
-           float roll,
-           Eigen::Matrix4f & pose)
-{
-    pose(0,0) = cos(yaw) * cos(pitch);
-    pose(0,1) = cos(yaw) * sin(pitch) * sin(roll) - sin(yaw) * cos(roll);
-    pose(0,2) = cos(yaw) * sin(pitch) * cos(roll) + sin(yaw) * sin(roll);
-    pose(0,3) = x;
-
-    pose(1,0) = sin(yaw) * cos(pitch);
-    pose(1,1) = sin(yaw) * sin(pitch) * sin(roll) + cos(yaw) * cos(roll);
-    pose(1,2) = sin(yaw) * sin(pitch) * cos(roll) - cos(yaw) * sin(roll);
-    pose(1,3) = y;
-
-    pose(2,0) = -sin(pitch);
-    pose(2,1) = cos(pitch) * sin(roll);
-    pose(2,2) = cos(pitch) * cos(roll);
-    pose(2,3) = z;
-
-    pose(3,0) = 0;
-    pose(3,1) = 0;
-    pose(3,2) = 0;
-    pose(3,3) = 1;
-
-}
-
-template <class T>
-void warpImage(cv::Mat & imgGray,
-               cv::Mat & imgDepth,
-               cv::Mat & imgGrayWarped,
-               Eigen::Matrix4f & Rt,
-               Eigen::Matrix3f & cameraMatrix,int level=0)
-{
-    float fx = cameraMatrix(0,0)/pow(2,level);
-    float fy = cameraMatrix(1,1)/pow(2,level);
-    float inv_fx = 1.f/fx;
-    float inv_fy = 1.f/fy;
-    float ox = cameraMatrix(0,2)/pow(2,level);
-    float oy = cameraMatrix(1,2)/pow(2,level);
-
-    Eigen::Vector4f point3D;
-    Eigen::Vector4f transformedPoint3D;
-    int transformed_r,transformed_c; // 2D coordinates of the transformed pixel(r,c) of frame 1
-
-    imgGrayWarped = cv::Mat::zeros(imgGray.rows,imgGray.cols,imgGray.type());
-
-    #if ENABLE_OPENMP_MULTITHREADING
-    #pragma omp parallel for private(point3D,transformedPoint3D,transformed_r,transformed_c)
-    #endif
-    for(int r=0;r<imgGray.rows;r++)
-    {
-        for(int c=0;c<imgGray.cols;c++)
-        {
-            if(imgDepth.at<float>(r,c)>0) //If has valid depth value
-            {
-                //Compute the local 3D coordinates of pixel(r,c) of frame 1
-                point3D(2) = imgDepth.at<float>(r,c); //z
-                point3D(0) = (c-ox) * point3D(2) * inv_fx;	   //x
-                point3D(1) = (r-oy) * point3D(2) * inv_fy;	   //y
-                point3D(3) = 1.0;			   //homogeneous coordinate
-
-                //Transform the 3D point using the transformation matrix Rt
-                transformedPoint3D = Rt * point3D;
-
-                //Project the 3D point to the 2D plane
-                transformed_c = ((transformedPoint3D(0) * fx) / transformedPoint3D(2)) + ox; //transformed x (2D)
-                transformed_r = ((transformedPoint3D(1) * fy) / transformedPoint3D(2)) + oy; //transformed y (2D)
-
-                //Asign the intensity value to the warped image and compute the difference between the transformed
-                //pixel of frame 1 and the corresponding pixel of frame 2. Compute the error function
-                if(transformed_r>=0 && transformed_r < imgGray.rows &
-                   transformed_c>=0 && transformed_c < imgGray.cols)
-                {
-                    imgGrayWarped.at<T>(transformed_r,transformed_c)=imgGray.at<T>(r,c);
-                }
-            }
-        }
-    }
-}
-
-class CPhotoconsistencyOdometryCeres
+/*!This class computes the rigid (6DoF) transformation that best aligns a pair of RGBD frames using a photoconsistency maximization approach.
+To estimate the rigid transformation, this class implements a coarse to fine approach. Thus, the algorithm starts finding a first pose approximation at
+a low resolution level and uses the estimate to initialize the optimization at greater image scales. This class uses Ceres autodifferentiation to compute the derivatives of the cost function.*/
+class CPhotoconsistencyOdometryCeres : public CPhotoconsistencyOdometry
 {
 
 private:
@@ -389,6 +312,7 @@ public:
 
     ~CPhotoconsistencyOdometryCeres(){};
 
+    /*!Sets the 3x3 matrix of (pinhole) camera intrinsic parameters used to obtain the 3D colored point cloud from the RGB and depth images.*/
     void setCameraMatrix(Eigen::Matrix3f & camMat)
     {
         for(int i=0;i<3;i++)
@@ -400,6 +324,7 @@ public:
         }
     }
 
+    /*!Sets the source (Intensity+Depth) frame.*/
     void setSourceFrame(cv::Mat & imgGray,cv::Mat & imgDepth)
     {
         //Create a float auxialiary image from the imput image
@@ -411,6 +336,7 @@ public:
         buildPyramid(imgDepth,depth0Pyr,numOptimizationLevels,false);
     }
 
+    /*!Sets the target intensity frame.*/
     void setTargetFrame(cv::Mat & imgGray)
     {
         //Create a float auxialiary image from the imput image
@@ -424,6 +350,7 @@ public:
         buildDerivativesPyramids(gray1Pyr,gray1GradXPyr,gray1GradYPyr);
     }
 
+    /*!Initializes the state vector to a certain value. The optimization process uses the initial state vector as the initial estimate.*/
     void setInitialStateVector(const std::vector<double> & initialStateVector)
     {
         x[0] = initialStateVector[0];
@@ -434,6 +361,7 @@ public:
         x[5] = initialStateVector[5];
     }
 
+    /*!Launches the least-squares optimization process to find the configuration of the state vector parameters that maximizes the photoconsistency between the source and target frame.*/
     void optimize()
     {
         for(optimizationLevel = numOptimizationLevels-1;optimizationLevel>=0;optimizationLevel--)
@@ -486,6 +414,7 @@ public:
 
     }
 
+    /*!Returns the optimal state vector. This method has to be called after calling the optimize() method.*/
     void getOptimalStateVector(std::vector<double> & optimalStateVector)
     {
         optimalStateVector[0] = x[0];
@@ -496,12 +425,14 @@ public:
         optimalStateVector[5] = x[5];
     }
 
+    /*!Returns the optimal 4x4 rigid transformation matrix between the source and target frame. This method has to be called after calling the optimize() method.*/
     void getOptimalRigidTransformationMatrix(Eigen::Matrix4f & optimal_Rt)
     {
         eigenPose(x[0],x[1],x[2],
                   x[3],x[4],x[5],optimal_Rt);
     }
 
+    /*!Reads the configuration parameters from a .yml file.*/
     void readConfigurationFile(std::string fileName)
     {
         cv::FileStorage fs(fileName, cv::FileStorage::READ);
@@ -556,6 +487,8 @@ public:
 
 };
 
-} //end namespace
+} //end namespace Ceres
+
+} //end namespace PhotoconsistencyOdometry
 
 #endif

@@ -31,12 +31,19 @@
  *
  */
 
-#define ENABLE_ICP_POSE_REFINEMENT 1
+#define USE_PHOTOCONSISTENCY_ODOMETRY_ANALYTIC 1 // If set to 1 uses the CPhotoconsistencyOdometryAnalytic class
+                                                 // else, uses the CPhotoconsistencyOdometryCeres class.
+#define ENABLE_ICP_POSE_REFINEMENT 0
 #define ENABLE_SAVE_TRAJECTORY 1
+#define ENABLE_DISPLAY_ONLINE_MAP 1 // Enable this only for visualization/debug purposes
 
 #include "include/CRGBDGrabberRawlog.h"
 #include "include/CFrameRGBD.h"
-#include "include/CPhotoconsistencyOdometryCeres.h"
+#if USE_PHOTOCONSISTENCY_ODOMETRY_ANALYTIC
+    #include "include/CPhotoconsistencyOdometryAnalytic.h"
+#else
+    #include "include/CPhotoconsistencyOdometryCeres.h"
+#endif
 #include <pcl/io/pcd_io.h> //Save global map as PCD file
 #include <pcl/common/transforms.h> //Transform the keyframe pointclouds to the original reference frame
 #include <pcl/console/parse.h> //Parse the inputs of the program
@@ -45,6 +52,10 @@
     #include <pcl/registration/icp.h> //ICP
     #include <pcl/registration/icp_nl.h> //ICP LM
     #include <pcl/registration/gicp.h> //GICP
+#endif
+
+#if ENABLE_DISPLAY_ONLINE_MAP
+#include <pcl/visualization/cloud_viewer.h>
 #endif
 
 #if ENABLE_SAVE_TRAJECTORY
@@ -219,7 +230,11 @@ int main(int argc, char **argv)
     saveKeyframeToFile(0,*frame1);
 
     //Define the photoconsistency odometry object and set the input parameters
-	PhotoconsistencyOdometryCeres::CPhotoconsistencyOdometryCeres photoconsistencyOdometry;
+	#if USE_PHOTOCONSISTENCY_ODOMETRY_ANALYTIC
+	PhotoconsistencyOdometry::Analytic::CPhotoconsistencyOdometryAnalytic photoconsistencyOdometry;
+	#else
+	PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres photoconsistencyOdometry;
+	#endif
 	photoconsistencyOdometry.readConfigurationFile(std::string(argv[1]));
     photoconsistencyOdometry.setCameraMatrix(cameraMatrix);
 
@@ -247,6 +262,14 @@ int main(int argc, char **argv)
     icp->setMaxCorrespondenceDistance (dist);
     icp->setRANSACOutlierRejectionThreshold (rans);
     icp->setTransformationEpsilon(transEpsilon);
+    #endif
+
+    #if ENABLE_DISPLAY_ONLINE_MAP
+    //Initialize the global map with the first frame
+    pcl::visualization::CloudViewer viewer("3D map");
+    pcl::PointCloud<pcl::PointXYZRGBA>::Ptr map;
+    map.reset(new pcl::PointCloud<pcl::PointXYZRGBA>());
+    *map += *(frame1->getDownsampledPointCloud(cameraMatrix));
     #endif
 
     //Main pairwise alignment loop
@@ -280,7 +303,7 @@ int main(int argc, char **argv)
 
         //Show the difference image
         cv::Mat imgGray1Warped;
-        PhotoconsistencyOdometryCeres::warpImage<uint8_t>(frame1->getIntensityImage(),frame1->getDepthImage(),imgGray1Warped,H,cameraMatrix);
+        PhotoconsistencyOdometry::warpImage<uint8_t>(frame1->getIntensityImage(),frame1->getDepthImage(),imgGray1Warped,H,cameraMatrix);
         cv::Mat imgDifference;
         cv::absdiff(frame2->getIntensityImage(),imgGray1Warped,imgDifference);
         cv::putText(imgDifference,"Press enter to stop grabbing frames",cv::Point(20,450),cv::FONT_HERSHEY_SIMPLEX,1,cv::Scalar(255,0,0),2);
@@ -305,7 +328,9 @@ int main(int argc, char **argv)
         #endif
 
         //Add a new keyframe
-        bool keyframeCondition = true;
+        bool keyframeCondition=false;
+        static int count = 0;
+        if (count>5){count=0;keyframeCondition=true;}else{count++;}
         if(keyframeCondition) //the frame1 is the new keyframe
         {
             //Update the global pose of the current keyframe
@@ -321,6 +346,16 @@ int main(int argc, char **argv)
 
             #if ENABLE_SAVE_TRAJECTORY
             timestamps.push_back(frame2->getTimeStamp());
+            #endif
+
+            #if ENABLE_DISPLAY_ONLINE_MAP
+            //Transform the keyframe point cloud to the reference frame of the first keyframe cloud
+            pcl::PointCloud<pcl::PointXYZRGBA> transformedCloud;
+            pcl::transformPointCloud(*frame2->getDownsampledPointCloud(cameraMatrix),transformedCloud,globalPose);
+            *map += transformedCloud;
+
+            //Display the global map
+            viewer.showCloud(map);
             #endif
 
             //Update the last keframe with the current frame
@@ -342,7 +377,7 @@ int main(int argc, char **argv)
     //Free the allocated objects
     delete grabber;
 
-//Transform each keyframe point cloud to the same reference frame using each global pose
+    //Transform each keyframe point cloud to the same reference frame using each global pose
     #pragma omp parallel for
     for(int keyframe_i_Indx=0;keyframe_i_Indx<globalPoses.size();keyframe_i_Indx++)
     {
