@@ -1,0 +1,165 @@
+\hypertarget{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres}{
+\section{PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres Class Reference}
+\label{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres}\index{PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres@{PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres}}
+}
+
+
+{\ttfamily \#include $<$CPhotoconsistencyOdometryCeres.h$>$}
+
+Inheritance diagram for PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_1_1_residual_r_g_b_d_photoconsistency}{ResidualRGBDPhotoconsistency}
+\item 
+class \hyperlink{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_1_1_visualization_callback}{VisualizationCallback}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_ad45891d5065f3b00c40c8dbca794a632}{setCameraMatrix} (Eigen::Matrix3f \&camMat)
+\item 
+void \hyperlink{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_a987feeea7aab8dcc09ef82bde0814ed7}{setSourceFrame} (cv::Mat \&imgGray, cv::Mat \&imgDepth)
+\item 
+void \hyperlink{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_a803aeaed5e74ea8f50bab6694c887aa7}{setTargetFrame} (cv::Mat \&imgGray)
+\item 
+void \hyperlink{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_a0993e83c820d16e606bce87edabbcd12}{setInitialStateVector} (const std::vector$<$ double $>$ \&initialStateVector)
+\item 
+void \hyperlink{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_af177ce6dd5517d73d5cf25da266a2777}{optimize} ()
+\item 
+void \hyperlink{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_a54f00adc07a9027430b4044284dec16c}{getOptimalStateVector} (std::vector$<$ double $>$ \&optimalStateVector)
+\item 
+void \hyperlink{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_aef03c06654345aeea7c0e128b575420d}{getOptimalRigidTransformationMatrix} (Eigen::Matrix4f \&optimal\_\-Rt)
+\item 
+void \hyperlink{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_a459e59ddd284a1a1a5c239f55dd7fc12}{readConfigurationFile} (std::string fileName)
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_a33c8529241349e266167b377c9652f8a}{
+void {\bfseries buildPyramid} (cv::Mat \&img, std::vector$<$ cv::Mat $>$ \&pyramid, int levels, bool applyBlur)}
+\label{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_a33c8529241349e266167b377c9652f8a}
+
+\item 
+\hypertarget{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_a57953e7b19bd6f264384a8c36daf7ffb}{
+void {\bfseries buildDerivativesPyramids} (std::vector$<$ cv::Mat $>$ \&imagePyramid, std::vector$<$ cv::Mat $>$ \&derXPyramid, std::vector$<$ cv::Mat $>$ \&derYPyramid)}
+\label{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_a57953e7b19bd6f264384a8c36daf7ffb}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class computes the rigid (6DoF) transformation that best aligns a pair of RGBD frames using a photoconsistency maximization approach. To estimate the rigid transformation, this class implements a coarse to fine approach. Thus, the algorithm starts finding a first pose approximation at a low resolution level and uses the estimate to initialize the optimization at greater image scales. This class uses Ceres autodifferentiation to compute the derivatives of the cost function. 
+
+\subsection{Member Function Documentation}
+\hypertarget{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_aef03c06654345aeea7c0e128b575420d}{
+\index{PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres@{PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres}!getOptimalRigidTransformationMatrix@{getOptimalRigidTransformationMatrix}}
+\index{getOptimalRigidTransformationMatrix@{getOptimalRigidTransformationMatrix}!PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres@{PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres}}
+\subsubsection[{getOptimalRigidTransformationMatrix}]{\setlength{\rightskip}{0pt plus 5cm}void PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres::getOptimalRigidTransformationMatrix (
+\begin{DoxyParamCaption}
+\item[{Eigen::Matrix4f \&}]{optimal\_\-Rt}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_aef03c06654345aeea7c0e128b575420d}
+Returns the optimal 4x4 rigid transformation matrix between the source and target frame. This method has to be called after calling the \hyperlink{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_af177ce6dd5517d73d5cf25da266a2777}{optimize()} method. 
+
+Implements \hyperlink{class_photoconsistency_odometry_1_1_c_photoconsistency_odometry_a319f97afb21523fa6c66e9a04a607ea6}{PhotoconsistencyOdometry::CPhotoconsistencyOdometry}.
+
+\hypertarget{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_a54f00adc07a9027430b4044284dec16c}{
+\index{PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres@{PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres}!getOptimalStateVector@{getOptimalStateVector}}
+\index{getOptimalStateVector@{getOptimalStateVector}!PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres@{PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres}}
+\subsubsection[{getOptimalStateVector}]{\setlength{\rightskip}{0pt plus 5cm}void PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres::getOptimalStateVector (
+\begin{DoxyParamCaption}
+\item[{std::vector$<$ double $>$ \&}]{optimalStateVector}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_a54f00adc07a9027430b4044284dec16c}
+Returns the optimal state vector. This method has to be called after calling the \hyperlink{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_af177ce6dd5517d73d5cf25da266a2777}{optimize()} method. 
+
+Implements \hyperlink{class_photoconsistency_odometry_1_1_c_photoconsistency_odometry_a60e50c92161d1c2c1090757358ddba92}{PhotoconsistencyOdometry::CPhotoconsistencyOdometry}.
+
+\hypertarget{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_af177ce6dd5517d73d5cf25da266a2777}{
+\index{PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres@{PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres}!optimize@{optimize}}
+\index{optimize@{optimize}!PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres@{PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres}}
+\subsubsection[{optimize}]{\setlength{\rightskip}{0pt plus 5cm}void PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres::optimize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_af177ce6dd5517d73d5cf25da266a2777}
+Launches the least-\/squares optimization process to find the configuration of the state vector parameters that maximizes the photoconsistency between the source and target frame. 
+
+Implements \hyperlink{class_photoconsistency_odometry_1_1_c_photoconsistency_odometry_aa7b0f04764e2c348556193281de58639}{PhotoconsistencyOdometry::CPhotoconsistencyOdometry}.
+
+\hypertarget{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_a459e59ddd284a1a1a5c239f55dd7fc12}{
+\index{PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres@{PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres}!readConfigurationFile@{readConfigurationFile}}
+\index{readConfigurationFile@{readConfigurationFile}!PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres@{PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres}}
+\subsubsection[{readConfigurationFile}]{\setlength{\rightskip}{0pt plus 5cm}void PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres::readConfigurationFile (
+\begin{DoxyParamCaption}
+\item[{std::string}]{fileName}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_a459e59ddd284a1a1a5c239f55dd7fc12}
+Reads the configuration parameters from a .yml file. \hypertarget{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_ad45891d5065f3b00c40c8dbca794a632}{
+\index{PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres@{PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres}!setCameraMatrix@{setCameraMatrix}}
+\index{setCameraMatrix@{setCameraMatrix}!PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres@{PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres}}
+\subsubsection[{setCameraMatrix}]{\setlength{\rightskip}{0pt plus 5cm}void PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres::setCameraMatrix (
+\begin{DoxyParamCaption}
+\item[{Eigen::Matrix3f \&}]{camMat}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_ad45891d5065f3b00c40c8dbca794a632}
+Sets the 3x3 matrix of (pinhole) camera intrinsic parameters used to obtain the 3D colored point cloud from the RGB and depth images. 
+
+Implements \hyperlink{class_photoconsistency_odometry_1_1_c_photoconsistency_odometry_a7464fc533b08dc7150eabd1086b84155}{PhotoconsistencyOdometry::CPhotoconsistencyOdometry}.
+
+\hypertarget{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_a0993e83c820d16e606bce87edabbcd12}{
+\index{PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres@{PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres}!setInitialStateVector@{setInitialStateVector}}
+\index{setInitialStateVector@{setInitialStateVector}!PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres@{PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres}}
+\subsubsection[{setInitialStateVector}]{\setlength{\rightskip}{0pt plus 5cm}void PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres::setInitialStateVector (
+\begin{DoxyParamCaption}
+\item[{const std::vector$<$ double $>$ \&}]{initialStateVector}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_a0993e83c820d16e606bce87edabbcd12}
+Initializes the state vector to a certain value. The optimization process uses the initial state vector as the initial estimate. 
+
+Implements \hyperlink{class_photoconsistency_odometry_1_1_c_photoconsistency_odometry_a425e6bc2fbbc9dcf924ae197f5569ddf}{PhotoconsistencyOdometry::CPhotoconsistencyOdometry}.
+
+\hypertarget{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_a987feeea7aab8dcc09ef82bde0814ed7}{
+\index{PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres@{PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres}!setSourceFrame@{setSourceFrame}}
+\index{setSourceFrame@{setSourceFrame}!PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres@{PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres}}
+\subsubsection[{setSourceFrame}]{\setlength{\rightskip}{0pt plus 5cm}void PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres::setSourceFrame (
+\begin{DoxyParamCaption}
+\item[{cv::Mat \&}]{imgGray, }
+\item[{cv::Mat \&}]{imgDepth}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_a987feeea7aab8dcc09ef82bde0814ed7}
+Sets the source (Intensity+Depth) frame. 
+
+Implements \hyperlink{class_photoconsistency_odometry_1_1_c_photoconsistency_odometry_aa017bf63aeb6f3103d1b6fec8d38a888}{PhotoconsistencyOdometry::CPhotoconsistencyOdometry}.
+
+\hypertarget{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_a803aeaed5e74ea8f50bab6694c887aa7}{
+\index{PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres@{PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres}!setTargetFrame@{setTargetFrame}}
+\index{setTargetFrame@{setTargetFrame}!PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres@{PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres}}
+\subsubsection[{setTargetFrame}]{\setlength{\rightskip}{0pt plus 5cm}void PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres::setTargetFrame (
+\begin{DoxyParamCaption}
+\item[{cv::Mat \&}]{imgGray}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres_a803aeaed5e74ea8f50bab6694c887aa7}
+Sets the target intensity frame. 
+
+Implements \hyperlink{class_photoconsistency_odometry_1_1_c_photoconsistency_odometry_a4f04b88ac54670b03b5c2bf773bca018}{PhotoconsistencyOdometry::CPhotoconsistencyOdometry}.
+
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+CPhotoconsistencyOdometryCeres.h\end{DoxyCompactItemize}
