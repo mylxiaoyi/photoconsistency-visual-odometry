@@ -1,6 +1,11 @@
 # remove runtime generated files
-rm -rf results;
-mkdir results;
 cd results;
-mkdir pcd_files;
+rm keyframe_*.bin;
+rm poses.mat;
+rm trajectory.txt;
+rm estimated_trajectory.eps;
+cd pcd_files;
+rm *.pcd;
 cd ..;
+cd ..;
+

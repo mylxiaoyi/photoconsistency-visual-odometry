@@ -73,12 +73,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_point_cloud_downsampler.html#a518e890b357eed74601e0fc940334343">PointCloudDownsampler</a> (const int=8)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_point_cloud_downsampler.html#aa59d5affe32288f96dd2ac1ff46aab35">setDownsamplingStep</a> (const int)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_point_cloud_downsampler.html#a429b93008e34b4aa7680aa44286e802c">setMaximumDepth</a> (const float maxD=4.0)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_point_cloud_downsampler.html#aece710727fa24542e5657f53d01906d7">setMinimumDepth</a> (const float minD=0.3)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_point_cloud_downsampler.html#a6c2648119f30b8c41c5851844c1acb29">downsamplePointCloud</a> (pcl::PointCloud&lt; pcl::PointXYZRGBA &gt;::Ptr pointCloudPtr, pcl::PointCloud&lt; pcl::PointXYZRGBA &gt;::Ptr downsampledPointCloudPtr)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_point_cloud_downsampler.html#aa974584d15d1de898bbec8dbf791b29f">downsamplePointCloudColor</a> (pcl::PointCloud&lt; pcl::PointXYZRGBA &gt;::Ptr, pcl::PointCloud&lt; pcl::PointXYZRGBA &gt;::Ptr)</td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a74b48c9180a5d63ab550e26f07c24df0"></a><!-- doxytag: member="PointCloudDownsampler::downsamplingStep" ref="a74b48c9180a5d63ab550e26f07c24df0" args="" -->
 int&#160;</td><td class="memItemRight" valign="bottom"><b>downsamplingStep</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae0c137dfabde9694984a0d4fa87e3b36"></a><!-- doxytag: member="PointCloudDownsampler::maxDepth" ref="ae0c137dfabde9694984a0d4fa87e3b36" args="" -->
+float&#160;</td><td class="memItemRight" valign="bottom"><b>maxDepth</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a297e75764bca40b3ecc32db5cdb03379"></a><!-- doxytag: member="PointCloudDownsampler::minDepth" ref="a297e75764bca40b3ecc32db5cdb03379" args="" -->
+float&#160;</td><td class="memItemRight" valign="bottom"><b>minDepth</b></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>This class implements a fast and straightforward algorithm to downsample organized 3D point clouds. The algorithm takes the median point of a square region (downsamplingStep x downsamplingStep) of 3D points to mitigate the data noise. </p>
@@ -176,6 +182,42 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>downsamplingStep</b></
 
 </div>
 </div>
+<a class="anchor" id="a429b93008e34b4aa7680aa44286e802c"></a><!-- doxytag: member="PointCloudDownsampler::setMaximumDepth" ref="a429b93008e34b4aa7680aa44286e802c" args="(const float maxD=4.0)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PointCloudDownsampler::setMaximumDepth </td>
+          <td>(</td>
+          <td class="paramtype">const float&#160;</td>
+          <td class="paramname"><em>maxD</em> = <code>4.0</code></td><td>)</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Sets the maximum depth used to downsample the point cloud. Discard points with a depth value higher than the provided one. </p>
+
+</div>
+</div>
+<a class="anchor" id="aece710727fa24542e5657f53d01906d7"></a><!-- doxytag: member="PointCloudDownsampler::setMinimumDepth" ref="aece710727fa24542e5657f53d01906d7" args="(const float minD=0.3)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PointCloudDownsampler::setMinimumDepth </td>
+          <td>(</td>
+          <td class="paramtype">const float&#160;</td>
+          <td class="paramname"><em>minD</em> = <code>0.3</code></td><td>)</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Sets the minimum depth used to downsample the point cloud. Discard points with a depth value lower than the provided one. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="_point_cloud_downsampler_8h_source.html">PointCloudDownsampler.h</a></li>
 </ul>
@@ -194,7 +236,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>downsamplingStep</b></
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 12 2012 17:46:06 for Photoconsistency-Visual-Odometry by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Sep 14 2012 17:37:40 for Photoconsistency-Visual-Odometry by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

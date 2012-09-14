@@ -78,6 +78,10 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_frame_r_g_b_d.html#ab778d5eb102f577cc338ee1812846ac9">setTimeStamp</a> (uint64_t timeStamp)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_frame_r_g_b_d.html#a9c441cdc349038fae31bffc4d0202b2c">getTimeStamp</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">cv::Mat &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_frame_r_g_b_d.html#a7fd118a6a456ee314009f1fd260e70e0">getIntensityImage</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_frame_r_g_b_d.html#ae20f37738bca2f2db2a10bfff882ddd5">setMaxPointCloudDepth</a> (float maxD)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_frame_r_g_b_d.html#af763a5da39ec146c6456bf155cac76ba">setMinPointCloudDepth</a> (float minD)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_frame_r_g_b_d.html#a4009c7bfb6e5d62ac13dd04fd6430dc5">getMaxPointCloudDepth</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_frame_r_g_b_d.html#a00b651160ddf1cac5ed8c3b0edfa3c3c">getMinPointCloudDepth</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">pcl::PointCloud<br class="typebreak"/>
 &lt; pcl::PointXYZRGBA &gt;::Ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_frame_r_g_b_d.html#aae45ce5efb781c914ec8b420970ce492">getPointCloud</a> (const Eigen::Matrix3f &amp;cameraMatrix)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">pcl::PointCloud<br class="typebreak"/>
@@ -103,6 +107,8 @@ Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_frame_r_g_b_d.html#a06f87da2b36ef01b47ac338adb6443ea">downsampledPointCloudAvailable</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_frame_r_g_b_d.html#a445d7d67bbff8cdac482e1c10dba2dc9">intensityImageAvailable</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_frame_r_g_b_d.html#a0f7c2fb4831a936c63b78305ab9298bd">m_timeStamp</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_frame_r_g_b_d.html#abc84822b1baf13e257826ffb219dd913">maxDepth</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_frame_r_g_b_d.html#aaaab590488c350a37cba25c54ff2519c">minDepth</a></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>The class <a class="el" href="class_c_frame_r_g_b_d.html">CFrameRGBD</a> encapsulates the RGB and depht data of a certain RGBD frame. It also contains the timestamp of the RGBD data. </p>
@@ -156,6 +162,40 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>Gets a grayscale version of the RGB image </p>
+
+</div>
+</div>
+<a class="anchor" id="a4009c7bfb6e5d62ac13dd04fd6430dc5"></a><!-- doxytag: member="CFrameRGBD::getMaxPointCloudDepth" ref="a4009c7bfb6e5d62ac13dd04fd6430dc5" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float CFrameRGBD::getMaxPointCloudDepth </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Returns the max depth value for point cloud points. </p>
+
+</div>
+</div>
+<a class="anchor" id="a00b651160ddf1cac5ed8c3b0edfa3c3c"></a><!-- doxytag: member="CFrameRGBD::getMinPointCloudDepth" ref="a00b651160ddf1cac5ed8c3b0edfa3c3c" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float CFrameRGBD::getMinPointCloudDepth </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Returns the min depth value for point cloud points. </p>
 
 </div>
 </div>
@@ -226,6 +266,42 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>Sets a depth image to the RGBD frame. </p>
+
+</div>
+</div>
+<a class="anchor" id="ae20f37738bca2f2db2a10bfff882ddd5"></a><!-- doxytag: member="CFrameRGBD::setMaxPointCloudDepth" ref="ae20f37738bca2f2db2a10bfff882ddd5" args="(float maxD)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CFrameRGBD::setMaxPointCloudDepth </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>maxD</em></td><td>)</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Sets the max depth value for the point cloud points. </p>
+
+</div>
+</div>
+<a class="anchor" id="af763a5da39ec146c6456bf155cac76ba"></a><!-- doxytag: member="CFrameRGBD::setMinPointCloudDepth" ref="af763a5da39ec146c6456bf155cac76ba" args="(float minD)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CFrameRGBD::setMinPointCloudDepth </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>minD</em></td><td>)</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Sets the min depth value for the point cloud points. </p>
 
 </div>
 </div>
@@ -378,6 +454,34 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="abc84822b1baf13e257826ffb219dd913"></a><!-- doxytag: member="CFrameRGBD::maxDepth" ref="abc84822b1baf13e257826ffb219dd913" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float <a class="el" href="class_c_frame_r_g_b_d.html#abc84822b1baf13e257826ffb219dd913">CFrameRGBD::maxDepth</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Max pointcloud depth </p>
+
+</div>
+</div>
+<a class="anchor" id="aaaab590488c350a37cba25c54ff2519c"></a><!-- doxytag: member="CFrameRGBD::minDepth" ref="aaaab590488c350a37cba25c54ff2519c" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float <a class="el" href="class_c_frame_r_g_b_d.html#aaaab590488c350a37cba25c54ff2519c">CFrameRGBD::minDepth</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Min pointcloud depth </p>
+
+</div>
+</div>
 <a class="anchor" id="ace30426f416cd66b2a0a256071d93464"></a><!-- doxytag: member="CFrameRGBD::pointCloudAvailable" ref="ace30426f416cd66b2a0a256071d93464" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -410,7 +514,7 @@ Private Attributes</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 12 2012 17:46:05 for Photoconsistency-Visual-Odometry by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Sep 14 2012 17:37:39 for Photoconsistency-Visual-Odometry by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

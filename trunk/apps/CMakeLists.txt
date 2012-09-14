@@ -1,0 +1,2 @@
+ADD_SUBDIRECTORY(PhotoconsistencyFrameAlignment)
+ADD_SUBDIRECTORY(PhotoconsistencyVisualOdometry)

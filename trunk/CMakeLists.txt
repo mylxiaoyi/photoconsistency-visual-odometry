@@ -1,39 +1,22 @@
-PROJECT(PhotoconsistencyVisualOdometry)
+PROJECT(phovo)
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8 FATAL_ERROR)
 if(COMMAND cmake_policy)
       cmake_policy(SET CMP0003 NEW)  # Required by CMake 2.7+
 endif(COMMAND cmake_policy)
 
-# Set the output directory for the build executables
-SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build)
-
 # Set the cmake find libraries directory
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake) 
 
-#Add here your project dependencies
 	# OpenCV library
 	FIND_PACKAGE(OpenCV REQUIRED )
-
-	# PCL library
-	FIND_PACKAGE(PCL REQUIRED)
-	INCLUDE_DIRECTORIES(${PCL_INCLUDE_DIRS})
-	LINK_DIRECTORIES(${PCL_LIBRARY_DIRS})
-	ADD_DEFINITIONS(${PCL_DEFINITIONS})
-	
-	# MRPT library
-	FIND_PACKAGE(MRPT REQUIRED hwdrivers maps graphslam) 
-
-	# Boost library
-	FIND_PACKAGE( Boost 1.47.0 REQUIRED )
-	INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} ) 
 
 	# OpenMP
 	FIND_PACKAGE(OpenMP)
 	IF(OPENMP_FOUND)
 	    MESSAGE("-- Found OpenMP.")
 	    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-	    SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} 						${OpenMP_EXE_LINKER_FLAGS}")
+	    SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
 	ELSE(OPENMP_FOUND)
 	    MESSAGE("-- Can't find OpenMP. Continuing without it.")
 	ENDIF(OPENMP_FOUND)
@@ -95,49 +78,11 @@ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 	SET( CERES_LIB CERES_LIB_DIRECTORY CACHE PATH "Library directory of Ceres")
 	LINK_DIRECTORIES( ${LINK_DIRECTORIES} "${CERES_LIB}" )
 
-# Declare the target (an executable)
-ADD_EXECUTABLE(PhotoconsistencyFrameAlignment PhotoconsistencyFrameAlignment.cpp
-include/CPhotoconsistencyOdometry.h
-include/CPhotoconsistencyOdometryCeres.h
-third_party/sample.h
-include/CPhotoconsistencyOdometryAnalytic.h
-)
+# Add the "phovo" library subdirectory
+ADD_SUBDIRECTORY(phovo)
 
-TARGET_LINK_LIBRARIES(PhotoconsistencyFrameAlignment 
-				   ceres
-				   ${OpenCV_LIBS}
-				   ${GFLAGS_LIB} 
-				   ${GLOG_LIB}
-				   ${CHOLMOD_LIBRARIES}
-				   ${CSPARSE_LIBRARY}
-				   )
-
-# Declare the target (an executable)
-ADD_EXECUTABLE(PhotoconsistencyVisualOdometry PhotoconsistencyVisualOdometry.cpp
-include/CPhotoconsistencyOdometry.h
-include/CPhotoconsistencyOdometryCeres.h
-third_party/sample.h
-include/CPhotoconsistencyOdometryAnalytic.h
-./include/CFrameRGBD.h
-third_party/cvmat_serialization.h
-./include/PointCloudDownsampler.h
-./src/PointCloudDownsampler.cpp
-./include/CRGBDGrabber.h
-./include/CRGBDGrabberRawlog.h
-./src/CRGBDGrabberRawlog.cpp
-)
-
-TARGET_LINK_LIBRARIES(PhotoconsistencyVisualOdometry 
-				   ceres
-				   ${OpenCV_LIBS}
-				   ${GFLAGS_LIB} 
-				   ${GLOG_LIB}
-				   ${CHOLMOD_LIBRARIES}
-				   ${CSPARSE_LIBRARY}
-				   ${PCL_LIBRARIES} 
-				   ${MRPT_LIBS}
-				   boost_serialization
-				   )
+# Add the "apps" subdirectory
+ADD_SUBDIRECTORY(apps)
 
 # Set optimized building:
 IF(CMAKE_COMPILER_IS_GNUCXX AND NOT CMAKE_BUILD_TYPE MATCHES "Debug")

@@ -35,14 +35,15 @@
                                                  // else, uses the CPhotoconsistencyOdometryCeres class.
 #define ENABLE_ICP_POSE_REFINEMENT 0
 #define ENABLE_SAVE_TRAJECTORY 1
-#define ENABLE_DISPLAY_ONLINE_MAP 1 // Enable this only for visualization/debug purposes
+#define ENABLE_DISPLAY_ONLINE_MAP 0 // Enable this only for visualization/debug purposes
 
 #include "include/CRGBDGrabberRawlog.h"
+#include "include/CRGBDGrabberOpenNI_PCL.h"
 #include "include/CFrameRGBD.h"
 #if USE_PHOTOCONSISTENCY_ODOMETRY_ANALYTIC
-    #include "include/CPhotoconsistencyOdometryAnalytic.h"
+    #include "phovo/include/CPhotoconsistencyOdometryAnalytic.h"
 #else
-    #include "include/CPhotoconsistencyOdometryCeres.h"
+    #include "phovo/include/CPhotoconsistencyOdometryCeres.h"
 #endif
 #include <pcl/io/pcd_io.h> //Save global map as PCD file
 #include <pcl/common/transforms.h> //Transform the keyframe pointclouds to the original reference frame
@@ -122,7 +123,7 @@ void add3DQuatPoseToFile(Eigen::Matrix4f & pose,
 
 void saveKeyframeToFile(int keyframeIndx,CFrameRGBD & keyframe)
 {
-    std::stringstream keyframeFileName_ss;keyframeFileName_ss<<"../results/keyframe_"<<keyframeIndx;
+    std::stringstream keyframeFileName_ss;keyframeFileName_ss<<"../../../results/keyframe_"<<keyframeIndx;
     std::string keyframeFileName; keyframeFileName_ss>>keyframeFileName;
     std::cout<<"saving keyframe "<<keyframeIndx<<" to "<<keyframeFileName<<std::endl;
     keyframe.saveToFile(keyframeFileName);
@@ -130,7 +131,7 @@ void saveKeyframeToFile(int keyframeIndx,CFrameRGBD & keyframe)
 
 void loadKeyframeFromFile(int keyframeIndx,CFrameRGBD & keyframe)
 {
-    std::stringstream keyframeFileName_ss;keyframeFileName_ss<<"../results/keyframe_"<<keyframeIndx;
+    std::stringstream keyframeFileName_ss;keyframeFileName_ss<<"../../../results/keyframe_"<<keyframeIndx;
     std::string keyframeFileName; keyframeFileName_ss>>keyframeFileName;
     std::cout<<"loading keyframe "<<keyframeIndx<<" from "<<keyframeFileName<<std::endl;
     keyframe.loadFromFile(keyframeFileName);
@@ -139,8 +140,9 @@ void loadKeyframeFromFile(int keyframeIndx,CFrameRGBD & keyframe)
 void printHelp()
 {
     std::cout<<"-----------------------------------------------------------------------------------"<<std::endl;
-    std::cout<<"./PhotoconsistencyVisualOdometry <config_file.yml> <rawlog_file.rawlog> [options]"<<std::endl;
+    std::cout<<"./PhotoconsistencyVisualOdometry <config_file.yml> [options]"<<std::endl;
     std::cout<<"       options: "<<std::endl;
+    std::cout<<"               -rawlog     RGBD rawlog file name <rgbd.rawlog>"<<std::endl;
     std::cout<<"               -g          Ground truth file <groundtruth.txt>"<<std::endl;
     #if ENABLE_ICP_POSE_REFINEMENT
     std::cout<<"               -m          Iterative Closest Point method:"<<std::endl;
@@ -159,7 +161,11 @@ void printHelp()
 //Video sequence
 int main(int argc, char **argv)
 {
-    if(argc<3){printHelp();return -1;}
+    if(argc<2){printHelp();return -1;}
+
+    //Parse input arguments
+    std::string rgbdFileName = "";
+    pcl::console::parse_argument (argc, argv, "-rawlog", rgbdFileName);
 
     #if ENABLE_ICP_POSE_REFINEMENT
     int ICP_method = 0; //Desired ICP method [GICP: 0] [ICP-LM: 1] [ICP: 2]
@@ -199,8 +205,8 @@ int main(int argc, char **argv)
 
     #if ENABLE_SAVE_TRAJECTORY
     std::vector<uint64_t> timestamps;
-    std::ofstream posesFile; posesFile.open("../results/poses.mat"); //file to save the sequence of poses (as 4x4 matrices)
-    std::ofstream trajectoryFile; trajectoryFile.open("../results/trajectory.txt"); //file to save the sequence of poses (as 3D translation + quaternions) with timestamp [to be used with CVPR tools]
+    std::ofstream posesFile; posesFile.open("../../../results/poses.mat"); //file to save the sequence of poses (as 4x4 matrices)
+    std::ofstream trajectoryFile; trajectoryFile.open("../../../results/trajectory.txt"); //file to save the sequence of poses (as 3D translation + quaternions) with timestamp [to be used with CVPR tools]
     trajectoryFile << "# estimated trajectory\n# timestamp tx ty tz qx qy qz qw\n";
     #endif
 
@@ -209,7 +215,15 @@ int main(int argc, char **argv)
     CFrameRGBD* frame2;
 
     //Create and initialize an object to grab RGBD frames
-    CRGBDGrabberRawlog* grabber = new CRGBDGrabberRawlog(argv[2]);
+    CRGBDGrabber * grabber;
+    if(!rgbdFileName.empty())
+    {
+        grabber = new CRGBDGrabberRawlog(rgbdFileName);
+    }
+    else
+    {
+        grabber = new CRGBDGrabberOpenNI_PCL();
+    }
     grabber->init();
 
     //Grab a RGB-D frame
@@ -219,7 +233,7 @@ int main(int argc, char **argv)
     //Save first point cloud as a keyframe and add the first pose to the trajectory
     int keyframeIndx = 0;
     std::stringstream keyframeFileName_ss;keyframeFileName_ss<<keyframeIndx;std::string keyframeFileName; keyframeFileName_ss>>keyframeFileName;
-    pcl::io::savePCDFile(std::string("../results/pcd_files/transformed_keyframe_").append(keyframeFileName).append(".pcd"),*frame1->getDownsampledPointCloud(cameraMatrix));
+    pcl::io::savePCDFile(std::string("../../../results/pcd_files/transformed_keyframe_").append(keyframeFileName).append(".pcd"),*frame1->getDownsampledPointCloud(cameraMatrix));
     keyframeIndx++;
     globalPoses.push_back(globalPose);
     #if ENABLE_SAVE_TRAJECTORY
@@ -391,7 +405,7 @@ int main(int argc, char **argv)
 
         //Save the transformed keyframe cloud to file
         std::stringstream keyframeFileName_ss;keyframeFileName_ss<<keyframe_i_Indx;std::string keyframeFileName; keyframeFileName_ss>>keyframeFileName;
-        pcl::io::savePCDFile(std::string("../results/pcd_files/transformed_keyframe_").append(keyframeFileName).append(".pcd"),transformedCloud);
+        pcl::io::savePCDFile(std::string("../../../results/pcd_files/transformed_keyframe_").append(keyframeFileName).append(".pcd"),transformedCloud);
 
         //Delete the ith keyframe memory
         delete keyframe_i;
@@ -410,9 +424,9 @@ int main(int argc, char **argv)
     trajectoryFile.close();
 
     //Execute an Octave script to plot the estimated trajectory over the ground-truth
-    std::string terminal_command = "octave ../tools/plot_trajectory_tools/plot_odometry.m";
-    terminal_command.append(" ../results/poses.mat ");
-    terminal_command.append(" '../results/estimated_trajectory.eps';");
+    std::string terminal_command = "octave ../../../tools/plot_trajectory_tools/plot_odometry.m";
+    terminal_command.append(" ../../../results/poses.mat ");
+    terminal_command.append(" '../../../results/estimated_trajectory.eps';");
     int plot_estimated_trajectories_exe = std::system(terminal_command.c_str());
 
     if(!groundTruthFileName.empty())
@@ -420,25 +434,25 @@ int main(int argc, char **argv)
         //Save the ground truth file to the results directory
         terminal_command ="cp ";
         terminal_command.append(groundTruthFileName);
-        terminal_command.append(" ../results/groundtruth.txt;");
+        terminal_command.append(" ../../../results/groundtruth.txt;");
         int copy_groundtruth_exe = std::system(terminal_command.c_str());
 
         //Execute an Octave script to plot the estimated trajectory over the ground-truth
-        terminal_command = "octave --eval 'addpath(\"../tools/plot_trajectory_tools/\")' ../tools/plot_trajectory_tools/plot_trajectory_groundtruth_estimated.m";
-        terminal_command.append(" ../results/trajectory.txt ");
-        terminal_command.append(groundTruthFileName).append(" '../results/ground-truth_and_estimated_trajectory.eps';");
+        terminal_command = "octave --eval 'addpath(\"../../../tools/plot_trajectory_tools/\")' ../../../tools/plot_trajectory_tools/plot_trajectory_groundtruth_estimated.m";
+        terminal_command.append(" ../../../results/trajectory.txt ");
+        terminal_command.append(groundTruthFileName).append(" '../../../results/ground-truth_and_estimated_trajectory.eps';");
         int plot_groundtruth_estimated_trajectories_exe = std::system(terminal_command.c_str());
 
         //Compute ATE and RPE from the ground-truth and estimated trajectories
         //python evaluate_ate.py --plot trajectory_odometry.png groundtruth.txt TrajectoryTimestamp.txt
-        terminal_command = "python ../tools/rgbd_benchmark_tools/evaluate_ate.py --plot ../results/trajectory.pdf ";
+        terminal_command = "python ../../../tools/rgbd_benchmark_tools/evaluate_ate.py --plot ../../../results/trajectory.pdf ";
         terminal_command.append(groundTruthFileName);
-        terminal_command.append(" ../results/trajectory.txt;");
+        terminal_command.append(" ../../../results/trajectory.txt;");
         int ate_exe = std::system(terminal_command.c_str());
 
-        terminal_command = "python ../tools/rgbd_benchmark_tools/evaluate_rpe.py ";
+        terminal_command = "python ../../../tools/rgbd_benchmark_tools/evaluate_rpe.py ";
         terminal_command.append(groundTruthFileName);
-        terminal_command.append(" ../results/trajectory.txt;");
+        terminal_command.append(" ../../../results/trajectory.txt;");
         int rpe_exe = std::system(terminal_command.c_str());
     }
     #endif

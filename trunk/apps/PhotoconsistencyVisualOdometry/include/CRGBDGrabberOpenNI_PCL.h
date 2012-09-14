@@ -31,29 +31,46 @@
  *
  */
 
-#ifndef CRGBDGRABBER
-#define CRGBDGRABBER
+#ifndef CRGBDGRABBER_OPENNI_PCL
+#define CRGBDGRABBER_OPENNI_PCL
 
-#include <mrpt/system/datetime.h> //QUITAR SI NO ES NECESARIO
+#include <pcl/io/openni_grabber.h>
+#include <pcl/io/openni_camera/openni_driver.h>
 
-#include "CFrameRGBD.h"
+#include "CRGBDGrabber.h"
 
-/*!Abstract class that especifies the functionality of a generic RGBD grabber.*/
-class CRGBDGrabber
+/*!This class captures RGBD frames from an OpenNI compatible sensor using the OpenNI interface provided by the PCL library to access the sensor data. It grabs the intensity image as well as its corresponding 3D point cloud.*/
+
+class CRGBDGrabberOpenNI_PCL : public CRGBDGrabber
 {
 
-protected:
-    /*!Pointer to the last grabbed RGBD frame*/
-    CFrameRGBD* framePtr;
+private:
+
+    cv::Mat currentRGBImg;
+    cv::Mat currentBGRImg;
+    cv::Mat currentDepthImg;
+    pcl::PointCloud<pcl::PointXYZRGB>::ConstPtr pointCloudPtr_aux;
+    pcl::OpenNIGrabber* interface;
+
+    void rgb_cb_ (const boost::shared_ptr<openni_wrapper::Image>& img);
+    void depth_cb_ (const boost::shared_ptr<openni_wrapper::DepthImage>& depth);
 
 public:
+    /*!Creates a CRGBDGrabberOpenNI_PCL instance that grabs RGBD frames from an OpenNI compatible sensor.*/
+    CRGBDGrabberOpenNI_PCL();
+
     /*!Initializes the grabber object*/
-    virtual void init()=0;
+    inline void init()
+    {
+	// start receiving point clouds
+     	interface->start ();
+	sleep(2);
+    };
 
     /*!Retains the current RGBD frame.*/
-    virtual void grab(CFrameRGBD*)=0;
+    void grab(CFrameRGBD*);
 
     /*!Stop grabing RGBD frames.*/
-    virtual void stop()=0;
+    inline void stop(){interface->stop();};
 };
 #endif
