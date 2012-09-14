@@ -172,10 +172,6 @@ public:
     //If the point cloud has been already computed, don't compute it again
     if(!pointCloudAvailable)
     {
-std::cout<<"minDepth: "<<minDepth<<std::endl;
-std::cout<<"maxDepth: "<<maxDepth<<std::endl;
-
-
         const float inv_fx = 1.f/cameraMatrix(0,0);
         const float inv_fy = 1.f/cameraMatrix(1,1);
         const float ox = cameraMatrix(0,2);
