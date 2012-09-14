@@ -23,6 +23,14 @@ uint64\_\-t \hyperlink{class_c_frame_r_g_b_d_a9c441cdc349038fae31bffc4d0202b2c}{
 \item 
 cv::Mat \& \hyperlink{class_c_frame_r_g_b_d_a7fd118a6a456ee314009f1fd260e70e0}{getIntensityImage} ()
 \item 
+void \hyperlink{class_c_frame_r_g_b_d_ae20f37738bca2f2db2a10bfff882ddd5}{setMaxPointCloudDepth} (float maxD)
+\item 
+void \hyperlink{class_c_frame_r_g_b_d_af763a5da39ec146c6456bf155cac76ba}{setMinPointCloudDepth} (float minD)
+\item 
+float \hyperlink{class_c_frame_r_g_b_d_a4009c7bfb6e5d62ac13dd04fd6430dc5}{getMaxPointCloudDepth} ()
+\item 
+float \hyperlink{class_c_frame_r_g_b_d_a00b651160ddf1cac5ed8c3b0edfa3c3c}{getMinPointCloudDepth} ()
+\item 
 pcl::PointCloud$<$ pcl::PointXYZRGBA $>$::Ptr \hyperlink{class_c_frame_r_g_b_d_aae45ce5efb781c914ec8b420970ce492}{getPointCloud} (const Eigen::Matrix3f \&cameraMatrix)
 \item 
 pcl::PointCloud$<$ pcl::PointXYZRGBA $>$::Ptr \hyperlink{class_c_frame_r_g_b_d_af2d7e89a8f680b567f4b798beb075f8e}{getDownsampledPointCloud} (const Eigen::Matrix3f \&cameraMatrix)
@@ -67,6 +75,10 @@ bool \hyperlink{class_c_frame_r_g_b_d_a06f87da2b36ef01b47ac338adb6443ea}{downsam
 bool \hyperlink{class_c_frame_r_g_b_d_a445d7d67bbff8cdac482e1c10dba2dc9}{intensityImageAvailable}
 \item 
 uint64\_\-t \hyperlink{class_c_frame_r_g_b_d_a0f7c2fb4831a936c63b78305ab9298bd}{m\_\-timeStamp}
+\item 
+float \hyperlink{class_c_frame_r_g_b_d_abc84822b1baf13e257826ffb219dd913}{maxDepth}
+\item 
+float \hyperlink{class_c_frame_r_g_b_d_aaaab590488c350a37cba25c54ff2519c}{minDepth}
 \end{DoxyCompactItemize}
 
 
@@ -101,7 +113,25 @@ Gets a downsampled version of the RGB point cloud \hypertarget{class_c_frame_r_g
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
 \label{class_c_frame_r_g_b_d_a7fd118a6a456ee314009f1fd260e70e0}
-Gets a grayscale version of the RGB image \hypertarget{class_c_frame_r_g_b_d_aae45ce5efb781c914ec8b420970ce492}{
+Gets a grayscale version of the RGB image \hypertarget{class_c_frame_r_g_b_d_a4009c7bfb6e5d62ac13dd04fd6430dc5}{
+\index{CFrameRGBD@{CFrameRGBD}!getMaxPointCloudDepth@{getMaxPointCloudDepth}}
+\index{getMaxPointCloudDepth@{getMaxPointCloudDepth}!CFrameRGBD@{CFrameRGBD}}
+\subsubsection[{getMaxPointCloudDepth}]{\setlength{\rightskip}{0pt plus 5cm}float CFrameRGBD::getMaxPointCloudDepth (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{class_c_frame_r_g_b_d_a4009c7bfb6e5d62ac13dd04fd6430dc5}
+Returns the max depth value for point cloud points. \hypertarget{class_c_frame_r_g_b_d_a00b651160ddf1cac5ed8c3b0edfa3c3c}{
+\index{CFrameRGBD@{CFrameRGBD}!getMinPointCloudDepth@{getMinPointCloudDepth}}
+\index{getMinPointCloudDepth@{getMinPointCloudDepth}!CFrameRGBD@{CFrameRGBD}}
+\subsubsection[{getMinPointCloudDepth}]{\setlength{\rightskip}{0pt plus 5cm}float CFrameRGBD::getMinPointCloudDepth (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{class_c_frame_r_g_b_d_a00b651160ddf1cac5ed8c3b0edfa3c3c}
+Returns the min depth value for point cloud points. \hypertarget{class_c_frame_r_g_b_d_aae45ce5efb781c914ec8b420970ce492}{
 \index{CFrameRGBD@{CFrameRGBD}!getPointCloud@{getPointCloud}}
 \index{getPointCloud@{getPointCloud}!CFrameRGBD@{CFrameRGBD}}
 \subsubsection[{getPointCloud}]{\setlength{\rightskip}{0pt plus 5cm}pcl::PointCloud$<$pcl::PointXYZRGBA$>$::Ptr CFrameRGBD::getPointCloud (
@@ -137,7 +167,25 @@ Returns the RGBD frame timestamp \hypertarget{class_c_frame_r_g_b_d_a04b2bf58c8c
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
 \label{class_c_frame_r_g_b_d_a04b2bf58c8c5027148219675f626eeb7}
-Sets a depth image to the RGBD frame. \hypertarget{class_c_frame_r_g_b_d_a1babff86224475dd7b7e6960fbb71663}{
+Sets a depth image to the RGBD frame. \hypertarget{class_c_frame_r_g_b_d_ae20f37738bca2f2db2a10bfff882ddd5}{
+\index{CFrameRGBD@{CFrameRGBD}!setMaxPointCloudDepth@{setMaxPointCloudDepth}}
+\index{setMaxPointCloudDepth@{setMaxPointCloudDepth}!CFrameRGBD@{CFrameRGBD}}
+\subsubsection[{setMaxPointCloudDepth}]{\setlength{\rightskip}{0pt plus 5cm}void CFrameRGBD::setMaxPointCloudDepth (
+\begin{DoxyParamCaption}
+\item[{float}]{maxD}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{class_c_frame_r_g_b_d_ae20f37738bca2f2db2a10bfff882ddd5}
+Sets the max depth value for the point cloud points. \hypertarget{class_c_frame_r_g_b_d_af763a5da39ec146c6456bf155cac76ba}{
+\index{CFrameRGBD@{CFrameRGBD}!setMinPointCloudDepth@{setMinPointCloudDepth}}
+\index{setMinPointCloudDepth@{setMinPointCloudDepth}!CFrameRGBD@{CFrameRGBD}}
+\subsubsection[{setMinPointCloudDepth}]{\setlength{\rightskip}{0pt plus 5cm}void CFrameRGBD::setMinPointCloudDepth (
+\begin{DoxyParamCaption}
+\item[{float}]{minD}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{class_c_frame_r_g_b_d_af763a5da39ec146c6456bf155cac76ba}
+Sets the min depth value for the point cloud points. \hypertarget{class_c_frame_r_g_b_d_a1babff86224475dd7b7e6960fbb71663}{
 \index{CFrameRGBD@{CFrameRGBD}!setRGBImage@{setRGBImage}}
 \index{setRGBImage@{setRGBImage}!CFrameRGBD@{CFrameRGBD}}
 \subsubsection[{setRGBImage}]{\setlength{\rightskip}{0pt plus 5cm}void CFrameRGBD::setRGBImage (
@@ -198,7 +246,17 @@ RGB image \hypertarget{class_c_frame_r_g_b_d_a0f7c2fb4831a936c63b78305ab9298bd}{
 \index{m\_\-timeStamp@{m\_\-timeStamp}!CFrameRGBD@{CFrameRGBD}}
 \subsubsection[{m\_\-timeStamp}]{\setlength{\rightskip}{0pt plus 5cm}uint64\_\-t {\bf CFrameRGBD::m\_\-timeStamp}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
 \label{class_c_frame_r_g_b_d_a0f7c2fb4831a936c63b78305ab9298bd}
-Timestamp of the RGBD frame \hypertarget{class_c_frame_r_g_b_d_ace30426f416cd66b2a0a256071d93464}{
+Timestamp of the RGBD frame \hypertarget{class_c_frame_r_g_b_d_abc84822b1baf13e257826ffb219dd913}{
+\index{CFrameRGBD@{CFrameRGBD}!maxDepth@{maxDepth}}
+\index{maxDepth@{maxDepth}!CFrameRGBD@{CFrameRGBD}}
+\subsubsection[{maxDepth}]{\setlength{\rightskip}{0pt plus 5cm}float {\bf CFrameRGBD::maxDepth}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{class_c_frame_r_g_b_d_abc84822b1baf13e257826ffb219dd913}
+Max pointcloud depth \hypertarget{class_c_frame_r_g_b_d_aaaab590488c350a37cba25c54ff2519c}{
+\index{CFrameRGBD@{CFrameRGBD}!minDepth@{minDepth}}
+\index{minDepth@{minDepth}!CFrameRGBD@{CFrameRGBD}}
+\subsubsection[{minDepth}]{\setlength{\rightskip}{0pt plus 5cm}float {\bf CFrameRGBD::minDepth}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{class_c_frame_r_g_b_d_aaaab590488c350a37cba25c54ff2519c}
+Min pointcloud depth \hypertarget{class_c_frame_r_g_b_d_ace30426f416cd66b2a0a256071d93464}{
 \index{CFrameRGBD@{CFrameRGBD}!pointCloudAvailable@{pointCloudAvailable}}
 \index{pointCloudAvailable@{pointCloudAvailable}!CFrameRGBD@{CFrameRGBD}}
 \subsubsection[{pointCloudAvailable}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf CFrameRGBD::pointCloudAvailable}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}

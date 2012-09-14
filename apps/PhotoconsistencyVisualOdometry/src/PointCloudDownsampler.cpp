@@ -2,11 +2,11 @@
  *  Photoconsistency-Visual-Odometry
  *  Multiscale Photoconsistency Visual Odometry from RGBD Images
  *  Copyright (c) 2011-2012, Miguel Algaba Borrego
- *  
+ *
  *  http://code.google.com/p/photoconsistency-visual-odometry/
- *  
+ *
  *  All rights reserved.
- *  
+ *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions are met:
  *      * Redistributions of source code must retain the above copyright
@@ -17,7 +17,7 @@
  *      * Neither the name of the holder(s) nor the
  *        names of its contributors may be used to endorse or promote products
  *        derived from this software without specific prior written permission.
- *  
+ *
  *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -30,6 +30,8 @@
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+
+#define ENABLE_OPENMP_MULTITHREADING 0
 
 #include "../include/PointCloudDownsampler.h"
 
@@ -54,7 +56,9 @@ void PointCloudDownsampler::downsamplePointCloud(
     int height = pointCloudPtr->height;
 
     downsampledPointCloudPtr->points.resize(width*height/downsamplingStep*downsamplingStep);
+    #if ENABLE_OPENMP_MULTITHREADING
     #pragma omp parallel for
+    #endif
     for(int r=0;r<height;r=r+downsamplingStep)
     {
         std::vector<double> xV;
@@ -76,8 +80,8 @@ void PointCloudDownsampler::downsamplePointCloud(
                     if(pcl_isfinite (pointCloudPtr->points[r2*width+c2].x) &&
                        pcl_isfinite (pointCloudPtr->points[r2*width+c2].y) &&
                        pcl_isfinite (pointCloudPtr->points[r2*width+c2].z) &&
-                       0.3<pointCloudPtr->points[r2*width+c2].x &&
-                       pointCloudPtr->points[r2*width+c2].x<5)
+                       minDepth<=pointCloudPtr->points[r2*width+c2].x &&
+                       pointCloudPtr->points[r2*width+c2].x<=maxDepth)
                     {
                         //Create a vector with the x, y and z coordinates of the square region
                         xV[nPoints]=pointCloudPtr->points[r2*width+c2].x;
@@ -107,7 +111,9 @@ void PointCloudDownsampler::downsamplePointCloud(
                 point.z=zV[nPoints/2];
 
                 //Set the median point as the representative point of the region
+                #if ENABLE_OPENMP_MULTITHREADING
                 #pragma omp critical
+                #endif
                 {
                     downsampledPointCloudPtr->points[j]=point;
                     j++;
@@ -129,7 +135,9 @@ void PointCloudDownsampler::downsamplePointCloudColor(
     int height = pointCloudPtr->height;
 
     downsampledPointCloudPtr->points.resize(width*height/downsamplingStep*downsamplingStep);
+    #if ENABLE_OPENMP_MULTITHREADING
     #pragma omp parallel for
+    #endif
     for(int r=0;r<height;r=r+downsamplingStep)
     {
         std::vector<double> xV;
@@ -157,8 +165,8 @@ void PointCloudDownsampler::downsamplePointCloudColor(
                     if(pcl_isfinite (pointCloudPtr->points[r2*width+c2].x) &&
                        pcl_isfinite (pointCloudPtr->points[r2*width+c2].y) &&
                        pcl_isfinite (pointCloudPtr->points[r2*width+c2].z) &&
-                       0.3<pointCloudPtr->points[r2*width+c2].x &&
-                       pointCloudPtr->points[r2*width+c2].x<5)
+                       minDepth<=pointCloudPtr->points[r2*width+c2].x &&
+                       pointCloudPtr->points[r2*width+c2].x<=maxDepth)
                     {
                         //Create a vector with the x, y and z coordinates of the square region and RGB info
                         xV[nPoints]=pointCloudPtr->points[r2*width+c2].x;
@@ -199,7 +207,9 @@ void PointCloudDownsampler::downsamplePointCloudColor(
                 point.b=bV[nPoints/2];
 
                 //Set the median point as the representative point of the region
+                #if ENABLE_OPENMP_MULTITHREADING
                 #pragma omp critical
+                #endif
                 {
                     downsampledPointCloudPtr->points[j]=point;
                     j++;

@@ -1,0 +1,128 @@
+\hypertarget{class_c_r_g_b_d_grabber_open_n_i___p_c_l}{
+\section{CRGBDGrabberOpenNI\_\-PCL Class Reference}
+\label{class_c_r_g_b_d_grabber_open_n_i___p_c_l}\index{CRGBDGrabberOpenNI\_\-PCL@{CRGBDGrabberOpenNI\_\-PCL}}
+}
+
+
+{\ttfamily \#include $<$CRGBDGrabberOpenNI\_\-PCL.h$>$}
+
+Inheritance diagram for CRGBDGrabberOpenNI\_\-PCL:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_c_r_g_b_d_grabber_open_n_i___p_c_l}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_c_r_g_b_d_grabber_open_n_i___p_c_l_a74e58381667d17469ed2538942ae4642}{CRGBDGrabberOpenNI\_\-PCL} ()
+\item 
+void \hyperlink{class_c_r_g_b_d_grabber_open_n_i___p_c_l_abffd24f81fc9d0668ade3fae4a610a5b}{init} ()
+\item 
+void \hyperlink{class_c_r_g_b_d_grabber_open_n_i___p_c_l_ab01be725fe3388898a9bad48aa6e15bb}{grab} (\hyperlink{class_c_frame_r_g_b_d}{CFrameRGBD} $\ast$)
+\item 
+void \hyperlink{class_c_r_g_b_d_grabber_open_n_i___p_c_l_a7ed8695258084e50b76241fe8543f527}{stop} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_c_r_g_b_d_grabber_open_n_i___p_c_l_ac3f9cbbb50f43bb162a981226e5c86d5}{
+void {\bfseries rgb\_\-cb\_\-} (const boost::shared\_\-ptr$<$ openni\_\-wrapper::Image $>$ \&img)}
+\label{class_c_r_g_b_d_grabber_open_n_i___p_c_l_ac3f9cbbb50f43bb162a981226e5c86d5}
+
+\item 
+\hypertarget{class_c_r_g_b_d_grabber_open_n_i___p_c_l_ac6bdc65fa81bd86e7f22d3f8b70da079}{
+void {\bfseries depth\_\-cb\_\-} (const boost::shared\_\-ptr$<$ openni\_\-wrapper::DepthImage $>$ \&depth)}
+\label{class_c_r_g_b_d_grabber_open_n_i___p_c_l_ac6bdc65fa81bd86e7f22d3f8b70da079}
+
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_c_r_g_b_d_grabber_open_n_i___p_c_l_a3b538150b8b97ac77275d0e0cc782d2f}{
+cv::Mat {\bfseries currentRGBImg}}
+\label{class_c_r_g_b_d_grabber_open_n_i___p_c_l_a3b538150b8b97ac77275d0e0cc782d2f}
+
+\item 
+\hypertarget{class_c_r_g_b_d_grabber_open_n_i___p_c_l_a6fe0bee4cd42ccb07c3823461630acf7}{
+cv::Mat {\bfseries currentBGRImg}}
+\label{class_c_r_g_b_d_grabber_open_n_i___p_c_l_a6fe0bee4cd42ccb07c3823461630acf7}
+
+\item 
+\hypertarget{class_c_r_g_b_d_grabber_open_n_i___p_c_l_af6741aa6eea71dde6d8ab2ee9bffd849}{
+cv::Mat {\bfseries currentDepthImg}}
+\label{class_c_r_g_b_d_grabber_open_n_i___p_c_l_af6741aa6eea71dde6d8ab2ee9bffd849}
+
+\item 
+\hypertarget{class_c_r_g_b_d_grabber_open_n_i___p_c_l_afc8b4489fc3b873162166c4803830bb5}{
+pcl::PointCloud$<$ pcl::PointXYZRGB $>$::ConstPtr {\bfseries pointCloudPtr\_\-aux}}
+\label{class_c_r_g_b_d_grabber_open_n_i___p_c_l_afc8b4489fc3b873162166c4803830bb5}
+
+\item 
+\hypertarget{class_c_r_g_b_d_grabber_open_n_i___p_c_l_a19dd8c4dbb891d9be9813c9e476a789c}{
+pcl::OpenNIGrabber $\ast$ {\bfseries interface}}
+\label{class_c_r_g_b_d_grabber_open_n_i___p_c_l_a19dd8c4dbb891d9be9813c9e476a789c}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class captures RGBD frames from an OpenNI compatible sensor using the OpenNI interface provided by the PCL library to access the sensor data. It grabs the intensity image as well as its corresponding 3D point cloud. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_c_r_g_b_d_grabber_open_n_i___p_c_l_a74e58381667d17469ed2538942ae4642}{
+\index{CRGBDGrabberOpenNI\_\-PCL@{CRGBDGrabberOpenNI\_\-PCL}!CRGBDGrabberOpenNI\_\-PCL@{CRGBDGrabberOpenNI\_\-PCL}}
+\index{CRGBDGrabberOpenNI\_\-PCL@{CRGBDGrabberOpenNI\_\-PCL}!CRGBDGrabberOpenNI_PCL@{CRGBDGrabberOpenNI\_\-PCL}}
+\subsubsection[{CRGBDGrabberOpenNI\_\-PCL}]{\setlength{\rightskip}{0pt plus 5cm}CRGBDGrabberOpenNI\_\-PCL::CRGBDGrabberOpenNI\_\-PCL (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{class_c_r_g_b_d_grabber_open_n_i___p_c_l_a74e58381667d17469ed2538942ae4642}
+Creates a \hyperlink{class_c_r_g_b_d_grabber_open_n_i___p_c_l}{CRGBDGrabberOpenNI\_\-PCL} instance that grabs RGBD frames from an OpenNI compatible sensor. 
+
+\subsection{Member Function Documentation}
+\hypertarget{class_c_r_g_b_d_grabber_open_n_i___p_c_l_ab01be725fe3388898a9bad48aa6e15bb}{
+\index{CRGBDGrabberOpenNI\_\-PCL@{CRGBDGrabberOpenNI\_\-PCL}!grab@{grab}}
+\index{grab@{grab}!CRGBDGrabberOpenNI_PCL@{CRGBDGrabberOpenNI\_\-PCL}}
+\subsubsection[{grab}]{\setlength{\rightskip}{0pt plus 5cm}void CRGBDGrabberOpenNI\_\-PCL::grab (
+\begin{DoxyParamCaption}
+\item[{{\bf CFrameRGBD} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{class_c_r_g_b_d_grabber_open_n_i___p_c_l_ab01be725fe3388898a9bad48aa6e15bb}
+Retains the current RGBD frame. 
+
+Implements \hyperlink{class_c_r_g_b_d_grabber_aa7f9c715a16933287a92ecaf7a1bbfb4}{CRGBDGrabber}.
+
+\hypertarget{class_c_r_g_b_d_grabber_open_n_i___p_c_l_abffd24f81fc9d0668ade3fae4a610a5b}{
+\index{CRGBDGrabberOpenNI\_\-PCL@{CRGBDGrabberOpenNI\_\-PCL}!init@{init}}
+\index{init@{init}!CRGBDGrabberOpenNI_PCL@{CRGBDGrabberOpenNI\_\-PCL}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}void CRGBDGrabberOpenNI\_\-PCL::init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{class_c_r_g_b_d_grabber_open_n_i___p_c_l_abffd24f81fc9d0668ade3fae4a610a5b}
+Initializes the grabber object 
+
+Implements \hyperlink{class_c_r_g_b_d_grabber_ab1aa7a5c871104dd8791d5a3a5117e3a}{CRGBDGrabber}.
+
+\hypertarget{class_c_r_g_b_d_grabber_open_n_i___p_c_l_a7ed8695258084e50b76241fe8543f527}{
+\index{CRGBDGrabberOpenNI\_\-PCL@{CRGBDGrabberOpenNI\_\-PCL}!stop@{stop}}
+\index{stop@{stop}!CRGBDGrabberOpenNI_PCL@{CRGBDGrabberOpenNI\_\-PCL}}
+\subsubsection[{stop}]{\setlength{\rightskip}{0pt plus 5cm}void CRGBDGrabberOpenNI\_\-PCL::stop (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{class_c_r_g_b_d_grabber_open_n_i___p_c_l_a7ed8695258084e50b76241fe8543f527}
+Stop grabing RGBD frames. 
+
+Implements \hyperlink{class_c_r_g_b_d_grabber_a653ef16978adcd9000079f0e5f00addc}{CRGBDGrabber}.
+
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+CRGBDGrabberOpenNI\_\-PCL.h\end{DoxyCompactItemize}

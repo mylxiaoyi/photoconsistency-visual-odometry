@@ -2,11 +2,11 @@
  *  Photoconsistency-Visual-Odometry
  *  Multiscale Photoconsistency Visual Odometry from RGBD Images
  *  Copyright (c) 2012, Miguel Algaba Borrego
- *  
+ *
  *  http://code.google.com/p/photoconsistency-visual-odometry/
- *  
+ *
  *  All rights reserved.
- *  
+ *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions are met:
  *      * Redistributions of source code must retain the above copyright
@@ -17,7 +17,7 @@
  *      * Neither the name of the holder(s) nor the
  *        names of its contributors may be used to endorse or promote products
  *        derived from this software without specific prior written permission.
- *  
+ *
  *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -35,6 +35,7 @@
 #define CFRAME_RGBD
 
 #define ENABLE_POINTCLOUD_DOWNSAMPLER 1
+#define ENABLE_OPENMP_MULTITHREADING 0
 
 #if ENABLE_POINTCLOUD_DOWNSAMPLER
     #include "PointCloudDownsampler.h"
@@ -88,9 +89,23 @@ private:
   /*!Timestamp of the RGBD frame*/
   uint64_t m_timeStamp;
 
+  /*!Max pointcloud depth*/
+  float maxDepth;
+
+  /*!Min pointcloud depth*/
+  float minDepth;
+
 public:
 
-  CFrameRGBD(){pointCloudAvailable=false;downsampledPointCloudAvailable=false;intensityImageAvailable=false;};
+  CFrameRGBD()
+  {
+      pointCloudAvailable=false;
+      downsampledPointCloudAvailable=false;
+      intensityImageAvailable=false;
+
+      minDepth = 0.3; // Default min depth
+      maxDepth = 5.0; // Default max depth
+  };
 
   ~CFrameRGBD(){};
 
@@ -127,12 +142,40 @@ public:
       return m_intensityImage;
   }
 
+  /*!Sets the max depth value for the point cloud points.*/
+  inline void setMaxPointCloudDepth(float maxD)
+  {
+        maxDepth = maxD;
+  }
+
+  /*!Sets the min depth value for the point cloud points.*/
+  inline void setMinPointCloudDepth(float minD)
+  {
+        minDepth = minD;
+  }
+
+  /*!Returns the max depth value for point cloud points.*/
+  inline float getMaxPointCloudDepth()
+  {
+      return maxDepth;
+  }
+
+  /*!Returns the min depth value for point cloud points.*/
+  inline float getMinPointCloudDepth()
+  {
+      return minDepth;
+  }
+
   /*!Gets a 3D coloured point cloud from the RGBD data using the camera parameters*/
   inline pcl::PointCloud<pcl::PointXYZRGBA>::Ptr getPointCloud(const Eigen::Matrix3f & cameraMatrix)
   {
     //If the point cloud has been already computed, don't compute it again
     if(!pointCloudAvailable)
     {
+std::cout<<"minDepth: "<<minDepth<<std::endl;
+std::cout<<"maxDepth: "<<maxDepth<<std::endl;
+
+
         const float inv_fx = 1.f/cameraMatrix(0,0);
         const float inv_fy = 1.f/cameraMatrix(1,1);
         const float ox = cameraMatrix(0,2);
@@ -147,8 +190,10 @@ public:
         m_pointCloudPtr->is_dense = false;
         m_pointCloudPtr->points.resize(height*width);
 
+        #if ENABLE_OPENMP_MULTITHREADING
         #pragma omp parallel for
-        for( int y = 0; y < height; y++ )
+        #endif
+        /*for( int y = 0; y < height; y++ )
         {
             for( int x = 0; x < width; x++ )
             {
@@ -160,6 +205,29 @@ public:
                 m_pointCloudPtr->points[width*y+x].r = bgr[2];
                 m_pointCloudPtr->points[width*y+x].g = bgr[1];
                 m_pointCloudPtr->points[width*y+x].b = bgr[0];
+            }
+        }*/
+        for( int y = 0; y < height; y++ )
+        {
+            for( int x = 0; x < width; x++ )
+            {
+                float z = m_depthImage.at<float>(y,x); //convert from milimeters to meters
+                if(z>0 && z>=minDepth && z<=maxDepth) //If the point has valid depth information assign the 3D point to the point cloud
+                {
+                    m_pointCloudPtr->points[width*y+x].x = z;
+                    m_pointCloudPtr->points[width*y+x].y = -(x - ox) * z * inv_fx;
+                    m_pointCloudPtr->points[width*y+x].z = -(y - oy) * z * inv_fy;
+                    cv::Vec3b& bgr = m_rgbImage.at<cv::Vec3b>(y,x);
+                    m_pointCloudPtr->points[width*y+x].r = bgr[2];
+                    m_pointCloudPtr->points[width*y+x].g = bgr[1];
+                    m_pointCloudPtr->points[width*y+x].b = bgr[0];
+                }
+                else //else, assign a NAN value
+                {
+                    m_pointCloudPtr->points[width*y+x].x = std::numeric_limits<float>::quiet_NaN ();
+                    m_pointCloudPtr->points[width*y+x].y = std::numeric_limits<float>::quiet_NaN ();
+                    m_pointCloudPtr->points[width*y+x].z = std::numeric_limits<float>::quiet_NaN ();
+                }
             }
         }
 
@@ -181,6 +249,8 @@ public:
         #if ENABLE_POINTCLOUD_DOWNSAMPLER
             PointCloudDownsampler grid;
             grid = PointCloudDownsampler(8);
+            grid.setMaximumDepth(maxDepth);
+            grid.setMinimumDepth(minDepth);
             grid.downsamplePointCloudColor(getPointCloud(cameraMatrix),m_downsampledPointCloudPtr);
         #else
             pcl::VoxelGrid<pcl::PointXYZRGBA> grid;

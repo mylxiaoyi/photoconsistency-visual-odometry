@@ -13,6 +13,10 @@
 \item 
 void \hyperlink{class_point_cloud_downsampler_aa59d5affe32288f96dd2ac1ff46aab35}{setDownsamplingStep} (const int)
 \item 
+void \hyperlink{class_point_cloud_downsampler_a429b93008e34b4aa7680aa44286e802c}{setMaximumDepth} (const float maxD=4.0)
+\item 
+void \hyperlink{class_point_cloud_downsampler_aece710727fa24542e5657f53d01906d7}{setMinimumDepth} (const float minD=0.3)
+\item 
 void \hyperlink{class_point_cloud_downsampler_a6c2648119f30b8c41c5851844c1acb29}{downsamplePointCloud} (pcl::PointCloud$<$ pcl::PointXYZRGBA $>$::Ptr pointCloudPtr, pcl::PointCloud$<$ pcl::PointXYZRGBA $>$::Ptr downsampledPointCloudPtr)
 \item 
 void \hyperlink{class_point_cloud_downsampler_aa974584d15d1de898bbec8dbf791b29f}{downsamplePointCloudColor} (pcl::PointCloud$<$ pcl::PointXYZRGBA $>$::Ptr, pcl::PointCloud$<$ pcl::PointXYZRGBA $>$::Ptr)
@@ -23,6 +27,16 @@ void \hyperlink{class_point_cloud_downsampler_aa974584d15d1de898bbec8dbf791b29f}
 \hypertarget{class_point_cloud_downsampler_a74b48c9180a5d63ab550e26f07c24df0}{
 int {\bfseries downsamplingStep}}
 \label{class_point_cloud_downsampler_a74b48c9180a5d63ab550e26f07c24df0}
+
+\item 
+\hypertarget{class_point_cloud_downsampler_ae0c137dfabde9694984a0d4fa87e3b36}{
+float {\bfseries maxDepth}}
+\label{class_point_cloud_downsampler_ae0c137dfabde9694984a0d4fa87e3b36}
+
+\item 
+\hypertarget{class_point_cloud_downsampler_a297e75764bca40b3ecc32db5cdb03379}{
+float {\bfseries minDepth}}
+\label{class_point_cloud_downsampler_a297e75764bca40b3ecc32db5cdb03379}
 
 \end{DoxyCompactItemize}
 
@@ -72,7 +86,25 @@ Downsamples the point cloud given by pointCloudPtr. The color information will b
 \end{DoxyParamCaption}
 )}}
 \label{class_point_cloud_downsampler_aa59d5affe32288f96dd2ac1ff46aab35}
-Sets the desired downsamplingStep to the given value 
+Sets the desired downsamplingStep to the given value \hypertarget{class_point_cloud_downsampler_a429b93008e34b4aa7680aa44286e802c}{
+\index{PointCloudDownsampler@{PointCloudDownsampler}!setMaximumDepth@{setMaximumDepth}}
+\index{setMaximumDepth@{setMaximumDepth}!PointCloudDownsampler@{PointCloudDownsampler}}
+\subsubsection[{setMaximumDepth}]{\setlength{\rightskip}{0pt plus 5cm}void PointCloudDownsampler::setMaximumDepth (
+\begin{DoxyParamCaption}
+\item[{const float}]{maxD = {\ttfamily 4.0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{class_point_cloud_downsampler_a429b93008e34b4aa7680aa44286e802c}
+Sets the maximum depth used to downsample the point cloud. Discard points with a depth value higher than the provided one. \hypertarget{class_point_cloud_downsampler_aece710727fa24542e5657f53d01906d7}{
+\index{PointCloudDownsampler@{PointCloudDownsampler}!setMinimumDepth@{setMinimumDepth}}
+\index{setMinimumDepth@{setMinimumDepth}!PointCloudDownsampler@{PointCloudDownsampler}}
+\subsubsection[{setMinimumDepth}]{\setlength{\rightskip}{0pt plus 5cm}void PointCloudDownsampler::setMinimumDepth (
+\begin{DoxyParamCaption}
+\item[{const float}]{minD = {\ttfamily 0.3}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{class_point_cloud_downsampler_aece710727fa24542e5657f53d01906d7}
+Sets the minimum depth used to downsample the point cloud. Discard points with a depth value lower than the provided one. 
 
 The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
 \item 
