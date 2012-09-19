@@ -35,9 +35,9 @@
                                                  // else, uses the CPhotoconsistencyOdometryCeres class.
 
 #if USE_PHOTOCONSISTENCY_ODOMETRY_ANALYTIC
-    #include "phovo/include/CPhotoconsistencyOdometryAnalytic.h"
+    #include "CPhotoconsistencyOdometryAnalytic.h"
 #else
-    #include "phovo/include/CPhotoconsistencyOdometryCeres.h"
+    #include "CPhotoconsistencyOdometryCeres.h"
 #endif
 
 #include "opencv2/highgui/highgui.hpp"

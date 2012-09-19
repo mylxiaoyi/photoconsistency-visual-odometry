@@ -35,7 +35,7 @@
 #define CFRAME_RGBD
 
 #define ENABLE_POINTCLOUD_DOWNSAMPLER 1
-#define ENABLE_OPENMP_MULTITHREADING 0
+#define ENABLE_OPENMP_MULTITHREADING_FRAMERGBD 0 //Enables multithreading for CFrameRGBD
 
 #if ENABLE_POINTCLOUD_DOWNSAMPLER
     #include "PointCloudDownsampler.h"
@@ -50,7 +50,7 @@
 #include <fstream>
 #include <boost/lexical_cast.hpp>
 
-#include "third_party/cvmat_serialization.h"
+#include "cvmat_serialization.h"
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
 #include <fstream>
@@ -186,23 +186,9 @@ public:
         m_pointCloudPtr->is_dense = false;
         m_pointCloudPtr->points.resize(height*width);
 
-        #if ENABLE_OPENMP_MULTITHREADING
+        #if ENABLE_OPENMP_MULTITHREADING_FRAMERGBD
         #pragma omp parallel for
         #endif
-        /*for( int y = 0; y < height; y++ )
-        {
-            for( int x = 0; x < width; x++ )
-            {
-                float z = m_depthImage.at<float>(y,x); //convert from milimeters to meters
-                m_pointCloudPtr->points[width*y+x].x = z;
-                m_pointCloudPtr->points[width*y+x].y = -(x - ox) * z * inv_fx;
-                m_pointCloudPtr->points[width*y+x].z = -(y - oy) * z * inv_fy;
-                cv::Vec3b& bgr = m_rgbImage.at<cv::Vec3b>(y,x);
-                m_pointCloudPtr->points[width*y+x].r = bgr[2];
-                m_pointCloudPtr->points[width*y+x].g = bgr[1];
-                m_pointCloudPtr->points[width*y+x].b = bgr[0];
-            }
-        }*/
         for( int y = 0; y < height; y++ )
         {
             for( int x = 0; x < width; x++ )

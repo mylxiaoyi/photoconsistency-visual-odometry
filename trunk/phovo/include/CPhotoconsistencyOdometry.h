@@ -34,7 +34,7 @@
 #ifndef _CPHOTOCONSISTENCY_ODOMETRY_
 #define _CPHOTOCONSISTENCY_ODOMETRY_
 
-#define ENABLE_OPENMP_MULTITHREADING_WARP_IMAGE 1
+#define ENABLE_OPENMP_MULTITHREADING_WARP_IMAGE 0
 
 #include "opencv2/imgproc/imgproc.hpp"
 #include <eigen3/Eigen/Dense>

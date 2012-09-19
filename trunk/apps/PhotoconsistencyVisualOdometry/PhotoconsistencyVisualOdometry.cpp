@@ -41,9 +41,9 @@
 #include "include/CRGBDGrabberOpenNI_PCL.h"
 #include "include/CFrameRGBD.h"
 #if USE_PHOTOCONSISTENCY_ODOMETRY_ANALYTIC
-    #include "phovo/include/CPhotoconsistencyOdometryAnalytic.h"
+    #include "CPhotoconsistencyOdometryAnalytic.h"
 #else
-    #include "phovo/include/CPhotoconsistencyOdometryCeres.h"
+    #include "CPhotoconsistencyOdometryCeres.h"
 #endif
 #include <pcl/io/pcd_io.h> //Save global map as PCD file
 #include <pcl/common/transforms.h> //Transform the keyframe pointclouds to the original reference frame

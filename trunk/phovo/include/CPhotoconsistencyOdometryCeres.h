@@ -31,12 +31,15 @@
  *
  */
 
+#include "phovo/include/config.h"
+//#ifdef PHOVO_WITH_CERES // Check for Ceres-solver
+
 #ifndef _CPHOTOCONSISTENCY_ODOMETRY_CERES_
 #define _CPHOTOCONSISTENCY_ODOMETRY_CERES_
 
 #define ENABLE_GAUSSIAN_BLUR 1
 #define ENABLE_BOX_FILTER_BLUR 0
-#define ENABLE_OPENMP_MULTITHREADING 1
+#define ENABLE_OPENMP_MULTITHREADING_CERES 0 // Enables OpenMP for CPhotoconsistencyOdometryCeres
 
 #include "CPhotoconsistencyOdometry.h"
 
@@ -132,7 +135,7 @@ private:
         Rt[3][3] = T(1);
 
         //Initialize the error function (residuals) with an initial value
-        #if ENABLE_OPENMP_MULTITHREADING
+        #if ENABLE_OPENMP_MULTITHREADING_CERES
         #pragma omp parallel for
         #endif
         for(int r=0;r<gray0Pyr[optimizationLevel].rows;r++)
@@ -145,7 +148,7 @@ private:
 
         T residualScalingFactor = T(1);
 
-        #if ENABLE_OPENMP_MULTITHREADING
+        #if ENABLE_OPENMP_MULTITHREADING_CERES
         #pragma omp parallel for
         #endif
         for(int r=0;r<gray0Pyr[optimizationLevel].rows;r++)
@@ -492,3 +495,5 @@ public:
 } //end namespace PhotoconsistencyOdometry
 
 #endif
+
+//#endif  // Check for Ceres-solver

@@ -36,7 +36,7 @@
 
 #define ENABLE_GAUSSIAN_BLUR 1
 #define ENABLE_BOX_FILTER_BLUR 0
-#define ENABLE_OPENMP_MULTITHREADING 0
+#define ENABLE_OPENMP_MULTITHREADING_ANALYTIC 0 // Enables OpenMP for CPhotoconsistencyOdometryAnalytic
 #define ENABLE_PRINT_CONSOLE_OPTIMIZATION_PROGRESS 0
 
 #include "CPhotoconsistencyOdometry.h"
@@ -234,7 +234,7 @@ private:
         double temp23 = cos(pitch)*sin(roll);
         double temp24 = cos(pitch);
 
-        #if ENABLE_OPENMP_MULTITHREADING
+        #if ENABLE_OPENMP_MULTITHREADING_ANALYTIC
         #pragma omp parallel for
         #endif
         for (int r=0;r<nRows;r++)
@@ -318,7 +318,9 @@ private:
                           Eigen::Matrix<double,1,6> jacobian=target_imgGradient*jacobianPrRt;
 
                           //Assign the pixel residual and jacobian to its corresponding row
-                          #pragma omp critical
+                          #if ENABLE_OPENMP_MULTITHREADING_ANALYTIC
+			  #pragma omp critical
+			  #endif
                           {
                               jacobians(i,0)=jacobian(0,0);
                               jacobians(i,1)=jacobian(0,1);
