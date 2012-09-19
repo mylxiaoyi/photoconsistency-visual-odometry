@@ -7,12 +7,18 @@ ADD_DEFINITIONS(${PCL_DEFINITIONS})
 # MRPT library
 FIND_PACKAGE(MRPT REQUIRED hwdrivers maps graphslam) 
 
+# Include the phovo include files
+INCLUDE_DIRECTORIES(${PHOVO_SOURCE_DIR}/phovo/include)
+
+# Include the third party include files
+INCLUDE_DIRECTORIES(${PHOVO_SOURCE_DIR}/third_party)
+
 # Make sure the linker can find the "phovo" library once it is built.
 link_directories (${PHOVO_BINARY_DIR}/phovo) 
 
 # Declare the target (an executable)
 ADD_EXECUTABLE(PhotoconsistencyVisualOdometry PhotoconsistencyVisualOdometry.cpp
-	../../third_party/cvmat_serialization.h	
+	${PHOVO_SOURCE_DIR}/third_party/cvmat_serialization.h	
 	include/CFrameRGBD.h
 	include/PointCloudDownsampler.h
 	src/PointCloudDownsampler.cpp
@@ -23,13 +29,24 @@ ADD_EXECUTABLE(PhotoconsistencyVisualOdometry PhotoconsistencyVisualOdometry.cpp
 	src/CRGBDGrabberOpenNI_PCL.cpp
 )
 
-TARGET_LINK_LIBRARIES(PhotoconsistencyVisualOdometry 
-				   phovo
-				   ${OpenCV_LIBS}
-				   ${PCL_LIBRARIES} 
-				   ${MRPT_LIBS}
-				   boost_serialization
-				   )
+IF(PHOVO_WITH_CERES)
+        TARGET_LINK_LIBRARIES(PhotoconsistencyVisualOdometry phovo 
+							     ceres 
+							     ${OpenCV_LIBS}
+							     ${PCL_LIBRARIES} 
+				                             ${MRPT_LIBS}
+				                             boost_serialization
+							     ${GFLAGS_LIB} 
+		                                             ${GLOG_LIB}
+		                                             ${CHOLMOD_LIBRARIES}
+		                                             ${CSPARSE_LIBRARY})
+ELSE(PHOVO_WITH_CERES)
+	TARGET_LINK_LIBRARIES(PhotoconsistencyVisualOdometry phovo 
+							     ${OpenCV_LIBS}
+                                                             ${PCL_LIBRARIES} 
+				                             ${MRPT_LIBS}
+				                             boost_serialization)
+ENDIF(PHOVO_WITH_CERES)
 
 # Set optimized building:
 IF(CMAKE_COMPILER_IS_GNUCXX AND NOT CMAKE_BUILD_TYPE MATCHES "Debug")
