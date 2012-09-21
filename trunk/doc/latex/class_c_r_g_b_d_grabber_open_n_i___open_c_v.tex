@@ -1,0 +1,105 @@
+\hypertarget{class_c_r_g_b_d_grabber_open_n_i___open_c_v}{
+\section{CRGBDGrabberOpenNI\_\-OpenCV Class Reference}
+\label{class_c_r_g_b_d_grabber_open_n_i___open_c_v}\index{CRGBDGrabberOpenNI\_\-OpenCV@{CRGBDGrabberOpenNI\_\-OpenCV}}
+}
+
+
+{\ttfamily \#include $<$CRGBDGrabberOpenNI\_\-OpenCV.h$>$}
+
+Inheritance diagram for CRGBDGrabberOpenNI\_\-OpenCV:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_c_r_g_b_d_grabber_open_n_i___open_c_v}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_c_r_g_b_d_grabber_open_n_i___open_c_v_a7a7de1dd5987fb2fe33f0883ce5e82ee}{CRGBDGrabberOpenNI\_\-OpenCV} ()
+\item 
+void \hyperlink{class_c_r_g_b_d_grabber_open_n_i___open_c_v_ac3f36ad66da25fb590e915072bece32e}{init} ()
+\item 
+void \hyperlink{class_c_r_g_b_d_grabber_open_n_i___open_c_v_a7a1d5c1d4ec74000b15d60e0683d9e77}{grab} (\hyperlink{class_c_frame_r_g_b_d}{CFrameRGBD} $\ast$)
+\item 
+void \hyperlink{class_c_r_g_b_d_grabber_open_n_i___open_c_v_a3a16ce107e7d613fef517096f3dff39f}{stop} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_c_r_g_b_d_grabber_open_n_i___open_c_v_a4dd468c8ae68796a0f80e0213be0cf08}{
+cv::Mat {\bfseries currentRGBImg}}
+\label{class_c_r_g_b_d_grabber_open_n_i___open_c_v_a4dd468c8ae68796a0f80e0213be0cf08}
+
+\item 
+\hypertarget{class_c_r_g_b_d_grabber_open_n_i___open_c_v_a7c54b8b6efb1e51b12b025faf7690aee}{
+cv::Mat {\bfseries currentDepthImg}}
+\label{class_c_r_g_b_d_grabber_open_n_i___open_c_v_a7c54b8b6efb1e51b12b025faf7690aee}
+
+\item 
+\hypertarget{class_c_r_g_b_d_grabber_open_n_i___open_c_v_ab61ee76d223e9e66db8f696d3eadf7a6}{
+cv::VideoCapture $\ast$ {\bfseries capture}}
+\label{class_c_r_g_b_d_grabber_open_n_i___open_c_v_ab61ee76d223e9e66db8f696d3eadf7a6}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class captures RGBD frames from an OpenNI compatible sensor using the OpenNI interface provided by the OpenCV library to access the sensor data. It grabs the intensity image as well as its corresponding depth image. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_c_r_g_b_d_grabber_open_n_i___open_c_v_a7a7de1dd5987fb2fe33f0883ce5e82ee}{
+\index{CRGBDGrabberOpenNI\_\-OpenCV@{CRGBDGrabberOpenNI\_\-OpenCV}!CRGBDGrabberOpenNI\_\-OpenCV@{CRGBDGrabberOpenNI\_\-OpenCV}}
+\index{CRGBDGrabberOpenNI\_\-OpenCV@{CRGBDGrabberOpenNI\_\-OpenCV}!CRGBDGrabberOpenNI_OpenCV@{CRGBDGrabberOpenNI\_\-OpenCV}}
+\subsubsection[{CRGBDGrabberOpenNI\_\-OpenCV}]{\setlength{\rightskip}{0pt plus 5cm}CRGBDGrabberOpenNI\_\-OpenCV::CRGBDGrabberOpenNI\_\-OpenCV (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{class_c_r_g_b_d_grabber_open_n_i___open_c_v_a7a7de1dd5987fb2fe33f0883ce5e82ee}
+Creates a \hyperlink{class_c_r_g_b_d_grabber_open_n_i___open_c_v}{CRGBDGrabberOpenNI\_\-OpenCV} instance that grabs RGBD frames from an OpenNI compatible sensor. 
+
+\subsection{Member Function Documentation}
+\hypertarget{class_c_r_g_b_d_grabber_open_n_i___open_c_v_a7a1d5c1d4ec74000b15d60e0683d9e77}{
+\index{CRGBDGrabberOpenNI\_\-OpenCV@{CRGBDGrabberOpenNI\_\-OpenCV}!grab@{grab}}
+\index{grab@{grab}!CRGBDGrabberOpenNI_OpenCV@{CRGBDGrabberOpenNI\_\-OpenCV}}
+\subsubsection[{grab}]{\setlength{\rightskip}{0pt plus 5cm}void CRGBDGrabberOpenNI\_\-OpenCV::grab (
+\begin{DoxyParamCaption}
+\item[{{\bf CFrameRGBD} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{class_c_r_g_b_d_grabber_open_n_i___open_c_v_a7a1d5c1d4ec74000b15d60e0683d9e77}
+Retains the current RGBD frame. 
+
+Implements \hyperlink{class_c_r_g_b_d_grabber_aa7f9c715a16933287a92ecaf7a1bbfb4}{CRGBDGrabber}.
+
+\hypertarget{class_c_r_g_b_d_grabber_open_n_i___open_c_v_ac3f36ad66da25fb590e915072bece32e}{
+\index{CRGBDGrabberOpenNI\_\-OpenCV@{CRGBDGrabberOpenNI\_\-OpenCV}!init@{init}}
+\index{init@{init}!CRGBDGrabberOpenNI_OpenCV@{CRGBDGrabberOpenNI\_\-OpenCV}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}void CRGBDGrabberOpenNI\_\-OpenCV::init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{class_c_r_g_b_d_grabber_open_n_i___open_c_v_ac3f36ad66da25fb590e915072bece32e}
+Initializes the grabber object 
+
+Implements \hyperlink{class_c_r_g_b_d_grabber_ab1aa7a5c871104dd8791d5a3a5117e3a}{CRGBDGrabber}.
+
+\hypertarget{class_c_r_g_b_d_grabber_open_n_i___open_c_v_a3a16ce107e7d613fef517096f3dff39f}{
+\index{CRGBDGrabberOpenNI\_\-OpenCV@{CRGBDGrabberOpenNI\_\-OpenCV}!stop@{stop}}
+\index{stop@{stop}!CRGBDGrabberOpenNI_OpenCV@{CRGBDGrabberOpenNI\_\-OpenCV}}
+\subsubsection[{stop}]{\setlength{\rightskip}{0pt plus 5cm}void CRGBDGrabberOpenNI\_\-OpenCV::stop (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{class_c_r_g_b_d_grabber_open_n_i___open_c_v_a3a16ce107e7d613fef517096f3dff39f}
+Stop grabing RGBD frames. 
+
+Implements \hyperlink{class_c_r_g_b_d_grabber_a653ef16978adcd9000079f0e5f00addc}{CRGBDGrabber}.
+
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+CRGBDGrabberOpenNI\_\-OpenCV.h\end{DoxyCompactItemize}

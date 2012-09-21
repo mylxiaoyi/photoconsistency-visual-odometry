@@ -2,11 +2,11 @@
  *  Photoconsistency-Visual-Odometry
  *  Multiscale Photoconsistency Visual Odometry from RGBD Images
  *  Copyright (c) 2012, Miguel Algaba Borrego
- *  
+ *
  *  http://code.google.com/p/photoconsistency-visual-odometry/
- *  
+ *
  *  All rights reserved.
- *  
+ *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions are met:
  *      * Redistributions of source code must retain the above copyright
@@ -17,7 +17,7 @@
  *      * Neither the name of the holder(s) nor the
  *        names of its contributors may be used to endorse or promote products
  *        derived from this software without specific prior written permission.
- *  
+ *
  *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -31,45 +31,27 @@
  *
  */
 
-#ifndef CRGBDGRABBER_OPENNI_PCL
-#define CRGBDGRABBER_OPENNI_PCL
+#include "../include/CRGBDGrabberOpenNI_OpenCV.h"
 
-#include <pcl/io/openni_grabber.h>
-#include <pcl/io/openni_camera/openni_driver.h>
+#include <iostream>
 
-#include "CRGBDGrabber.h"
+CRGBDGrabberOpenNI_OpenCV::CRGBDGrabberOpenNI_OpenCV(){}
 
-/*!This class captures RGBD frames from an OpenNI compatible sensor using the OpenNI interface provided by the PCL library to access the sensor data. It grabs the intensity image as well as its corresponding depth image.*/
+//CRGBDGrabberOpenNI_PCL::~CRGBDGrabberOpenNI_OpenCV(){}
 
-class CRGBDGrabberOpenNI_PCL : public CRGBDGrabber
+void CRGBDGrabberOpenNI_OpenCV::grab(CFrameRGBD* framePtr)
 {
-
-private:
-
-    cv::Mat currentRGBImg;
-    cv::Mat currentBGRImg;
-    cv::Mat currentDepthImg;
-    pcl::OpenNIGrabber* interface;
-
-    void rgb_cb_ (const boost::shared_ptr<openni_wrapper::Image>& img);
-    void depth_cb_ (const boost::shared_ptr<openni_wrapper::DepthImage>& depth);
-
-public:
-    /*!Creates a CRGBDGrabberOpenNI_PCL instance that grabs RGBD frames from an OpenNI compatible sensor.*/
-    CRGBDGrabberOpenNI_PCL();
-
-    /*!Initializes the grabber object*/
-    inline void init()
+    bool grabbedFrame = false;
+    do
     {
-	// start receiving point clouds
-     	interface->start ();
-	sleep(2);
-    };
+        //Grab a RGBD frame from the sensor
+        grabbedFrame = capture->grab();
+        capture->retrieve( currentDepthImg, CV_CAP_OPENNI_DEPTH_MAP );
+        capture->retrieve( currentRGBImg, CV_CAP_OPENNI_BGR_IMAGE );
 
-    /*!Retains the current RGBD frame.*/
-    void grab(CFrameRGBD*);
-
-    /*!Stop grabing RGBD frames.*/
-    inline void stop(){interface->stop();};
-};
-#endif
+    	//Assign the current RGB and depth images to the current frame
+        framePtr->setRGBImage(currentRGBImg);
+        currentDepthImg.convertTo(currentDepthImg, CV_32FC1, 1./1000 );
+    	framePtr->setDepthImage(currentDepthImg);
+    }while(!grabbedFrame);
+}

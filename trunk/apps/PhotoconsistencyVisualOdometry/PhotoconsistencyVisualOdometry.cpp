@@ -31,7 +31,7 @@
  *
  */
 
-#define USE_PHOTOCONSISTENCY_ODOMETRY_METHOD 2 // CPhotoconsistencyOdometryAnalytic: 0
+#define USE_PHOTOCONSISTENCY_ODOMETRY_METHOD 0 // CPhotoconsistencyOdometryAnalytic: 0
                                                // CPhotoconsistencyOdometryCeres: 1
                                                // CPhotoconsistencyOdometryBiObjective: 2
 
@@ -41,6 +41,7 @@
 
 #include "include/CRGBDGrabberRawlog.h"
 #include "include/CRGBDGrabberOpenNI_PCL.h"
+#include "include/CRGBDGrabberOpenNI_OpenCV.h"
 #include "include/CFrameRGBD.h"
 
 #if USE_PHOTOCONSISTENCY_ODOMETRY_METHOD == 0
@@ -149,6 +150,9 @@ void printHelp()
     std::cout<<"./PhotoconsistencyVisualOdometry <config_file.yml> [options]"<<std::endl;
     std::cout<<"       options: "<<std::endl;
     std::cout<<"               -rawlog     RGBD rawlog file name <rgbd.rawlog>"<<std::endl;
+    std::cout<<"               -interface  OpenNI interface:"<<std::endl;
+    std::cout<<"                           0: OpenCV"<<std::endl;
+    std::cout<<"                           1: PCL"<<std::endl;
     std::cout<<"               -g          Ground truth file <groundtruth.txt>"<<std::endl;
     #if ENABLE_ICP_POSE_REFINEMENT
     std::cout<<"               -m          Iterative Closest Point method:"<<std::endl;
@@ -168,6 +172,9 @@ void printHelp()
 int main(int argc, char **argv)
 {
     if(argc<2){printHelp();return -1;}
+
+    int OpenNI_interface = 0; //Desired OpenNI sensor interface [OpenNI: 0] [PCL: 1]
+    pcl::console::parse_argument(argc,argv,"-interface",OpenNI_interface);
 
     //Parse input arguments
     std::string rgbdFileName = "";
@@ -228,7 +235,14 @@ int main(int argc, char **argv)
     }
     else
     {
-        grabber = new CRGBDGrabberOpenNI_PCL();
+        if(OpenNI_interface==0) //OpenCV-OpenNI interface
+        {
+            grabber = new CRGBDGrabberOpenNI_OpenCV();
+        }
+        else //PCL-OpenNI interface
+        {
+            grabber = new CRGBDGrabberOpenNI_PCL();
+        }
     }
     grabber->init();
 

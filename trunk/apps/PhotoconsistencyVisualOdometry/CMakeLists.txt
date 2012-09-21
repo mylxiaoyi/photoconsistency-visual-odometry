@@ -27,6 +27,8 @@ ADD_EXECUTABLE(PhotoconsistencyVisualOdometry PhotoconsistencyVisualOdometry.cpp
 	src/CRGBDGrabberRawlog.cpp
 	include/CRGBDGrabberOpenNI_PCL.h
 	src/CRGBDGrabberOpenNI_PCL.cpp
+	include/CRGBDGrabberOpenNI_OpenCV.h
+	src/CRGBDGrabberOpenNI_OpenCV.cpp
 )
 
 IF(PHOVO_WITH_CERES)

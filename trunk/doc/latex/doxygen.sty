@@ -16,6 +16,40 @@
 \RequirePackage{helvet}
 \RequirePackage{sectsty}
 \RequirePackage{tocloft}
+\allsectionsfont{\usefont{OT1}{phv}{bc}{n}\selectfont}
+\providecommand{\cftchapfont}{%
+  \fontsize{11}{13}\usefont{OT1}{phv}{bc}{n}\selectfont
+}
+\providecommand{\cftchappagefont}{%
+  \fontsize{11}{13}\usefont{OT1}{phv}{c}{n}\selectfont
+}
+\providecommand{\cftsecfont}{%
+  \fontsize{10}{12}\usefont{OT1}{phv}{c}{n}\selectfont
+}
+\providecommand{\cftsecpagefont}{%
+  \fontsize{10}{12}\usefont{OT1}{phv}{c}{n}\selectfont
+}
+\providecommand{\cftsubsecfont}{%
+  \fontsize{10}{12}\usefont{OT1}{phv}{c}{n}\selectfont
+}
+\providecommand{\cftsubsecpagefont}{%
+  \fontsize{10}{12}\usefont{OT1}{phv}{c}{n}\selectfont
+}
+\providecommand{\cftsubsubsecfont}{%
+  \fontsize{9}{11}\usefont{OT1}{phv}{c}{n}\selectfont
+}
+\providecommand{\cftsubsubsecpagefont}{%
+  \fontsize{9}{11}\usefont{OT1}{phv}{c}{n}\selectfont
+}
+\providecommand{\cftparafont}{%
+  \fontsize{9}{11}\usefont{OT1}{phv}{c}{n}\selectfont
+}
+\providecommand{\cftparapagefont}{%
+  \fontsize{9}{11}\usefont{OT1}{phv}{c}{n}\selectfont
+}
+\providecommand{\cfttoctitlefont}{%
+  \fontsize{20}{22}\usefont{OT1}{phv}{b}{n}\selectfont
+}
 \providecommand{\rmdefault}{phv}
 \providecommand{\bfdefault}{bc}
 
@@ -39,8 +73,8 @@
 \fancyhead[RO]{\fancyplain{}{\bfseries\thepage}}
 \fancyfoot[LE]{\fancyplain{}{}}
 \fancyfoot[CE]{\fancyplain{}{}}
-\fancyfoot[RE]{\fancyplain{}{\bfseries\scriptsize Generated on Fri Sep 21 2012 10:13:30 for Photoconsistency-\/Visual-\/Odometry by Doxygen }}
-\fancyfoot[LO]{\fancyplain{}{\bfseries\scriptsize Generated on Fri Sep 21 2012 10:13:30 for Photoconsistency-\/Visual-\/Odometry by Doxygen }}
+\fancyfoot[RE]{\fancyplain{}{\bfseries\scriptsize Generated on Fri Sep 21 2012 19:06:30 for Photoconsistency-\/Visual-\/Odometry by Doxygen }}
+\fancyfoot[LO]{\fancyplain{}{\bfseries\scriptsize Generated on Fri Sep 21 2012 19:06:30 for Photoconsistency-\/Visual-\/Odometry by Doxygen }}
 \fancyfoot[CO]{\fancyplain{}{}}
 \fancyfoot[RO]{\fancyplain{}{}}
 %---------- Internal commands used in this style file ----------------
@@ -388,19 +422,14 @@
   {\unskip\end{list}}
 \setlength{\parindent}{0cm}
 \setlength{\parskip}{0.2cm}
-\addtocounter{secnumdepth}{2}
+\addtocounter{secnumdepth}{1}
 \usepackage[T1]{fontenc}
 \makeatletter
 \renewcommand{\paragraph}{\@startsection{paragraph}{4}{0ex}%
-   {-1.0ex}%
-   {1.0ex}%
-   {\usefont{OT1}{phv}{bc}{n}\color{darkgray}}}
-\renewcommand{\subparagraph}{\@startsection{subparagraph}{5}{0ex}%
-   {-1.0ex}%
-   {1.0ex}%
-   {\usefont{OT1}{phv}{bc}{n}\color{darkgray}}}
+   {-3.25ex plus -1ex minus -0.2ex}%
+   {1.5ex plus 0.2ex}%
+   {\normalfont\normalsize\bfseries}}
 \makeatother
-\allsectionsfont{\usefont{OT1}{phv}{bc}{n}\selectfont\color{darkgray}}
 \stepcounter{secnumdepth}
 \stepcounter{tocdepth}
 \definecolor{comment}{rgb}{0.5,0.0,0.0}
