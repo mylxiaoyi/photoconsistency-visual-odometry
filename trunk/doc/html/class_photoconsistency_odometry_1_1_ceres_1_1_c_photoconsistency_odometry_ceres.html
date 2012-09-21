@@ -94,7 +94,7 @@ Data Structures</h2></td></tr>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres.html#ad45891d5065f3b00c40c8dbca794a632">setCameraMatrix</a> (Eigen::Matrix3f &amp;camMat)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres.html#a987feeea7aab8dcc09ef82bde0814ed7">setSourceFrame</a> (cv::Mat &amp;imgGray, cv::Mat &amp;imgDepth)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres.html#a803aeaed5e74ea8f50bab6694c887aa7">setTargetFrame</a> (cv::Mat &amp;imgGray)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres.html#afb707483f6766c5069eaad9824382272">setTargetFrame</a> (cv::Mat &amp;imgGray, cv::Mat &amp;imgDepth)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres.html#a0993e83c820d16e606bce87edabbcd12">setInitialStateVector</a> (const std::vector&lt; double &gt; &amp;initialStateVector)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres.html#af177ce6dd5517d73d5cf25da266a2777">optimize</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_photoconsistency_odometry_1_1_ceres_1_1_c_photoconsistency_odometry_ceres.html#a54f00adc07a9027430b4044284dec16c">getOptimalStateVector</a> (std::vector&lt; double &gt; &amp;optimalStateVector)</td></tr>
@@ -257,7 +257,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>buildDerivativesPyram
 
 </div>
 </div>
-<a class="anchor" id="a803aeaed5e74ea8f50bab6694c887aa7"></a><!-- doxytag: member="PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres::setTargetFrame" ref="a803aeaed5e74ea8f50bab6694c887aa7" args="(cv::Mat &amp;imgGray)" -->
+<a class="anchor" id="afb707483f6766c5069eaad9824382272"></a><!-- doxytag: member="PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres::setTargetFrame" ref="afb707483f6766c5069eaad9824382272" args="(cv::Mat &amp;imgGray, cv::Mat &amp;imgDepth)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -265,15 +265,25 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>buildDerivativesPyram
           <td class="memname">void PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres::setTargetFrame </td>
           <td>(</td>
           <td class="paramtype">cv::Mat &amp;&#160;</td>
-          <td class="paramname"><em>imgGray</em></td><td>)</td>
-          <td><code> [inline, virtual]</code></td>
+          <td class="paramname"><em>imgGray</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">cv::Mat &amp;&#160;</td>
+          <td class="paramname"><em>imgDepth</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [inline, virtual]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Sets the target intensity frame. </p>
+<p>Sets the source (Intensity+Depth) frame. Depth image is ignored </p>
 
-<p>Implements <a class="el" href="class_photoconsistency_odometry_1_1_c_photoconsistency_odometry.html#a4f04b88ac54670b03b5c2bf773bca018">PhotoconsistencyOdometry::CPhotoconsistencyOdometry</a>.</p>
+<p>Implements <a class="el" href="class_photoconsistency_odometry_1_1_c_photoconsistency_odometry.html#ac22e57f7f5039b7988447e7bd7d77f89">PhotoconsistencyOdometry::CPhotoconsistencyOdometry</a>.</p>
 
 </div>
 </div>
@@ -295,7 +305,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>buildDerivativesPyram
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 19 2012 10:31:04 for Photoconsistency-Visual-Odometry by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Sep 21 2012 10:13:31 for Photoconsistency-Visual-Odometry by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

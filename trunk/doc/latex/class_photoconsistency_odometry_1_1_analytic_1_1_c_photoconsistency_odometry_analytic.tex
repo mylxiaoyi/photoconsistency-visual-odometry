@@ -23,7 +23,7 @@ void \hyperlink{class_photoconsistency_odometry_1_1_analytic_1_1_c_photoconsiste
 \item 
 void \hyperlink{class_photoconsistency_odometry_1_1_analytic_1_1_c_photoconsistency_odometry_analytic_a540df6929640bf7c1c248e27cc952772}{setSourceFrame} (cv::Mat \&imgGray, cv::Mat \&imgDepth)
 \item 
-void \hyperlink{class_photoconsistency_odometry_1_1_analytic_1_1_c_photoconsistency_odometry_analytic_ac2f9288148db6b93b5cbe6a77818106d}{setTargetFrame} (cv::Mat \&imgGray)
+void \hyperlink{class_photoconsistency_odometry_1_1_analytic_1_1_c_photoconsistency_odometry_analytic_a820824acdf3019f17ba889d0455e7f9c}{setTargetFrame} (cv::Mat \&imgGray, cv::Mat \&imgDepth)
 \item 
 void \hyperlink{class_photoconsistency_odometry_1_1_analytic_1_1_c_photoconsistency_odometry_analytic_a6765ca12e063b199624e408fe07d2c13}{setInitialStateVector} (const std::vector$<$ double $>$ \&initialStateVector)
 \item 
@@ -231,18 +231,19 @@ Sets the source (Intensity+Depth) frame.
 
 Implements \hyperlink{class_photoconsistency_odometry_1_1_c_photoconsistency_odometry_aa017bf63aeb6f3103d1b6fec8d38a888}{PhotoconsistencyOdometry::CPhotoconsistencyOdometry}.
 
-\hypertarget{class_photoconsistency_odometry_1_1_analytic_1_1_c_photoconsistency_odometry_analytic_ac2f9288148db6b93b5cbe6a77818106d}{
+\hypertarget{class_photoconsistency_odometry_1_1_analytic_1_1_c_photoconsistency_odometry_analytic_a820824acdf3019f17ba889d0455e7f9c}{
 \index{PhotoconsistencyOdometry::Analytic::CPhotoconsistencyOdometryAnalytic@{PhotoconsistencyOdometry::Analytic::CPhotoconsistencyOdometryAnalytic}!setTargetFrame@{setTargetFrame}}
 \index{setTargetFrame@{setTargetFrame}!PhotoconsistencyOdometry::Analytic::CPhotoconsistencyOdometryAnalytic@{PhotoconsistencyOdometry::Analytic::CPhotoconsistencyOdometryAnalytic}}
 \subsubsection[{setTargetFrame}]{\setlength{\rightskip}{0pt plus 5cm}void PhotoconsistencyOdometry::Analytic::CPhotoconsistencyOdometryAnalytic::setTargetFrame (
 \begin{DoxyParamCaption}
-\item[{cv::Mat \&}]{imgGray}
+\item[{cv::Mat \&}]{imgGray, }
+\item[{cv::Mat \&}]{imgDepth}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
-\label{class_photoconsistency_odometry_1_1_analytic_1_1_c_photoconsistency_odometry_analytic_ac2f9288148db6b93b5cbe6a77818106d}
-Sets the target intensity frame. 
+\label{class_photoconsistency_odometry_1_1_analytic_1_1_c_photoconsistency_odometry_analytic_a820824acdf3019f17ba889d0455e7f9c}
+Sets the source (Intensity+Depth) frame. Depth image is ignored 
 
-Implements \hyperlink{class_photoconsistency_odometry_1_1_c_photoconsistency_odometry_a4f04b88ac54670b03b5c2bf773bca018}{PhotoconsistencyOdometry::CPhotoconsistencyOdometry}.
+Implements \hyperlink{class_photoconsistency_odometry_1_1_c_photoconsistency_odometry_ac22e57f7f5039b7988447e7bd7d77f89}{PhotoconsistencyOdometry::CPhotoconsistencyOdometry}.
 
 
 

@@ -339,8 +339,9 @@ public:
         buildPyramid(imgDepth,depth0Pyr,numOptimizationLevels,false);
     }
 
-    /*!Sets the target intensity frame.*/
-    void setTargetFrame(cv::Mat & imgGray)
+
+    /*!Sets the source (Intensity+Depth) frame. Depth image is ignored*/
+    void setTargetFrame(cv::Mat & imgGray,cv::Mat & imgDepth)
     {
         //Create a float auxialiary image from the imput image
         cv::Mat imgGrayFloat;
