@@ -1,0 +1,362 @@
+\hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective}{
+\section{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective Class Reference}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective}\index{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}}
+}
+
+
+{\ttfamily \#include $<$CPhotoconsistencyOdometryBiObjective.h$>$}
+
+Inheritance diagram for PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a558ea77216fdd1423f601107774d794e}{setMinDepth} (float minD)
+\item 
+void \hyperlink{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_aa115dd864e3bea5b1db3bff97890c9e9}{setMaxDepth} (float maxD)
+\item 
+void \hyperlink{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a8f2e9f8a20c2496032577e5a7e50e506}{setCameraMatrix} (Eigen::Matrix3f \&camMat)
+\item 
+void \hyperlink{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_acb6628a7f90ffd52798f61fdec55db0b}{setSourceFrame} (cv::Mat \&imgGray, cv::Mat \&imgDepth)
+\item 
+void \hyperlink{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_ace2177b6d8081644465bad2b1fc4e176}{setTargetFrame} (cv::Mat \&imgGray, cv::Mat \&imgDepth)
+\item 
+void \hyperlink{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a1e129e5db719ecf0365c40a09a26f9f0}{setInitialStateVector} (const std::vector$<$ double $>$ \&initialStateVector)
+\item 
+void \hyperlink{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a653474944f8cea88fc98074d3da4b551}{optimize} ()
+\item 
+void \hyperlink{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_acc57b9e6e38f85071f747d935023e7fd}{getOptimalStateVector} (std::vector$<$ double $>$ \&optimalStateVector)
+\item 
+void \hyperlink{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a1115655df7094d0566b786433fb0a223}{getOptimalRigidTransformationMatrix} (Eigen::Matrix4f \&optimal\_\-Rt)
+\item 
+void \hyperlink{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_af2aebdd1dde2b510c854ea029b228d49}{readConfigurationFile} (std::string fileName)
+\end{DoxyCompactItemize}
+\subsection*{Private Types}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bfseries TerminationCriteriaType} \{ {\bfseries NonTerminated} =  -\/1, 
+{\bfseries MaxIterationsReached} =  0, 
+{\bfseries GradientNormLowerThanThreshold} =  1
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a7067fc7eb48845fb49abeceb484b20ff}{
+void {\bfseries buildPyramid} (cv::Mat \&img, std::vector$<$ cv::Mat $>$ \&pyramid, int levels, bool applyBlur)}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a7067fc7eb48845fb49abeceb484b20ff}
+
+\item 
+\hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a4975f3b0ea19d2260ea68c9eca8a2e09}{
+void {\bfseries buildIntensityDerivativesPyramids} (std::vector$<$ cv::Mat $>$ \&imagePyramid, std::vector$<$ cv::Mat $>$ \&derXPyramid, std::vector$<$ cv::Mat $>$ \&derYPyramid)}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a4975f3b0ea19d2260ea68c9eca8a2e09}
+
+\item 
+\hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_af7f26dddddb9a92e6919b15dcc57883a}{
+float {\bfseries maxDepthValue} (cv::Mat \&image)}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_af7f26dddddb9a92e6919b15dcc57883a}
+
+\item 
+\hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_aba43dcc171b6644f30dc6845492e07c4}{
+void {\bfseries buildDepthDerivativesPyramids} (std::vector$<$ cv::Mat $>$ \&imagePyramid, std::vector$<$ cv::Mat $>$ \&derXPyramid, std::vector$<$ cv::Mat $>$ \&derYPyramid)}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_aba43dcc171b6644f30dc6845492e07c4}
+
+\item 
+\hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a94c422985f1b377017ffb4cf81ccb33c}{
+void {\bfseries computeResidualsAndJacobians} (cv::Mat \&source\_\-grayImg, cv::Mat \&source\_\-depthImg, cv::Mat \&target\_\-grayImg, cv::Mat \&target\_\-depthImg, cv::Mat \&target\_\-intensityGradXImg, cv::Mat \&target\_\-intensityGradYImg, cv::Mat \&target\_\-depthGradXImg, cv::Mat \&target\_\-depthGradYImg, Eigen::Matrix$<$ double, Eigen::Dynamic, 1 $>$ \&residuals, Eigen::Matrix$<$ double, Eigen::Dynamic, 6 $>$ \&jacobians, cv::Mat \&warped\_\-source\_\-grayImage)}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a94c422985f1b377017ffb4cf81ccb33c}
+
+\item 
+\hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_aa9be21372875ed2d640d473c39315877}{
+bool {\bfseries testTerminationCriteria} ()}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_aa9be21372875ed2d640d473c39315877}
+
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std::vector$<$ cv::Mat $>$ \hyperlink{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a5b6c425d383f581b45ca8865972a37b7}{gray0Pyr}
+\item 
+\hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_ac5a94b22817f8633b03d45be487c88da}{
+std::vector$<$ cv::Mat $>$ {\bfseries gray1Pyr}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_ac5a94b22817f8633b03d45be487c88da}
+
+\item 
+\hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_ae8159a121a096e17cef90308de9f53b7}{
+std::vector$<$ cv::Mat $>$ {\bfseries depth0Pyr}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_ae8159a121a096e17cef90308de9f53b7}
+
+\item 
+\hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a1817948101627509f96dde0678d179c5}{
+std::vector$<$ cv::Mat $>$ {\bfseries depth1Pyr}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a1817948101627509f96dde0678d179c5}
+
+\item 
+\hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_ad35f6bc05e2d04819e756cd77d9b5430}{
+std::vector$<$ cv::Mat $>$ {\bfseries gray1GradXPyr}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_ad35f6bc05e2d04819e756cd77d9b5430}
+
+\item 
+\hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a9a4f56efd803d188bc330cfa868ffb37}{
+std::vector$<$ cv::Mat $>$ {\bfseries gray1GradYPyr}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a9a4f56efd803d188bc330cfa868ffb37}
+
+\item 
+\hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a2cdd5eb556a267c04691550589fd6e87}{
+std::vector$<$ cv::Mat $>$ {\bfseries depth1GradXPyr}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a2cdd5eb556a267c04691550589fd6e87}
+
+\item 
+\hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_afd12f2aa0be1a04538ce40e9fefc5c32}{
+std::vector$<$ cv::Mat $>$ {\bfseries depth1GradYPyr}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_afd12f2aa0be1a04538ce40e9fefc5c32}
+
+\item 
+Eigen::Matrix3f \hyperlink{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a74d4c192feef1afef8a8d8e2a0355899}{cameraMatrix}
+\item 
+int \hyperlink{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a091fe96422095cde49e8dbf0f588c68f}{optimizationLevel}
+\item 
+int \hyperlink{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a446eabe1e440d02158f2333fa19263fb}{numOptimizationLevels}
+\item 
+std::vector$<$ float $>$ \hyperlink{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_ab0228ea77ced9d4717870907e435c137}{lambda\_\-optimization\_\-step}
+\item 
+std::vector$<$ int $>$ \hyperlink{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a3eb4895b36bfd0bb7c1b19bff7e85694}{blurFilterSize}
+\item 
+std::vector$<$ float $>$ \hyperlink{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a0a5c463a29e8b400d7f8137f3f55fe79}{imageGradientsScalingFactor}
+\item 
+std::vector$<$ int $>$ \hyperlink{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a92cf677b2555e928f70401e87285841f}{max\_\-num\_\-iterations}
+\item 
+std::vector$<$ float $>$ \hyperlink{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a4ffb9e6e6dfd284941f8e00488506f50}{min\_\-gradient\_\-norm}
+\item 
+bool \hyperlink{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_aa6a0112aba3c34e3c523612694e2ec69}{visualizeIterations}
+\item 
+Eigen::Matrix$<$ double, 6, 1 $>$ \hyperlink{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a1ca67345fb32011d2af5db3d9d512ca1}{stateVector}
+\item 
+Eigen::Matrix$<$ double, 6, 1 $>$ \hyperlink{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_afc7ba59ecbc66587a6962da3e9ed7db3}{gradients}
+\item 
+int \hyperlink{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a674c302e691993256dd46f7be45439ef}{iter}
+\item 
+float \hyperlink{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_adec531c1211633911c26103389dc3a8a}{minDepth}
+\item 
+float \hyperlink{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a2fab9eb3d5a6951c70b916a1958afd1f}{maxDepth}
+\item 
+float \hyperlink{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a36e4db1f8ff290be6b443d863975b7ab}{depthComponentGain}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class computes the rigid (6DoF) transformation that best aligns a pair of RGBD frames using a photoconsistency maximization approach. To estimate the rigid transformation, this class implements a coarse to fine approach minimizing the photometric and depth error simultaneously. Thus, the algorithm starts finding a first pose approximation at a low resolution level and uses the estimate to initialize the optimization at greater image scales. Both the residuals and jacobians are computed analytically. 
+
+\subsection{Member Function Documentation}
+\hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a1115655df7094d0566b786433fb0a223}{
+\index{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}!getOptimalRigidTransformationMatrix@{getOptimalRigidTransformationMatrix}}
+\index{getOptimalRigidTransformationMatrix@{getOptimalRigidTransformationMatrix}!PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}}
+\subsubsection[{getOptimalRigidTransformationMatrix}]{\setlength{\rightskip}{0pt plus 5cm}void PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective::getOptimalRigidTransformationMatrix (
+\begin{DoxyParamCaption}
+\item[{Eigen::Matrix4f \&}]{optimal\_\-Rt}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a1115655df7094d0566b786433fb0a223}
+Returns the optimal 4x4 rigid transformation matrix between the source and target frame. This method has to be called after calling the \hyperlink{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a653474944f8cea88fc98074d3da4b551}{optimize()} method. 
+
+Implements \hyperlink{class_photoconsistency_odometry_1_1_c_photoconsistency_odometry_a319f97afb21523fa6c66e9a04a607ea6}{PhotoconsistencyOdometry::CPhotoconsistencyOdometry}.
+
+\hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_acc57b9e6e38f85071f747d935023e7fd}{
+\index{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}!getOptimalStateVector@{getOptimalStateVector}}
+\index{getOptimalStateVector@{getOptimalStateVector}!PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}}
+\subsubsection[{getOptimalStateVector}]{\setlength{\rightskip}{0pt plus 5cm}void PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective::getOptimalStateVector (
+\begin{DoxyParamCaption}
+\item[{std::vector$<$ double $>$ \&}]{optimalStateVector}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_acc57b9e6e38f85071f747d935023e7fd}
+Returns the optimal state vector. This method has to be called after calling the \hyperlink{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a653474944f8cea88fc98074d3da4b551}{optimize()} method. 
+
+Implements \hyperlink{class_photoconsistency_odometry_1_1_c_photoconsistency_odometry_a60e50c92161d1c2c1090757358ddba92}{PhotoconsistencyOdometry::CPhotoconsistencyOdometry}.
+
+\hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a653474944f8cea88fc98074d3da4b551}{
+\index{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}!optimize@{optimize}}
+\index{optimize@{optimize}!PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}}
+\subsubsection[{optimize}]{\setlength{\rightskip}{0pt plus 5cm}void PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective::optimize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a653474944f8cea88fc98074d3da4b551}
+Launches the least-\/squares optimization process to find the configuration of the state vector parameters that maximizes the photoconsistency between the source and target frame. 
+
+Implements \hyperlink{class_photoconsistency_odometry_1_1_c_photoconsistency_odometry_aa7b0f04764e2c348556193281de58639}{PhotoconsistencyOdometry::CPhotoconsistencyOdometry}.
+
+\hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_af2aebdd1dde2b510c854ea029b228d49}{
+\index{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}!readConfigurationFile@{readConfigurationFile}}
+\index{readConfigurationFile@{readConfigurationFile}!PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}}
+\subsubsection[{readConfigurationFile}]{\setlength{\rightskip}{0pt plus 5cm}void PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective::readConfigurationFile (
+\begin{DoxyParamCaption}
+\item[{std::string}]{fileName}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_af2aebdd1dde2b510c854ea029b228d49}
+Reads the configuration parameters from a .yml file. \hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a8f2e9f8a20c2496032577e5a7e50e506}{
+\index{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}!setCameraMatrix@{setCameraMatrix}}
+\index{setCameraMatrix@{setCameraMatrix}!PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}}
+\subsubsection[{setCameraMatrix}]{\setlength{\rightskip}{0pt plus 5cm}void PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective::setCameraMatrix (
+\begin{DoxyParamCaption}
+\item[{Eigen::Matrix3f \&}]{camMat}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a8f2e9f8a20c2496032577e5a7e50e506}
+Sets the 3x3 matrix of (pinhole) camera intrinsic parameters used to obtain the 3D colored point cloud from the RGB and depth images. 
+
+Implements \hyperlink{class_photoconsistency_odometry_1_1_c_photoconsistency_odometry_a7464fc533b08dc7150eabd1086b84155}{PhotoconsistencyOdometry::CPhotoconsistencyOdometry}.
+
+\hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a1e129e5db719ecf0365c40a09a26f9f0}{
+\index{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}!setInitialStateVector@{setInitialStateVector}}
+\index{setInitialStateVector@{setInitialStateVector}!PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}}
+\subsubsection[{setInitialStateVector}]{\setlength{\rightskip}{0pt plus 5cm}void PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective::setInitialStateVector (
+\begin{DoxyParamCaption}
+\item[{const std::vector$<$ double $>$ \&}]{initialStateVector}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a1e129e5db719ecf0365c40a09a26f9f0}
+Initializes the state vector to a certain value. The optimization process uses the initial state vector as the initial estimate. 
+
+Implements \hyperlink{class_photoconsistency_odometry_1_1_c_photoconsistency_odometry_a425e6bc2fbbc9dcf924ae197f5569ddf}{PhotoconsistencyOdometry::CPhotoconsistencyOdometry}.
+
+\hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_aa115dd864e3bea5b1db3bff97890c9e9}{
+\index{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}!setMaxDepth@{setMaxDepth}}
+\index{setMaxDepth@{setMaxDepth}!PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}}
+\subsubsection[{setMaxDepth}]{\setlength{\rightskip}{0pt plus 5cm}void PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective::setMaxDepth (
+\begin{DoxyParamCaption}
+\item[{float}]{maxD}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_aa115dd864e3bea5b1db3bff97890c9e9}
+Sets the maximum depth distance (m) to consider a certain pixel valid. \hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a558ea77216fdd1423f601107774d794e}{
+\index{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}!setMinDepth@{setMinDepth}}
+\index{setMinDepth@{setMinDepth}!PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}}
+\subsubsection[{setMinDepth}]{\setlength{\rightskip}{0pt plus 5cm}void PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective::setMinDepth (
+\begin{DoxyParamCaption}
+\item[{float}]{minD}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a558ea77216fdd1423f601107774d794e}
+Sets the minimum depth distance (m) to consider a certain pixel valid. \hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_acb6628a7f90ffd52798f61fdec55db0b}{
+\index{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}!setSourceFrame@{setSourceFrame}}
+\index{setSourceFrame@{setSourceFrame}!PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}}
+\subsubsection[{setSourceFrame}]{\setlength{\rightskip}{0pt plus 5cm}void PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective::setSourceFrame (
+\begin{DoxyParamCaption}
+\item[{cv::Mat \&}]{imgGray, }
+\item[{cv::Mat \&}]{imgDepth}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_acb6628a7f90ffd52798f61fdec55db0b}
+Sets the source (Intensity+Depth) frame. 
+
+Implements \hyperlink{class_photoconsistency_odometry_1_1_c_photoconsistency_odometry_aa017bf63aeb6f3103d1b6fec8d38a888}{PhotoconsistencyOdometry::CPhotoconsistencyOdometry}.
+
+\hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_ace2177b6d8081644465bad2b1fc4e176}{
+\index{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}!setTargetFrame@{setTargetFrame}}
+\index{setTargetFrame@{setTargetFrame}!PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}}
+\subsubsection[{setTargetFrame}]{\setlength{\rightskip}{0pt plus 5cm}void PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective::setTargetFrame (
+\begin{DoxyParamCaption}
+\item[{cv::Mat \&}]{imgGray, }
+\item[{cv::Mat \&}]{imgDepth}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_ace2177b6d8081644465bad2b1fc4e176}
+Sets the source (Intensity+Depth) frame. 
+
+Implements \hyperlink{class_photoconsistency_odometry_1_1_c_photoconsistency_odometry_ac22e57f7f5039b7988447e7bd7d77f89}{PhotoconsistencyOdometry::CPhotoconsistencyOdometry}.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a3eb4895b36bfd0bb7c1b19bff7e85694}{
+\index{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}!blurFilterSize@{blurFilterSize}}
+\index{blurFilterSize@{blurFilterSize}!PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}}
+\subsubsection[{blurFilterSize}]{\setlength{\rightskip}{0pt plus 5cm}std::vector$<$int$>$ {\bf PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective::blurFilterSize}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a3eb4895b36bfd0bb7c1b19bff7e85694}
+Size (in pixels) of the blur filter (at each level). \hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a74d4c192feef1afef8a8d8e2a0355899}{
+\index{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}!cameraMatrix@{cameraMatrix}}
+\index{cameraMatrix@{cameraMatrix}!PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}}
+\subsubsection[{cameraMatrix}]{\setlength{\rightskip}{0pt plus 5cm}Eigen::Matrix3f {\bf PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective::cameraMatrix}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a74d4c192feef1afef8a8d8e2a0355899}
+Camera matrix (intrinsic parameters). \hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a36e4db1f8ff290be6b443d863975b7ab}{
+\index{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}!depthComponentGain@{depthComponentGain}}
+\index{depthComponentGain@{depthComponentGain}!PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}}
+\subsubsection[{depthComponentGain}]{\setlength{\rightskip}{0pt plus 5cm}float {\bf PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective::depthComponentGain}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a36e4db1f8ff290be6b443d863975b7ab}
+Depth component gain. This variable is used to scale the depth values so that depth components are similar to intensity values. \hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_afc7ba59ecbc66587a6962da3e9ed7db3}{
+\index{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}!gradients@{gradients}}
+\index{gradients@{gradients}!PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}}
+\subsubsection[{gradients}]{\setlength{\rightskip}{0pt plus 5cm}Eigen::Matrix$<$double,6,1$>$ {\bf PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective::gradients}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_afc7ba59ecbc66587a6962da3e9ed7db3}
+Gradient of the error function. \hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a5b6c425d383f581b45ca8865972a37b7}{
+\index{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}!gray0Pyr@{gray0Pyr}}
+\index{gray0Pyr@{gray0Pyr}!PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}}
+\subsubsection[{gray0Pyr}]{\setlength{\rightskip}{0pt plus 5cm}std::vector$<$cv::Mat$>$ {\bf PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective::gray0Pyr}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a5b6c425d383f581b45ca8865972a37b7}
+Intensity (gray), depth and gradient image pyramids. Each pyramid has 'numOptimizationLevels' levels. \hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a0a5c463a29e8b400d7f8137f3f55fe79}{
+\index{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}!imageGradientsScalingFactor@{imageGradientsScalingFactor}}
+\index{imageGradientsScalingFactor@{imageGradientsScalingFactor}!PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}}
+\subsubsection[{imageGradientsScalingFactor}]{\setlength{\rightskip}{0pt plus 5cm}std::vector$<$float$>$ {\bf PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective::imageGradientsScalingFactor}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a0a5c463a29e8b400d7f8137f3f55fe79}
+Scaling factor applied to the image gradients (at each level). \hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a674c302e691993256dd46f7be45439ef}{
+\index{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}!iter@{iter}}
+\index{iter@{iter}!PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}}
+\subsubsection[{iter}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective::iter}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a674c302e691993256dd46f7be45439ef}
+Current iteration at the current optimization level. \hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_ab0228ea77ced9d4717870907e435c137}{
+\index{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}!lambda\_\-optimization\_\-step@{lambda\_\-optimization\_\-step}}
+\index{lambda\_\-optimization\_\-step@{lambda\_\-optimization\_\-step}!PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}}
+\subsubsection[{lambda\_\-optimization\_\-step}]{\setlength{\rightskip}{0pt plus 5cm}std::vector$<$float$>$ {\bf PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective::lambda\_\-optimization\_\-step}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_ab0228ea77ced9d4717870907e435c137}
+Scaling factor to update the state vector (at each level). \hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a92cf677b2555e928f70401e87285841f}{
+\index{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}!max\_\-num\_\-iterations@{max\_\-num\_\-iterations}}
+\index{max\_\-num\_\-iterations@{max\_\-num\_\-iterations}!PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}}
+\subsubsection[{max\_\-num\_\-iterations}]{\setlength{\rightskip}{0pt plus 5cm}std::vector$<$int$>$ {\bf PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective::max\_\-num\_\-iterations}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a92cf677b2555e928f70401e87285841f}
+Maximum number of iterations for the Gauss-\/Newton algorithm (at each level). \hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a2fab9eb3d5a6951c70b916a1958afd1f}{
+\index{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}!maxDepth@{maxDepth}}
+\index{maxDepth@{maxDepth}!PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}}
+\subsubsection[{maxDepth}]{\setlength{\rightskip}{0pt plus 5cm}float {\bf PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective::maxDepth}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a2fab9eb3d5a6951c70b916a1958afd1f}
+Maximum allowed depth to consider a depth pixel valid. \hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a4ffb9e6e6dfd284941f8e00488506f50}{
+\index{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}!min\_\-gradient\_\-norm@{min\_\-gradient\_\-norm}}
+\index{min\_\-gradient\_\-norm@{min\_\-gradient\_\-norm}!PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}}
+\subsubsection[{min\_\-gradient\_\-norm}]{\setlength{\rightskip}{0pt plus 5cm}std::vector$<$float$>$ {\bf PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective::min\_\-gradient\_\-norm}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a4ffb9e6e6dfd284941f8e00488506f50}
+Minimum gradient norm of the jacobian (at each level). \hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_adec531c1211633911c26103389dc3a8a}{
+\index{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}!minDepth@{minDepth}}
+\index{minDepth@{minDepth}!PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}}
+\subsubsection[{minDepth}]{\setlength{\rightskip}{0pt plus 5cm}float {\bf PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective::minDepth}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_adec531c1211633911c26103389dc3a8a}
+Minimum allowed depth to consider a depth pixel valid. \hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a446eabe1e440d02158f2333fa19263fb}{
+\index{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}!numOptimizationLevels@{numOptimizationLevels}}
+\index{numOptimizationLevels@{numOptimizationLevels}!PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}}
+\subsubsection[{numOptimizationLevels}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective::numOptimizationLevels}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a446eabe1e440d02158f2333fa19263fb}
+Number of optimization levels. \hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a091fe96422095cde49e8dbf0f588c68f}{
+\index{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}!optimizationLevel@{optimizationLevel}}
+\index{optimizationLevel@{optimizationLevel}!PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}}
+\subsubsection[{optimizationLevel}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective::optimizationLevel}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a091fe96422095cde49e8dbf0f588c68f}
+Current optimization level. Level 0 corresponds to the higher image resolution. \hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a1ca67345fb32011d2af5db3d9d512ca1}{
+\index{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}!stateVector@{stateVector}}
+\index{stateVector@{stateVector}!PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}}
+\subsubsection[{stateVector}]{\setlength{\rightskip}{0pt plus 5cm}Eigen::Matrix$<$double,6,1$>$ {\bf PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective::stateVector}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_a1ca67345fb32011d2af5db3d9d512ca1}
+State vector. \hypertarget{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_aa6a0112aba3c34e3c523612694e2ec69}{
+\index{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}!visualizeIterations@{visualizeIterations}}
+\index{visualizeIterations@{visualizeIterations}!PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective@{PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective}}
+\subsubsection[{visualizeIterations}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective::visualizeIterations}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{class_photoconsistency_odometry_1_1_bi_objective_1_1_c_photoconsistency_odometry_bi_objective_aa6a0112aba3c34e3c523612694e2ec69}
+Enable the visualization of the optimization process (only for debug). 
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+CPhotoconsistencyOdometryBiObjective.h\end{DoxyCompactItemize}

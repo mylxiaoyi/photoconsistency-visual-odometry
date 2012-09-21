@@ -31,12 +31,12 @@
  *
  */
 
-#ifndef _CPHOTOCONSISTENCY_ODOMETRY_ANALYTIC_
-#define _CPHOTOCONSISTENCY_ODOMETRY_ANALYTIC_
+#ifndef _CPHOTOCONSISTENCY_ODOMETRY_BIOBJECTIVE_
+#define _CPHOTOCONSISTENCY_ODOMETRY_BIOBJECTIVE_
 
 #define ENABLE_GAUSSIAN_BLUR 1
 #define ENABLE_BOX_FILTER_BLUR 0
-#define ENABLE_OPENMP_MULTITHREADING_ANALYTIC 0 // Enables OpenMP for CPhotoconsistencyOdometryAnalytic
+#define ENABLE_OPENMP_MULTITHREADING 0
 #define ENABLE_PRINT_CONSOLE_OPTIMIZATION_PROGRESS 0
 
 #include "CPhotoconsistencyOdometry.h"
@@ -48,19 +48,19 @@
 namespace PhotoconsistencyOdometry
 {
 
-namespace Analytic
+namespace BiObjective
 {
 
 /*!This class computes the rigid (6DoF) transformation that best aligns a pair of RGBD frames using a photoconsistency maximization approach.
-To estimate the rigid transformation, this class implements a coarse to fine approach. Thus, the algorithm starts finding a first pose approximation at
+To estimate the rigid transformation, this class implements a coarse to fine approach minimizing the photometric and depth error simultaneously. Thus, the algorithm starts finding a first pose approximation at
 a low resolution level and uses the estimate to initialize the optimization at greater image scales. Both the residuals and jacobians are computed analytically.*/
-class CPhotoconsistencyOdometryAnalytic : public CPhotoconsistencyOdometry
+class CPhotoconsistencyOdometryBiObjective : public CPhotoconsistencyOdometry
 {
 
 private:
 
     /*!Intensity (gray), depth and gradient image pyramids. Each pyramid has 'numOptimizationLevels' levels.*/
-    std::vector<cv::Mat> gray0Pyr,gray1Pyr,depth0Pyr,gray1GradXPyr,gray1GradYPyr;
+    std::vector<cv::Mat> gray0Pyr,gray1Pyr,depth0Pyr,depth1Pyr,gray1GradXPyr,gray1GradYPyr,depth1GradXPyr,depth1GradYPyr;
     /*!Camera matrix (intrinsic parameters).*/
     Eigen::Matrix3f cameraMatrix;
     /*!Current optimization level. Level 0 corresponds to the higher image resolution.*/
@@ -89,6 +89,8 @@ private:
     float minDepth;
     /*!Maximum allowed depth to consider a depth pixel valid.*/
     float maxDepth;
+    /*!Depth component gain. This variable is used to scale the depth values so that depth components are similar to intensity values.*/
+    float depthComponentGain;
 
     void buildPyramid(cv::Mat & img,std::vector<cv::Mat>& pyramid,int levels,bool applyBlur)
     {
@@ -134,10 +136,9 @@ private:
         }
     }
 
-    void buildDerivativesPyramids(std::vector<cv::Mat>& imagePyramid,std::vector<cv::Mat>& derXPyramid,std::vector<cv::Mat>& derYPyramid)
+    void buildIntensityDerivativesPyramids(std::vector<cv::Mat>& imagePyramid,std::vector<cv::Mat>& derXPyramid,std::vector<cv::Mat>& derYPyramid)
     {
         //Compute image gradients
-        int scale = 1;
         int delta = 0;
         int ddepth = CV_32FC1;
 
@@ -148,20 +149,63 @@ private:
         for(int level=0;level<imagePyramid.size();level++)
         {
             // Compute the gradient in x
-            cv::Mat imgGray1_grad_x;
             cv::Scharr( imagePyramid[level], derXPyramid[level], ddepth, 1, 0, imageGradientsScalingFactor[level], delta, cv::BORDER_DEFAULT );
 
             // Compute the gradient in y
-            cv::Mat imgGray1_grad_y;
             cv::Scharr( imagePyramid[level], derYPyramid[level], ddepth, 0, 1, imageGradientsScalingFactor[level], delta, cv::BORDER_DEFAULT );
         }
     }
 
+    float maxDepthValue(cv::Mat & image)
+    {
+        float maxDepth = 0;
+
+        for(int r=0;r<image.rows;r++)
+        {
+            for(int c=0;c<image.cols;c++)
+            {
+                if(image.at<float>(r,c)>maxDepth)
+                {
+                    maxDepth = image.at<float>(r,c);
+                }
+            }
+        }
+
+        return maxDepth;
+    }
+
+    void buildDepthDerivativesPyramids(std::vector<cv::Mat>& imagePyramid,std::vector<cv::Mat>& derXPyramid,std::vector<cv::Mat>& derYPyramid)
+    {
+        //Compute image gradients
+        int delta = 0;
+        int ddepth = CV_32FC1;
+
+        //Create space for all the derivatives images
+        derXPyramid.resize(imagePyramid.size());
+        derYPyramid.resize(imagePyramid.size());
+
+        for(int level=0;level<imagePyramid.size();level++)
+        {
+            cv::Mat imgNormalizedDepth;
+            imagePyramid[level].convertTo(imgNormalizedDepth, CV_32FC1,1./maxDepth);
+
+            // Compute the gradient in x
+            cv::Scharr( imgNormalizedDepth, derXPyramid[level], ddepth, 1, 0, imageGradientsScalingFactor[level], delta, cv::BORDER_DEFAULT );
+
+            // Compute the gradient in y
+            cv::Scharr( imgNormalizedDepth, derYPyramid[level], ddepth, 0, 1, imageGradientsScalingFactor[level], delta, cv::BORDER_DEFAULT );
+        }
+    }
+
+    //Separated jacobians
     void computeResidualsAndJacobians(cv::Mat & source_grayImg,
                                       cv::Mat & source_depthImg,
                                       cv::Mat & target_grayImg,
-                                      cv::Mat & target_gradXImg,
-                                      cv::Mat & target_gradYImg,
+                                      cv::Mat & target_depthImg,
+                                      cv::Mat & target_intensityGradXImg,
+                                      cv::Mat & target_intensityGradYImg,
+                                      cv::Mat & target_depthGradXImg,
+                                      cv::Mat & target_depthGradYImg,
                                       Eigen::Matrix<double,Eigen::Dynamic,1> & residuals,
                                       Eigen::Matrix<double,Eigen::Dynamic,6> & jacobians,
                                       cv::Mat & warped_source_grayImage)
@@ -209,32 +253,9 @@ private:
         Rt(3,2) = 0;
         Rt(3,3) = 1;
 
-        double temp1 = cos(pitch)*sin(roll);
-        double temp2 = cos(pitch)*cos(roll);
-        double temp3 = sin(pitch);
-        double temp4 = (sin(roll)*sin(yaw)+sin(pitch)*cos(roll)*cos(yaw));
-        double temp5 = (sin(pitch)*sin(roll)*cos(yaw)-cos(roll)*sin(yaw));
-        double temp6 = (sin(pitch)*sin(roll)*sin(yaw)+cos(roll)*cos(yaw));
-        double temp7 = (-sin(pitch)*sin(roll)*sin(yaw)-cos(roll)*cos(yaw));
-        double temp8 = (sin(roll)*cos(yaw)-sin(pitch)*cos(roll)*sin(yaw));
-        double temp9 = (sin(pitch)*cos(roll)*sin(yaw)-sin(roll)*cos(yaw));
-        double temp10 = cos(pitch)*sin(roll)*cos(yaw);
-        double temp11 = cos(pitch)*cos(yaw)+x;
-        double temp12 = cos(pitch)*cos(roll)*cos(yaw);
-        double temp13 = sin(pitch)*cos(yaw);
-        double temp14 = cos(pitch)*sin(yaw);
-        double temp15 = cos(pitch)*cos(yaw);
-        double temp16 = sin(pitch)*sin(roll);
-        double temp17 = sin(pitch)*cos(roll);
-        double temp18 = cos(pitch)*sin(roll)*sin(yaw);
-        double temp19 = cos(pitch)*cos(roll)*sin(yaw);
-        double temp20 = sin(pitch)*sin(yaw);
-        double temp21 = (cos(roll)*sin(yaw)-sin(pitch)*sin(roll)*cos(yaw));
-        double temp22 = cos(pitch)*cos(roll);
-        double temp23 = cos(pitch)*sin(roll);
-        double temp24 = cos(pitch);
+        depthComponentGain = cv::mean(target_grayImg).val[0]/cv::mean(target_depthImg).val[0];
 
-        #if ENABLE_OPENMP_MULTITHREADING_ANALYTIC
+        #if ENABLE_OPENMP_MULTITHREADING
         #pragma omp parallel for
         #endif
         for (int r=0;r<nRows;r++)
@@ -272,66 +293,114 @@ private:
                     if((transformed_r_int>=0 && transformed_r_int < nRows) &
                        (transformed_c_int>=0 && transformed_c_int < nCols))
                     {
-                        //Obtain the pixel values that will be used to compute the pixel residual
-                        double pixel1; //Intensity value of the pixel(r,c) of the warped frame 1
-                        double pixel2; //Intensity value of the pixel(r,c) of frame 2
-                        pixel1 = source_grayImg.at<float>(r,c);
-                        pixel2 = target_grayImg.at<float>(transformed_r_int,transformed_c_int);
+                        //Obtain the pixel values that will be used to compute the intensity residual
+                        double intensity1; //Intensity value of the pixel(r,c) of the warped frame 1
+                        double intensity2; //Intensity value of the pixel(r,c) of frame 2
+                        intensity1 = source_grayImg.at<float>(r,c);
+                        intensity2 = target_grayImg.at<float>(transformed_r_int,transformed_c_int);
 
-                        //Compute the pixel jacobian
-                        Eigen::Matrix<double,2,6> jacobianPrRt;
-                        double temp25 = 1.0/(z+py*temp1+pz*temp2-px*temp3);
-                        double temp26 = temp25*temp25;
+                        //Obtain the depth values that will be used to the compute the depth residual
+                        double depth1; //Depth value of the pixel(r,c) of the warped frame 1
+                        double depth2; //Depth value of the pixel(r,c) of frame 2
+                        depth1 = source_depthImg.at<float>(r,c);
+                        depth2 = target_depthImg.at<float>(transformed_r_int,transformed_c_int);
+
+                        //Compute the rigid transformation jacobian
+                        Eigen::Matrix<double,3,6> jacobianRt;
 
                             //Derivative with respect to x
-                            jacobianPrRt(0,0)=fx*temp25;
-                            jacobianPrRt(1,0)=0;
+                            jacobianRt(0,0)=1;
+                            jacobianRt(1,0)=0;
+                            jacobianRt(2,0)=0;
 
                             //Derivative with respect to y
-                            jacobianPrRt(0,1)=0;
-                            jacobianPrRt(1,1)=fy*temp25;
+                            jacobianRt(0,1)=0;
+                            jacobianRt(1,1)=1;
+                            jacobianRt(2,1)=0;
 
                             //Derivative with respect to z
-                            jacobianPrRt(0,2)=-fx*(pz*temp4+py*temp5+px*temp11)*temp26;
-                            jacobianPrRt(1,2)=-fy*(py*temp6+pz*temp9+px*temp14+y)*temp26;
+                            jacobianRt(0,2)=0;
+                            jacobianRt(1,2)=0;
+                            jacobianRt(2,2)=1;
 
                             //Derivative with respect to yaw
-                            jacobianPrRt(0,3)=fx*(py*temp7+pz*temp8-px*temp14)*temp25;
-                            jacobianPrRt(1,3)=fy*(pz*temp4+py*temp5+px*temp15)*temp25;
+                            jacobianRt(0,3)=py*(-sin(pitch)*sin(roll)*sin(yaw)-cos(roll)*cos(yaw))+pz*(sin(roll)*cos(yaw)-sin(pitch)*cos(roll)*sin(yaw))-cos(pitch)*px*sin(yaw);
+                            jacobianRt(1,3)=pz*(sin(roll)*sin(yaw)+sin(pitch)*cos(roll)*cos(yaw))+py*(sin(pitch)*sin(roll)*cos(yaw)-cos(roll)*sin(yaw))+cos(pitch)*px*cos(yaw);
+                            jacobianRt(2,3)=0;
 
                             //Derivative with respect to pitch
-                            jacobianPrRt(0,4)=fx*(py*temp10+pz*temp12-px*temp13)*temp25
-                            -fx*(-py*temp16-pz*temp17-px*temp24)*(pz*temp4+py*temp5+px*temp11)*temp26;
-                            jacobianPrRt(1,4)=fy*(py*temp18+pz*temp19-px*temp20)*temp25
-                            -fy*(-py*temp16-pz*temp17-px*temp24)*(py*temp6+pz*temp9+px*temp14+y)*temp26;
+                            jacobianRt(0,4)=cos(pitch)*py*sin(roll)*cos(yaw)+cos(pitch)*pz*cos(roll)*cos(yaw)-sin(pitch)*px*cos(yaw);
+                            jacobianRt(1,4)=cos(pitch)*py*sin(roll)*sin(yaw)+cos(pitch)*pz*cos(roll)*sin(yaw)-sin(pitch)*px*sin(yaw);
+                            jacobianRt(2,4)=-sin(pitch)*py*sin(roll)-sin(pitch)*pz*cos(roll)-cos(pitch)*px;
 
                             //Derivative with respect to roll
-                            jacobianPrRt(0,5)=fx*(py*temp4+pz*temp21)*temp25
-                            -fx*(py*temp22-pz*temp23)*(pz*temp4+py*temp5+px*temp11)*temp26;
-                            jacobianPrRt(1,5)=fy*(pz*temp7+py*temp9)*temp25
-                            -fy*(py*temp22-pz*temp23)*(py*temp6+pz*temp9+px*temp14+y)*temp26;
+                            jacobianRt(0,5)=py*(sin(roll)*sin(yaw)+sin(pitch)*cos(roll)*cos(yaw))+pz*(cos(roll)*sin(yaw)-sin(pitch)*sin(roll)*cos(yaw));
+                            jacobianRt(1,5)=pz*(-sin(pitch)*sin(roll)*sin(yaw)-cos(roll)*cos(yaw))+py*(sin(pitch)*cos(roll)*sin(yaw)-sin(roll)*cos(yaw));
+                            jacobianRt(2,5)=cos(pitch)*py*cos(roll)-cos(pitch)*pz*sin(roll);
 
-                          //Apply the chain rule to compound the image gradients with the projective+RigidTransform jacobians
-                          Eigen::Matrix<double,1,2> target_imgGradient;
-                          target_imgGradient(0,0)=target_gradXImg.at<float>(i);
-                          target_imgGradient(0,1)=target_gradYImg.at<float>(i);
-                          Eigen::Matrix<double,1,6> jacobian=target_imgGradient*jacobianPrRt;
+                          //Compute the proyective transformation jacobian
+                          Eigen::Matrix<double,2,3> jacobianProy;
+
+                            //Derivative with respect to x
+                            jacobianProy(0,0)=fx*inv_transformedPz;
+                            jacobianProy(1,0)=0;
+
+                            //Derivative with respect to y
+                            jacobianProy(0,1)=0;
+                            jacobianProy(1,1)=fy*inv_transformedPz;
+
+                            //Derivative with respect to z
+                            jacobianProy(0,2)=-(fx*transformedPoint3D(0))*inv_transformedPz*inv_transformedPz;
+                            jacobianProy(1,2)=-(fy*transformedPoint3D(1))*inv_transformedPz*inv_transformedPz;
+
+                          //Intensity jacobian:
+                          //Apply the chain rule to compound the intensity gradients with the projective+RigidTransform jacobians
+                          Eigen::Matrix<double,1,2> target_intensityGradient;
+                          target_intensityGradient(0,0)=target_intensityGradXImg.at<float>(i);
+                          target_intensityGradient(0,1)=target_intensityGradYImg.at<float>(i);
+                          Eigen::Matrix<double,1,6> jacobianItensity=target_intensityGradient*jacobianProy*jacobianRt;
+
+                          //Depth jacobian:
+                          //Apply the chain rule to compound the depth gradients with the projective+RigidTransform jacobians
+                          Eigen::Matrix<double,1,2> target_depthGradient;
+                          target_depthGradient(0,0)=target_depthGradXImg.at<float>(i);
+                          target_depthGradient(0,1)=target_depthGradYImg.at<float>(i);
+                          Eigen::Matrix<double,1,6> jacobianRt_z;
+                          jacobianRt_z(0,0)=jacobianRt(2,0);
+                          jacobianRt_z(0,1)=jacobianRt(2,1);
+                          jacobianRt_z(0,2)=jacobianRt(2,2);
+                          jacobianRt_z(0,3)=jacobianRt(2,3);
+                          jacobianRt_z(0,4)=jacobianRt(2,4);
+                          jacobianRt_z(0,5)=jacobianRt(2,5);
+                          Eigen::Matrix<double,1,6> jacobianDepth=depthComponentGain*(target_depthGradient*jacobianProy*jacobianRt-jacobianRt_z);
 
                           //Assign the pixel residual and jacobian to its corresponding row
-                          #if ENABLE_OPENMP_MULTITHREADING_ANALYTIC
-			  #pragma omp critical
-			  #endif
+                          #pragma omp critical
                           {
-                              jacobians(i,0)=jacobian(0,0);
-                              jacobians(i,1)=jacobian(0,1);
-                              jacobians(i,2)=jacobian(0,2);
-                              jacobians(i,3)=jacobian(0,3);
-                              jacobians(i,4)=jacobian(0,4);
-                              jacobians(i,5)=jacobian(0,5);
+                              //Assign intensity jacobians
+                              jacobians(i,0)=jacobianItensity(0,0);
+                              jacobians(i,1)=jacobianItensity(0,1);
+                              jacobians(i,2)=jacobianItensity(0,2);
+                              jacobians(i,3)=jacobianItensity(0,3);
+                              jacobians(i,4)=jacobianItensity(0,4);
+                              jacobians(i,5)=jacobianItensity(0,5);
 
-                              residuals(nCols*transformed_r_int+transformed_c_int,0) = pixel2 - pixel1;
+                              //Assign intensity residuals
+                              residuals(nCols*transformed_r_int+transformed_c_int,0) = intensity2 - intensity1;
+
+                              //Assign depth jacobians
+                              jacobians(2*i,0)=jacobianDepth(0,0);
+                              jacobians(2*i,1)=jacobianDepth(0,1);
+                              jacobians(2*i,2)=jacobianDepth(0,2);
+                              jacobians(2*i,3)=jacobianDepth(0,3);
+                              jacobians(2*i,4)=jacobianDepth(0,4);
+                              jacobians(2*i,5)=jacobianDepth(0,5);
+
+                              //Assign depth residuals
+                              residuals(nCols*2*transformed_r_int+2*transformed_c_int,0) = depthComponentGain*(depth2 - depth1);
+
                               if(visualizeIterations)
-                                warped_source_grayImage.at<float>(transformed_r_int,transformed_c_int) = pixel1;
+                                warped_source_grayImage.at<float>(transformed_r_int,transformed_c_int) = intensity1;
                           }
                     }
                 }
@@ -394,9 +463,9 @@ private:
 
 public:
 
-    CPhotoconsistencyOdometryAnalytic(){minDepth=0.3;maxDepth=5.0;};
+    CPhotoconsistencyOdometryBiObjective(){minDepth=0.3;maxDepth=5.0;};
 
-    ~CPhotoconsistencyOdometryAnalytic(){};
+    ~CPhotoconsistencyOdometryBiObjective(){};
 
     /*!Sets the minimum depth distance (m) to consider a certain pixel valid.*/
     void setMinDepth(float minD)
@@ -425,10 +494,10 @@ public:
 
         //Compute image pyramids for the grayscale and depth images
         buildPyramid(imgGrayFloat,gray0Pyr,numOptimizationLevels,true);
-        buildPyramid(imgDepth,depth0Pyr,numOptimizationLevels,false);
+        buildPyramid(imgDepth,depth0Pyr,numOptimizationLevels,false); //TODO: Do not apply low-pass filtering to depth image
     }
 
-    /*!Sets the source (Intensity+Depth) frame. Depth image is ignored*/
+    /*!Sets the source (Intensity+Depth) frame.*/
     void setTargetFrame(cv::Mat & imgGray,cv::Mat & imgDepth)
     {
         //Create a float auxialiary image from the imput image
@@ -437,9 +506,11 @@ public:
 
         //Compute image pyramids for the grayscale and depth images
         buildPyramid(imgGrayFloat,gray1Pyr,numOptimizationLevels,true);
+        buildPyramid(imgDepth,depth1Pyr,numOptimizationLevels,false); //TODO: Do not apply low-pass filtering to depth image
 
         //Compute image pyramids for the gradients images
-        buildDerivativesPyramids(gray1Pyr,gray1GradXPyr,gray1GradYPyr);
+        buildIntensityDerivativesPyramids(gray1Pyr,gray1GradXPyr,gray1GradYPyr);
+        buildDepthDerivativesPyramids(depth1Pyr,depth1GradXPyr,depth1GradYPyr);
     }
 
     /*!Initializes the state vector to a certain value. The optimization process uses the initial state vector as the initial estimate.*/
@@ -473,9 +544,9 @@ public:
                     warped_source_grayImage = cv::Mat::zeros(nRows,nCols,gray0Pyr[optimizationLevel].type());
 
                 Eigen::Matrix<double,Eigen::Dynamic,1> residuals;
-                residuals = Eigen::MatrixXd::Zero(nPoints,1);
+                residuals = Eigen::MatrixXd::Zero(2*nPoints,1);
                 Eigen::Matrix<double,Eigen::Dynamic,6> jacobians;
-                jacobians = Eigen::MatrixXd::Zero(nPoints,6);
+                jacobians = Eigen::MatrixXd::Zero(2*nPoints,6);
 
                 if(max_num_iterations[optimizationLevel]>0) //compute only if the number of maximum iterations are greater than 0
                 {
@@ -483,8 +554,11 @@ public:
                             gray0Pyr[optimizationLevel],
                             depth0Pyr[optimizationLevel],
                             gray1Pyr[optimizationLevel],
+                            depth1Pyr[optimizationLevel],
                             gray1GradXPyr[optimizationLevel],
                             gray1GradYPyr[optimizationLevel],
+                            depth1GradXPyr[optimizationLevel],
+                            depth1GradYPyr[optimizationLevel],
                             residuals,
                             jacobians,
                             warped_source_grayImage);
@@ -564,7 +638,7 @@ public:
     }
 };
 
-} //end namespace Analytic
+} //end namespace BiObjective
 
 } //end namespace PhotoconsistencyOdometry
 

@@ -31,8 +31,10 @@
  *
  */
 
-#define USE_PHOTOCONSISTENCY_ODOMETRY_ANALYTIC 1 // If set to 1 uses the CPhotoconsistencyOdometryAnalytic class
-                                                 // else, uses the CPhotoconsistencyOdometryCeres class.
+#define USE_PHOTOCONSISTENCY_ODOMETRY_METHOD 2 // CPhotoconsistencyOdometryAnalytic: 0
+                                               // CPhotoconsistencyOdometryCeres: 1
+                                               // CPhotoconsistencyOdometryBiObjective: 2
+
 #define ENABLE_ICP_POSE_REFINEMENT 0
 #define ENABLE_SAVE_TRAJECTORY 1
 #define ENABLE_DISPLAY_ONLINE_MAP 0 // Enable this only for visualization/debug purposes
@@ -40,11 +42,15 @@
 #include "include/CRGBDGrabberRawlog.h"
 #include "include/CRGBDGrabberOpenNI_PCL.h"
 #include "include/CFrameRGBD.h"
-#if USE_PHOTOCONSISTENCY_ODOMETRY_ANALYTIC
+
+#if USE_PHOTOCONSISTENCY_ODOMETRY_METHOD == 0
     #include "CPhotoconsistencyOdometryAnalytic.h"
-#else
+#elif USE_PHOTOCONSISTENCY_ODOMETRY_METHOD == 1
     #include "CPhotoconsistencyOdometryCeres.h"
+#elif USE_PHOTOCONSISTENCY_ODOMETRY_METHOD == 2
+    #include "CPhotoconsistencyOdometryBiObjective.h"
 #endif
+
 #include <pcl/io/pcd_io.h> //Save global map as PCD file
 #include <pcl/common/transforms.h> //Transform the keyframe pointclouds to the original reference frame
 #include <pcl/console/parse.h> //Parse the inputs of the program
@@ -244,10 +250,12 @@ int main(int argc, char **argv)
     saveKeyframeToFile(0,*frame1);
 
     //Define the photoconsistency odometry object and set the input parameters
-	#if USE_PHOTOCONSISTENCY_ODOMETRY_ANALYTIC
+	#if USE_PHOTOCONSISTENCY_ODOMETRY_METHOD == 0
 	PhotoconsistencyOdometry::Analytic::CPhotoconsistencyOdometryAnalytic photoconsistencyOdometry;
-	#else
+	#elif USE_PHOTOCONSISTENCY_ODOMETRY_METHOD == 1
 	PhotoconsistencyOdometry::Ceres::CPhotoconsistencyOdometryCeres photoconsistencyOdometry;
+	#elif USE_PHOTOCONSISTENCY_ODOMETRY_METHOD == 2
+    PhotoconsistencyOdometry::BiObjective::CPhotoconsistencyOdometryBiObjective photoconsistencyOdometry;
 	#endif
 	photoconsistencyOdometry.readConfigurationFile(std::string(argv[1]));
     photoconsistencyOdometry.setCameraMatrix(cameraMatrix);
@@ -306,10 +314,10 @@ int main(int argc, char **argv)
         Eigen::Matrix4f H;
         cv::TickMeter tm; tm.start();
         photoconsistencyOdometry.setSourceFrame(frame1->getIntensityImage(),frame1->getDepthImage());
-        photoconsistencyOdometry.setTargetFrame(frame2->getIntensityImage());
-        photoconsistencyOdometry.setInitialStateVector(stateVector); //initialize the current state vector with the one computed in the previous iteration
+        photoconsistencyOdometry.setTargetFrame(frame2->getIntensityImage(),frame2->getDepthImage());
+        std::vector<double> stateVector; stateVector.resize(6,0); //Initialize the state vector with (0,0,0,0,0,0)
+        photoconsistencyOdometry.setInitialStateVector(stateVector);
         photoconsistencyOdometry.optimize();
-        photoconsistencyOdometry.getOptimalStateVector(stateVector);
         photoconsistencyOdometry.getOptimalRigidTransformationMatrix(H);
         tm.stop();
         std::cout<<"H (photoconsistency approximation):"<<std::endl<<H<<std::endl;

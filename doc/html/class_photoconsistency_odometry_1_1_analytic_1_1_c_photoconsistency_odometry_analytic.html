@@ -93,7 +93,7 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_photoconsistency_odometry_1_1_analytic_1_1_c_photoconsistency_odometry_analytic.html#a5553935095782a68830efa1d4f4ccce5">setMaxDepth</a> (float maxD)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_photoconsistency_odometry_1_1_analytic_1_1_c_photoconsistency_odometry_analytic.html#af55a42286ff6f056ad33103dd7c3b0a9">setCameraMatrix</a> (Eigen::Matrix3f &amp;camMat)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_photoconsistency_odometry_1_1_analytic_1_1_c_photoconsistency_odometry_analytic.html#a540df6929640bf7c1c248e27cc952772">setSourceFrame</a> (cv::Mat &amp;imgGray, cv::Mat &amp;imgDepth)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_photoconsistency_odometry_1_1_analytic_1_1_c_photoconsistency_odometry_analytic.html#ac2f9288148db6b93b5cbe6a77818106d">setTargetFrame</a> (cv::Mat &amp;imgGray)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_photoconsistency_odometry_1_1_analytic_1_1_c_photoconsistency_odometry_analytic.html#a820824acdf3019f17ba889d0455e7f9c">setTargetFrame</a> (cv::Mat &amp;imgGray, cv::Mat &amp;imgDepth)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_photoconsistency_odometry_1_1_analytic_1_1_c_photoconsistency_odometry_analytic.html#a6765ca12e063b199624e408fe07d2c13">setInitialStateVector</a> (const std::vector&lt; double &gt; &amp;initialStateVector)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_photoconsistency_odometry_1_1_analytic_1_1_c_photoconsistency_odometry_analytic.html#aadf26b26688281cd18375984c1cc719e">optimize</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_photoconsistency_odometry_1_1_analytic_1_1_c_photoconsistency_odometry_analytic.html#ad48c2851da3b626484d2d005b81d9b4e">getOptimalStateVector</a> (std::vector&lt; double &gt; &amp;optimalStateVector)</td></tr>
@@ -327,7 +327,7 @@ std::vector&lt; cv::Mat &gt;&#160;</td><td class="memItemRight" valign="bottom">
 
 </div>
 </div>
-<a class="anchor" id="ac2f9288148db6b93b5cbe6a77818106d"></a><!-- doxytag: member="PhotoconsistencyOdometry::Analytic::CPhotoconsistencyOdometryAnalytic::setTargetFrame" ref="ac2f9288148db6b93b5cbe6a77818106d" args="(cv::Mat &amp;imgGray)" -->
+<a class="anchor" id="a820824acdf3019f17ba889d0455e7f9c"></a><!-- doxytag: member="PhotoconsistencyOdometry::Analytic::CPhotoconsistencyOdometryAnalytic::setTargetFrame" ref="a820824acdf3019f17ba889d0455e7f9c" args="(cv::Mat &amp;imgGray, cv::Mat &amp;imgDepth)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -335,15 +335,25 @@ std::vector&lt; cv::Mat &gt;&#160;</td><td class="memItemRight" valign="bottom">
           <td class="memname">void PhotoconsistencyOdometry::Analytic::CPhotoconsistencyOdometryAnalytic::setTargetFrame </td>
           <td>(</td>
           <td class="paramtype">cv::Mat &amp;&#160;</td>
-          <td class="paramname"><em>imgGray</em></td><td>)</td>
-          <td><code> [inline, virtual]</code></td>
+          <td class="paramname"><em>imgGray</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">cv::Mat &amp;&#160;</td>
+          <td class="paramname"><em>imgDepth</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [inline, virtual]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
-<p>Sets the target intensity frame. </p>
+<p>Sets the source (Intensity+Depth) frame. Depth image is ignored </p>
 
-<p>Implements <a class="el" href="class_photoconsistency_odometry_1_1_c_photoconsistency_odometry.html#a4f04b88ac54670b03b5c2bf773bca018">PhotoconsistencyOdometry::CPhotoconsistencyOdometry</a>.</p>
+<p>Implements <a class="el" href="class_photoconsistency_odometry_1_1_c_photoconsistency_odometry.html#ac22e57f7f5039b7988447e7bd7d77f89">PhotoconsistencyOdometry::CPhotoconsistencyOdometry</a>.</p>
 
 </div>
 </div>
@@ -576,7 +586,7 @@ std::vector&lt; cv::Mat &gt;&#160;</td><td class="memItemRight" valign="bottom">
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Sep 19 2012 10:31:03 for Photoconsistency-Visual-Odometry by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Sep 21 2012 10:13:31 for Photoconsistency-Visual-Odometry by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

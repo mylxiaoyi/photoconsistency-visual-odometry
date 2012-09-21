@@ -134,8 +134,8 @@ public:
   virtual void setCameraMatrix(Eigen::Matrix3f & camMat)=0;
   /*!Sets the source (Intensity+Depth) frame.*/
   virtual void setSourceFrame(cv::Mat & imgGray,cv::Mat & imgDepth)=0;
-  /*!Sets the target intensity frame.*/
-  virtual void setTargetFrame(cv::Mat & imgGray)=0;
+  /*!Sets the source (Intensity+Depth) frame.*/
+  virtual void setTargetFrame(cv::Mat & imgGray,cv::Mat & imgDepth)=0;
   /*!Initializes the state vector to a certain value. The optimization process uses the initial state vector as the initial estimate.*/
   virtual void setInitialStateVector(const std::vector<double> & initialStateVector)=0;
   /*!Launches the least-squares optimization process to find the configuration of the state vector parameters that maximizes the photoconsistency between the source and target frame.*/

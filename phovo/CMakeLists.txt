@@ -4,11 +4,13 @@ IF(PHOVO_WITH_CERES)
 		    include/CPhotoconsistencyOdometry.h
 		    include/CPhotoconsistencyOdometryAnalytic.h
 		    include/CPhotoconsistencyOdometryCeres.h
-		    ../third_party/sample.h)	
+		    ../third_party/sample.h
+		    include/CPhotoconsistencyOdometryBiObjective)	
 ELSE(PHOVO_WITH_CERES)
 	ADD_LIBRARY(phovo
 		    include/CPhotoconsistencyOdometry.h
-		    include/CPhotoconsistencyOdometryAnalytic.h)
+		    include/CPhotoconsistencyOdometryAnalytic.h
+		    include/CPhotoconsistencyOdometryBiObjective)
 ENDIF(PHOVO_WITH_CERES)
 
 # Link the libraries used by PhotoconsistencyVisualOdometry
