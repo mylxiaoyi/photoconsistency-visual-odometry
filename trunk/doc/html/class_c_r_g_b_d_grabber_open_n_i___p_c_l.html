@@ -101,6 +101,16 @@ cv::Mat&#160;</td><td class="memItemRight" valign="bottom"><b>currentBGRImg</b><
 cv::Mat&#160;</td><td class="memItemRight" valign="bottom"><b>currentDepthImg</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a19dd8c4dbb891d9be9813c9e476a789c"></a><!-- doxytag: member="CRGBDGrabberOpenNI_PCL::interface" ref="a19dd8c4dbb891d9be9813c9e476a789c" args="" -->
 pcl::OpenNIGrabber *&#160;</td><td class="memItemRight" valign="bottom"><b>interface</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a102585f518935db8453e02ec7acaecb1"></a><!-- doxytag: member="CRGBDGrabberOpenNI_PCL::currentBGRPtr" ref="a102585f518935db8453e02ec7acaecb1" args="" -->
+boost::shared_ptr<br class="typebreak"/>
+&lt; openni_wrapper::Image &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>currentBGRPtr</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad723c92cb78a55c9d79c7f1449760a3f"></a><!-- doxytag: member="CRGBDGrabberOpenNI_PCL::currentDepthPtr" ref="ad723c92cb78a55c9d79c7f1449760a3f" args="" -->
+boost::shared_ptr<br class="typebreak"/>
+&lt; openni_wrapper::DepthImage &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>currentDepthPtr</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a168e6d6a39f27cc55d37f4592d6e19f5"></a><!-- doxytag: member="CRGBDGrabberOpenNI_PCL::rgb_connection" ref="a168e6d6a39f27cc55d37f4592d6e19f5" args="" -->
+boost::signals2::connection&#160;</td><td class="memItemRight" valign="bottom"><b>rgb_connection</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8c2e26b56e83fbc519e49a955fbb212a"></a><!-- doxytag: member="CRGBDGrabberOpenNI_PCL::depth_connection" ref="a8c2e26b56e83fbc519e49a955fbb212a" args="" -->
+boost::signals2::connection&#160;</td><td class="memItemRight" valign="bottom"><b>depth_connection</b></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>This class captures RGBD frames from an OpenNI compatible sensor using the OpenNI interface provided by the PCL library to access the sensor data. It grabs the intensity image as well as its corresponding depth image. </p>
@@ -199,7 +209,7 @@ pcl::OpenNIGrabber *&#160;</td><td class="memItemRight" valign="bottom"><b>inter
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Sep 21 2012 19:06:32 for Photoconsistency-Visual-Odometry by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Sep 21 2012 21:44:48 for Photoconsistency-Visual-Odometry by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

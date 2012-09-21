@@ -52,13 +52,19 @@ private:
 
 public:
     /*!Creates a CRGBDGrabberOpenNI_OpenCV instance that grabs RGBD frames from an OpenNI compatible sensor.*/
-    CRGBDGrabberOpenNI_OpenCV();
+    CRGBDGrabberOpenNI_OpenCV()
+    {
+        capture = new cv::VideoCapture( CV_CAP_OPENNI );
+    }
+
+    ~CRGBDGrabberOpenNI_OpenCV()
+    {
+        delete capture;
+    }
 
     /*!Initializes the grabber object*/
     inline void init()
     {
-        capture = new cv::VideoCapture( CV_CAP_OPENNI );
-
         if( !capture->isOpened() )
         {
             std::cout << "Can not open a capture object." << std::endl;

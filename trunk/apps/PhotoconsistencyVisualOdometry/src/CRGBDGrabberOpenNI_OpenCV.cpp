@@ -35,10 +35,6 @@
 
 #include <iostream>
 
-CRGBDGrabberOpenNI_OpenCV::CRGBDGrabberOpenNI_OpenCV(){}
-
-//CRGBDGrabberOpenNI_PCL::~CRGBDGrabberOpenNI_OpenCV(){}
-
 void CRGBDGrabberOpenNI_OpenCV::grab(CFrameRGBD* framePtr)
 {
     bool grabbedFrame = false;
