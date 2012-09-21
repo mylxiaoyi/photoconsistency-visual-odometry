@@ -2,11 +2,11 @@
  *  Photoconsistency-Visual-Odometry
  *  Multiscale Photoconsistency Visual Odometry from RGBD Images
  *  Copyright (c) 2012, Miguel Algaba Borrego
- *  
+ *
  *  http://code.google.com/p/photoconsistency-visual-odometry/
- *  
+ *
  *  All rights reserved.
- *  
+ *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions are met:
  *      * Redistributions of source code must retain the above copyright
@@ -17,7 +17,7 @@
  *      * Neither the name of the holder(s) nor the
  *        names of its contributors may be used to endorse or promote products
  *        derived from this software without specific prior written permission.
- *  
+ *
  *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -54,22 +54,38 @@ private:
     void rgb_cb_ (const boost::shared_ptr<openni_wrapper::Image>& img);
     void depth_cb_ (const boost::shared_ptr<openni_wrapper::DepthImage>& depth);
 
+    boost::shared_ptr<openni_wrapper::Image> currentBGRPtr;
+    boost::shared_ptr<openni_wrapper::DepthImage> currentDepthPtr;
+
+    boost::signals2::connection rgb_connection;
+    boost::signals2::connection depth_connection;
+
 public:
     /*!Creates a CRGBDGrabberOpenNI_PCL instance that grabs RGBD frames from an OpenNI compatible sensor.*/
     CRGBDGrabberOpenNI_PCL();
 
+    ~CRGBDGrabberOpenNI_PCL()
+    {
+        delete interface;
+    }
+
     /*!Initializes the grabber object*/
     inline void init()
     {
-	// start receiving point clouds
+        // start receiving point clouds
      	interface->start ();
-	sleep(2);
+        sleep(2);
     };
 
     /*!Retains the current RGBD frame.*/
     void grab(CFrameRGBD*);
 
     /*!Stop grabing RGBD frames.*/
-    inline void stop(){interface->stop();};
+    inline void stop()
+    {
+        depth_connection.disconnect();
+        rgb_connection.disconnect();
+        interface->stop();
+    };
 };
 #endif

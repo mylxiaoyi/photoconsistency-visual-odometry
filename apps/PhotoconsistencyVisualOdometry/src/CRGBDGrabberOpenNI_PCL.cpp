@@ -35,14 +35,20 @@
 
 #include <iostream>
 
+boost::mutex mtx_;
+
 void CRGBDGrabberOpenNI_PCL::rgb_cb_ (const boost::shared_ptr<openni_wrapper::Image>& img)
 {
-    img->fillRGB(currentBGRImg.cols,currentBGRImg.rows,currentBGRImg.data,currentBGRImg.step);
+    //lock while we set the depth image;
+    boost::mutex::scoped_lock lock (mtx_);
+    currentBGRPtr = img;
 }
 
 void CRGBDGrabberOpenNI_PCL::depth_cb_ (const boost::shared_ptr<openni_wrapper::DepthImage>& depth)
 {
-    depth->fillDepthImage(currentDepthImg.cols,currentDepthImg.rows,(float*)currentDepthImg.data,currentDepthImg.step);
+    //lock while we set the depth image;
+    boost::mutex::scoped_lock lock (mtx_);
+    currentDepthPtr = depth;
 }
 
 CRGBDGrabberOpenNI_PCL::CRGBDGrabberOpenNI_PCL()
@@ -60,19 +66,34 @@ CRGBDGrabberOpenNI_PCL::CRGBDGrabberOpenNI_PCL()
      boost::function<void(const boost::shared_ptr<openni_wrapper::DepthImage>&)> g = boost::bind (&CRGBDGrabberOpenNI_PCL::depth_cb_, this, _1);
 
      // connect callback function for desired signal.
-     interface->registerCallback (g);
-     interface->registerCallback (f);
+     depth_connection = interface->registerCallback (g);
+     rgb_connection = interface->registerCallback (f);
 }
-
-//CRGBDGrabberOpenNI_PCL::~CRGBDGrabberOpenNI_PCL(){}
 
 void CRGBDGrabberOpenNI_PCL::grab(CFrameRGBD* framePtr)
 {
-    //Grab the current RGB image
+    {
+        //lock while we set the RGB image;
+        boost::mutex::scoped_lock lock (mtx_);
+
+        //Grab the current RGB image
+        currentBGRPtr->fillRGB(currentBGRImg.cols,currentBGRImg.rows,currentBGRImg.data,currentBGRImg.step);
+    }
     cv::cvtColor(currentBGRImg,currentRGBImg,CV_RGB2BGR);
     framePtr->setRGBImage(currentRGBImg.clone());
 
-    //Graph the current depth image
-    framePtr->setDepthImage(currentDepthImg.clone());
+    {
+        //lock while we set the depth image;
+        boost::mutex::scoped_lock lock (mtx_);
 
+        //Grab the current depth image
+        for(int r=0;r<currentDepthPtr->getHeight();r++)
+        {
+            for(int c=0;c<currentDepthPtr->getWidth();c++)
+            {
+                currentDepthImg.at<float>(r,c)=0.001*currentDepthPtr->getDepthMetaData()[r*currentDepthPtr->getWidth()+c];
+            }
+        }
+    }
+    framePtr->setDepthImage(currentDepthImg.clone());
 }
