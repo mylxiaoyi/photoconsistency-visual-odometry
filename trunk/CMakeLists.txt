@@ -83,6 +83,10 @@ CONFIGURE_FILE( ${PHOVO_SOURCE_DIR}/config.h.in ${PHOVO_SOURCE_DIR}/phovo/includ
 # Add the "phovo" library subdirectory
 ADD_SUBDIRECTORY(phovo)
 
+# Select the "apps" to be built
+SET( BUILD_PHOTOCONSISTENCY_FRAME_ALIGNMENT_APPLICATION ON CACHE BOOL "Build PhotoconsistencyFrameAlignment application")
+SET( BUILD_PHOTOCONSISTENCY_VISUAL_ODOMETRY_APPLICATION OFF CACHE BOOL "Build PhotoconsistencyVisualOdometry application")
+
 # Add the "apps" subdirectory
 ADD_SUBDIRECTORY(apps)
 
