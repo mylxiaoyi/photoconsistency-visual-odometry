@@ -36,7 +36,7 @@
                                                // CPhotoconsistencyOdometryBiObjective: 2
 
 #define ENABLE_ICP_POSE_REFINEMENT 0
-#define ENABLE_SAVE_TRAJECTORY 1
+#define ENABLE_SAVE_TRAJECTORY 0
 #define ENABLE_DISPLAY_ONLINE_MAP 0 // Enable this only for visualization/debug purposes
 
 #include "include/CRGBDGrabberRawlog.h"
