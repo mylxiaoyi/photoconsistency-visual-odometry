@@ -154,7 +154,7 @@ cd photoconsistency-visual-odometry/trunk/results/pcd_files
 pcd_viewer *.pcd 
 \endverbatim
  *
- * \image html  PhotoconsistencyOdometry3DMap.png "PCL window that shows the generated global map of an indoor scene reconstructed using the Photoconsistency Visual Odometry as a first pose approximation and GICP for pose refinement. The results are stored in separate transformed_keyframe_x.pcd files that represent each keyframe point cloud transformed to the same reference frame; to open the .pcd files use the pcd_viewer tool of the PCL library."
+ * \image html  PhotoconsistencyOdometry3DMap_analytic.png "PCL window that shows the generated global map of an indoor scene reconstructed using the CPhotoconsistencyOdometryAnalytic class. The results are stored in separate transformed_keyframe_x.pcd files that represent each keyframe point cloud transformed to the same reference frame; to open the .pcd files use the pcd_viewer tool of the PCL library."
  *
  * \subsection B CVPR tools
  * If you have the CVPR tools dependencies installed and have compiled the PhotoconsistencyVisualOdometry program to save the trajectories, the program will execute the evaluate_ate.py and evaluate_rpe.py tools that compute the absolute and relative error of the estimated trajectory compared to the ground-truth. Additionally, to visualize the goodness of the estimated trajectory, a ".pdf" file will be generated inside the photoconsistency-visual-odometry/trunk/results directory, representing the ground-truth and the estimated trajectory seen from above.
