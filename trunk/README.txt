@@ -24,7 +24,7 @@ Additionally, the applications depends on two more open-source libraries:
     - PCL: http://pointclouds.org/
     - MRPT: http://www.mrpt.org/
 
-This project includes code developed by the authors of the Libmv library to propagate the image derivatives, needed to integrate the numeric image gradients with the auto-diff framework of Ceres Solver. Please see CPhotoconsistencyOdometryCeres.h for their copyright notice. 
+This project includes code developed by the authors of the Libmv library to propagate the image derivatives, needed to integrate the numeric image gradients with the auto-diff framework of Ceres Solver. Please see sample.h inside the third_party directory for their copyright notice. 
     
 3. Installation:
 ----------------
@@ -47,7 +47,7 @@ This project has been implemented and tested in Ubuntu 11.04 and 11.10. To compi
 
       sudo apt-get install python-numpy
       sudo apt-get install python-matplotlib 
-      cd PhotoconsistencyVisualOdometry/tools
+      cd photoconsistency-visual-odometry/trunk/tools
       svn co https://svncvpr.in.tum.de/cvpr-ros-pkg/trunk/rgbd_benchmark/rgbd_benchmark_tools/src/rgbd_benchmark_tools/
 
     - [optional] Download the file 'rigid_transform_3D.m' inside the photoconsistency-visual-odometry/trunk/tools/plot_trajectory_tools directory. The file can be found in the following link: http://nghiaho.com/uploads/code/rigid_transform_3D.m
