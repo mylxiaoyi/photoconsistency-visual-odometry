@@ -167,9 +167,9 @@ Global map visualization</h3>
 cd photoconsistency-visual-odometry/trunk/results/pcd_files
 pcd_viewer *.pcd 
 </pre></div><div class="image">
-<img src="PhotoconsistencyOdometry3DMap.png" alt="PhotoconsistencyOdometry3DMap.png"/>
+<img src="PhotoconsistencyOdometry3DMap_analytic.png" alt="PhotoconsistencyOdometry3DMap_analytic.png"/>
 <div class="caption">
-PCL window that shows the generated global map of an indoor scene reconstructed using the Photoconsistency Visual Odometry as a first pose approximation and GICP for pose refinement. The results are stored in separate transformed_keyframe_x.pcd files that represent each keyframe point cloud transformed to the same reference frame; to open the .pcd files use the pcd_viewer tool of the PCL library.</div></div>
+PCL window that shows the generated global map of an indoor scene reconstructed using the CPhotoconsistencyOdometryAnalytic class. The results are stored in separate transformed_keyframe_x.pcd files that represent each keyframe point cloud transformed to the same reference frame; to open the .pcd files use the pcd_viewer tool of the PCL library.</div></div>
  <h3><a class="anchor" id="B"></a>
 CVPR tools</h3>
 <p>If you have the CVPR tools dependencies installed and have compiled the PhotoconsistencyVisualOdometry program to save the trajectories, the program will execute the evaluate_ate.py and evaluate_rpe.py tools that compute the absolute and relative error of the estimated trajectory compared to the ground-truth. Additionally, to visualize the goodness of the estimated trajectory, a ".pdf" file will be generated inside the photoconsistency-visual-odometry/trunk/results directory, representing the ground-truth and the estimated trajectory seen from above.</p>
@@ -205,7 +205,7 @@ Estimated trajectory over the ground-truth using the Octave 'plot_trajectory_gro
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Sep 25 2012 09:14:16 for Photoconsistency-Visual-Odometry by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Sep 25 2012 10:32:23 for Photoconsistency-Visual-Odometry by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>
